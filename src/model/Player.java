@@ -1,11 +1,13 @@
 package model;
 
+import util.Observable;
+
 import java.util.*;
 
 /**
  * @author Nathan Wong
  */
-public class Player {
+public class Player extends Observable {
     
     private String name;
     private PlayerColour playerColour;

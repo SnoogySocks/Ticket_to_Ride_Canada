@@ -4,7 +4,6 @@ import model.City;
 import model.Route;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author Felix
