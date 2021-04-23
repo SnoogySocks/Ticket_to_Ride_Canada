@@ -8,14 +8,14 @@ import java.awt.*;
  */
 public class Route extends JLabel {
     
-    private Player owner;
+    private PlayerColour owner;
     private City city1, city2;
     private int length;
     private Color colour;
     private Coordinate completionPoint;
     private boolean isDualRoute;
     
-    public Route (Player owner, City city1, City city2, int length, Color colour, Coordinate completionPoint, boolean isDualRoute) {
+    public Route (PlayerColour owner, City city1, City city2, int length, Color colour, Coordinate completionPoint, boolean isDualRoute) {
         this.owner = owner;
         this.city1 = city1;
         this.city2 = city2;
@@ -25,11 +25,11 @@ public class Route extends JLabel {
         this.isDualRoute = isDualRoute;
     }
     
-    public Player getOwner () {
+    public PlayerColour getOwner () {
         return owner;
     }
     
-    public void setOwner (Player owner) {
+    public void setOwner (PlayerColour owner) {
         this.owner = owner;
     }
     
