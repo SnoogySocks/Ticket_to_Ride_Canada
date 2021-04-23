@@ -16,6 +16,7 @@ public class Route extends JLabel {
     private boolean isDualRoute;
     
     public Route (PlayerColour owner, City city1, City city2, int length, Color colour, Coordinate completionPoint, boolean isDualRoute) {
+        
         this.owner = owner;
         this.city1 = city1;
         this.city2 = city2;
@@ -23,6 +24,7 @@ public class Route extends JLabel {
         this.colour = colour;
         this.completionPoint = completionPoint;
         this.isDualRoute = isDualRoute;
+        
     }
     
     public PlayerColour getOwner () {
