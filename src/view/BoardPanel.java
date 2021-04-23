@@ -11,8 +11,8 @@ import javax.swing.*;
 public class BoardPanel extends JPanel {
 
     private JLabel gameBoardImage;
-    private City[] cities;
-    private Route[] routes;
+    private final City[] cities;
+    private final Route[] routes;
     
     public BoardPanel (City[] cities, Route[] routes) {
         

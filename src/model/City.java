@@ -1,5 +1,7 @@
 package model;
 
+import util.Coordinate;
+
 import javax.swing.*;
 
 /**
