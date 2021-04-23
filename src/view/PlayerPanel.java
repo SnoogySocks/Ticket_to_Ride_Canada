@@ -16,9 +16,6 @@ import java.util.HashMap;
  */
 public class PlayerPanel extends JPanel {
     
-    public static final int PANEL_PADDING = 20;
-    public static final int LABEL_HEIGHT = 20;
-    
     // Titles and player colour
     private PlayerColour playerColour;
     private JLabel panelTitle, playerNameTitle, playerColourTitle, ticketTitle, trainCardTitle, numTrainsTitle;
@@ -38,42 +35,51 @@ public class PlayerPanel extends JPanel {
     public PlayerPanel (int x, int y, int width, int height) {
     
         setBounds(x, y, width, height);
+        setLayout(null);
+        final int PANEL_PADDING = width/20;
+        final int LABEL_HEIGHT = height*3/160;
         final int PREFERRED_WIDTH = width-PANEL_PADDING*2;
         final int HALF_PREFERRED_WIDTH = width/2-PANEL_PADDING;
-        
-        playerColour = PlayerColour.RED;
-        
+        int curY = 0;
+    
         panelTitle = new JLabel("PLAYER PANEL");
-        panelTitle.setBounds(0, PANEL_PADDING, width, LABEL_HEIGHT);
+        curY += PANEL_PADDING;
+        panelTitle.setBounds(0, curY, width, LABEL_HEIGHT);
         panelTitle.setHorizontalAlignment(JLabel.CENTER);
         add(panelTitle);
     
+        playerColour = PlayerColour.RED;
         playerNameTitle = new JLabel("NAME:    Player "+playerColour);
-        playerNameTitle.setBounds(PANEL_PADDING, LABEL_HEIGHT*3, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
+        curY += LABEL_HEIGHT*2;
+        playerNameTitle.setBounds(PANEL_PADDING, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
         playerNameTitle.setHorizontalAlignment(JLabel.CENTER);
         add(playerNameTitle);
     
-        playerColourTitle = new JLabel("COLOUR:    ");
-        playerColourTitle.setBounds(width/2, LABEL_HEIGHT*3, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
+        playerColourTitle = new JLabel("COLOUR:    "+playerColour.toString());
+        playerColourTitle.setBounds(width/2, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
         playerColourTitle.setHorizontalAlignment(JLabel.CENTER);
         add(playerColourTitle);
         
         ticketTitle = new JLabel("TICKETS");
-        ticketTitle.setBounds(PANEL_PADDING, LABEL_HEIGHT*5, PREFERRED_WIDTH, LABEL_HEIGHT);
+        curY += LABEL_HEIGHT*2;
+        ticketTitle.setBounds(PANEL_PADDING, curY, PREFERRED_WIDTH, LABEL_HEIGHT);
         add(ticketTitle);
         
         // Create the scroll pane
         ticketPaneText = new JTextArea();
-        ticketPaneText.setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_WIDTH/2));
+        ticketPaneText.setPreferredSize(new Dimension(PREFERRED_WIDTH-18*2, LABEL_HEIGHT*20));
         ticketPane = new JScrollPane(ticketPaneText);
-        ticketPane.setBounds(PANEL_PADDING, LABEL_HEIGHT*7, PREFERRED_WIDTH, LABEL_HEIGHT*11);
+        curY += LABEL_HEIGHT*2;
+        ticketPane.setBounds(PANEL_PADDING, curY, PREFERRED_WIDTH-18, LABEL_HEIGHT*15);
         add(ticketPane);
         
         tickets = new ArrayList<>();
         
         // Train Card title
         trainCardTitle = new JLabel("TRAIN CARDS");
-        trainCardTitle.setBounds(PANEL_PADDING, LABEL_HEIGHT*18, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
+        curY += LABEL_HEIGHT*17;
+        trainCardTitle.setBounds(PANEL_PADDING, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
+        add(trainCardTitle);
         
         // Create the numTrainCard list
         CardColour[] values = CardColour.values();
@@ -81,17 +87,35 @@ public class PlayerPanel extends JPanel {
         for (int i = 0; i<values.length; ++i) {
     
             numTrainCards[i] = new TrainCard(values[i]);
-            numTrainCards[i].setBounds(PANEL_PADDING*4, LABEL_HEIGHT*20+LABEL_HEIGHT*i*2, width/2-PANEL_PADDING*4, LABEL_HEIGHT);
-            numTrainCards[i].setText(String.format("%-11s0", values[i].toString()));
-            
-            
+    
+            // numTrainCards will contain the number of each card in the label
+            numTrainCards[i].setBounds(PANEL_PADDING*3, curY+LABEL_HEIGHT*2*(i+1), PANEL_PADDING*4, LABEL_HEIGHT);
+            numTrainCards[i].setHorizontalAlignment(JLabel.RIGHT);
+            numTrainCards[i].setText("0");
             add(numTrainCards[i]);
+            
+            // Create a new JLabel to display the card colour
+            JLabel cardColour = new JLabel(values[i].toString());
+            cardColour.setBounds(PANEL_PADDING*3, curY+LABEL_HEIGHT*2*(i+1), PANEL_PADDING*2, LABEL_HEIGHT);
+            cardColour.setHorizontalAlignment(JLabel.RIGHT);
+            add(cardColour);
             
         }
         
-        numTrainsTitle = new JLabel("NUMBER OF TRAINS");
+        numTrains = 0;
+        numTrainsTitle = new JLabel("NUMBER OF TRAINS:    "+numTrains);
+        numTrainsTitle.setBounds(width/2, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
+        add(numTrainsTitle);
+    
+        claimRouteButton = new JButton("CLAIM ROUTE");
+        curY += LABEL_HEIGHT*10;
+        claimRouteButton.setBounds(width/2, curY, HALF_PREFERRED_WIDTH-18, LABEL_HEIGHT*4);
+        add(claimRouteButton);
         
-        
+        nextTurnButton = new JButton("NEXT TURN");
+        curY += LABEL_HEIGHT*7;
+        nextTurnButton.setBounds(width/2, curY, HALF_PREFERRED_WIDTH-18, LABEL_HEIGHT*6);
+        add(nextTurnButton);
         
     }
     
