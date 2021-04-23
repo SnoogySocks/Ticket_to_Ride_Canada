@@ -5,7 +5,7 @@ package model;
  */
 public enum PlayerColour {
     
-    RED(0), GREEN(1), BLUE(2), YELLOW(3);
+    RED(1), GREEN(2), BLUE(3), YELLOW(4);
     
     private int val;
     PlayerColour (int val) {
