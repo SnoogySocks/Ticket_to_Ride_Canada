@@ -1,5 +1,6 @@
 package model;
 
+import util.EventType;
 import util.Observable;
 
 import java.util.*;
@@ -83,6 +84,7 @@ public class Player extends Observable {
     
     public void setScore (int score) {
         this.score = score;
+        notifyObservers(EventType.UPDATE_SCORES);
     }
     
     @Override

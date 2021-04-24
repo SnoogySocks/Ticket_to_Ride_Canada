@@ -3,9 +3,10 @@ package util;
 import java.util.*;
 
 /**
- * @author Nathan
+ * see {@link Observer} for a description of the observer pattern
  *
- * java.util.Observable was deprecated so here's my implementation
+ * @implNote make sure that when an observable object is destroyed, clearObservers() is also called to prevent memory leaks
+ * @author Nathan
  */
 public class Observable {
     
