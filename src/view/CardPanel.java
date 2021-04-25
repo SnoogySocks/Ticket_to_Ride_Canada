@@ -17,15 +17,15 @@ import javax.swing.JPanel;
 public class CardPanel extends JPanel implements ActionListener {
     
     // Buttons
-    JButton ticketDeckButton, cardDeckButton, train1Button, train2Button, train3Button, train4Button, train5Button;
+    private JButton ticketDeckButton, cardDeckButton, train1Button, train2Button, train3Button, train4Button, train5Button;
+    
+    private JButton[] trainButtons = new JButton[5];
 
     // Titles
     private JLabel ticketDeckTitle, cardDeckTitle, cardPanelTitle;
 
     public CardPanel(int x, int y, int width, int height) {
-
-        Border border = BorderFactory.createLineBorder(Color.black, 2);
-
+        
         setBounds(x, y, width, height);
         setLayout(null);
         setBackground(new Color(245, 239, 245));
@@ -33,17 +33,14 @@ public class CardPanel extends JPanel implements ActionListener {
         // Adding tiles
         ticketDeckTitle = new JLabel("TICKET DECK");
         ticketDeckTitle.setBounds(30, 0, 100, 30);
-        // ticketDeckTitle.setBorder(border);
         add(ticketDeckTitle);
 
         cardDeckTitle = new JLabel("CARD DECK");
         cardDeckTitle.setBounds(160, 0, 100, 30);
-        // cardDeckTitle.setBorder(border);
         add(cardDeckTitle);
 
         cardPanelTitle = new JLabel("CARD PANEL");
         cardPanelTitle.setBounds(865, 0, 100, 30);
-        // cardPanelTitle.setBorder(border);
         add(cardPanelTitle);
 
         // Add Images
@@ -51,7 +48,6 @@ public class CardPanel extends JPanel implements ActionListener {
         ImageIcon cardDeckImage = new ImageIcon("./images/cardBack.png");
 
         // Buttons
-
         ticketDeckButton = new JButton(ticketDeckImage);
         ticketDeckButton.setBounds(10, 10, 125, 100);
         ticketDeckButton.setFocusable(false);
@@ -62,36 +58,45 @@ public class CardPanel extends JPanel implements ActionListener {
         cardDeckButton.setBounds(140, 10, 125, 100);
         cardDeckButton.setFocusable(false);
         add(cardDeckButton);
+        
+        for(int i = 1; i <= 5; i++){
+            trainButtons[i - 1]  = new JButton();
+            JButton trainButton = trainButtons[i-1];
+            trainButton.setText("Placeholder :)");
+            trainButton.setBounds(140 + 200 * i, 10, 125, 90);
+            trainButton.setFocusable(false);
+            add(trainButton);
+        }
 
-        train1Button = new JButton();
-        train1Button.setText("Placeholder :)");
-        train1Button.setBounds(340, 10, 125, 90);
-        train1Button.setFocusable(false);
-        add(train1Button);
-
-        train2Button = new JButton();
-        train2Button.setText("Placeholder :)");
-        train2Button.setBounds(540, 10, 125, 90);
-        train2Button.setFocusable(false);
-        add(train2Button);
-
-        train3Button = new JButton();
-        train3Button.setText("Placeholder :)");
-        train3Button.setBounds(740, 10, 125, 90);
-        train3Button.setFocusable(false);
-        add(train3Button);
-
-        train4Button = new JButton();
-        train4Button.setText("Placeholder :)");
-        train4Button.setBounds(940, 10, 125, 90);
-        train4Button.setFocusable(false);
-        add(train4Button);
-
-        train5Button = new JButton();
-        train5Button.setText("Placeholder :)");
-        train5Button.setBounds(1140, 10, 125, 90);
-        train5Button.setFocusable(false);
-        add(train5Button);
+//        train1Button = new JButton();
+//        train1Button.setText("Placeholder :)");
+//        train1Button.setBounds(340, 10, 125, 90);
+//        train1Button.setFocusable(false);
+//        add(train1Button);
+//
+//        train2Button = new JButton();
+//        train2Button.setText("Placeholder :)");
+//        train2Button.setBounds(540, 10, 125, 90);
+//        train2Button.setFocusable(false);
+//        add(train2Button);
+//
+//        train3Button = new JButton();
+//        train3Button.setText("Placeholder :)");
+//        train3Button.setBounds(740, 10, 125, 90);
+//        train3Button.setFocusable(false);
+//        add(train3Button);
+//
+//        train4Button = new JButton();
+//        train4Button.setText("Placeholder :)");
+//        train4Button.setBounds(940, 10, 125, 90);
+//        train4Button.setFocusable(false);
+//        add(train4Button);
+//
+//        train5Button = new JButton();
+//        train5Button.setText("Placeholder :)");
+//        train5Button.setBounds(1140, 10, 125, 90);
+//        train5Button.setFocusable(false);
+//        add(train5Button);
 
     }
 
@@ -141,8 +146,8 @@ public class CardPanel extends JPanel implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == okButton ) {
-
+            if (e.getSource() == okButton) {
+            
             }
         }
 
