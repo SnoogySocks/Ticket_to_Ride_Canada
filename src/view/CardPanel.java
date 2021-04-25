@@ -1,26 +1,21 @@
 package view;
 
-import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
-
 /**
  * @author Cerena
  */
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+        
+        import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 public class CardPanel extends JPanel implements ActionListener {
-
+    
     // Buttons
     JButton ticketDeckButton, cardDeckButton, train1Button, train2Button, train3Button, train4Button, train5Button;
 
@@ -103,19 +98,18 @@ public class CardPanel extends JPanel implements ActionListener {
     // Train deck function
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ticketDeckButton) {
-            System.out.println("your mom");
-            new selectTickets();
+            new SelectTickets();
+            
         }
-
     }
 
-    public class selectTickets extends JFrame implements ActionListener {
+    public class SelectTickets extends JFrame implements ActionListener {
 
-        JLabel selectingTicketsInstructions;
-        JButton okButton;
-        JCheckBox cb1, cb2, cb3;
-
-        selectTickets() {
+        private JLabel selectingTicketsInstructions;
+        private JButton okButton;
+        private JCheckBox cb1, cb2, cb3;
+ 
+        public SelectTickets () {
 
             selectingTicketsInstructions = new JLabel("Select at least 1 ticket.");
             selectingTicketsInstructions.setBounds(20,0,400, 60);
@@ -132,8 +126,7 @@ public class CardPanel extends JPanel implements ActionListener {
 
             cb3 = new JCheckBox("REEEEE");
             cb3.setBounds(30,120,400,20);
-
-
+            
             add(okButton);
             add(cb1);
             add(cb2);
@@ -151,7 +144,6 @@ public class CardPanel extends JPanel implements ActionListener {
             if (e.getSource() == okButton ) {
 
             }
-
         }
 
     }

@@ -1,6 +1,7 @@
 package Application;
 
 import model.CardColour;
+import view.CardPanel;
 import view.GameFrame;
 import view.PlayerPanel;
 
@@ -19,9 +20,10 @@ public class Main {
 //
 //        PlayerPanel playerPanel = new PlayerPanel(0, 0, width, height);
 //        frame.add(playerPanel);
-//
+
 //        frame.setVisible(true);
         GameFrame frame = new GameFrame(null, null);
+    
     
     }
     
