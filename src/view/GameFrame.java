@@ -16,7 +16,7 @@ public class GameFrame extends JFrame {
     //Panels
     private BoardPanel boardPanel;
     private ScorePanel scorePanel = new ScorePanel(1400,0,520,180);
-    private CardPanel cardPanel = new CardPanel(0,900,1400,180);
+    private CardPanel cardPanel = new CardPanel(0,860,1400,180);
     private PlayerPanel playerPanel = new PlayerPanel(1400,180,520,900);
     
     //Menubar components
@@ -33,4 +33,5 @@ public class GameFrame extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
+    
 }

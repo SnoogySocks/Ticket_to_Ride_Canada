@@ -119,4 +119,68 @@ public class PlayerPanel extends JPanel {
         
     }
     
+    public PlayerColour getPlayerColour () {
+        return playerColour;
+    }
+    
+    public void setPlayerColour (PlayerColour playerColour) {
+        this.playerColour = playerColour;
+    }
+    
+    public JLabel getPanelTitle () {
+        return panelTitle;
+    }
+    
+    public JLabel getPlayerNameTitle () {
+        return playerNameTitle;
+    }
+    
+    public JLabel getPlayerColourTitle () {
+        return playerColourTitle;
+    }
+    
+    public JLabel getTicketTitle () {
+        return ticketTitle;
+    }
+    
+    public JLabel getTrainCardTitle () {
+        return trainCardTitle;
+    }
+    
+    public JLabel getNumTrainsTitle () {
+        return numTrainsTitle;
+    }
+    
+    public JTextArea getTicketPaneText () {
+        return ticketPaneText;
+    }
+    
+    public JScrollPane getTicketPane () {
+        return ticketPane;
+    }
+    
+    public JButton getClaimRouteButton () {
+        return claimRouteButton;
+    }
+    
+    public JButton getNextTurnButton () {
+        return nextTurnButton;
+    }
+    
+    public ArrayList<Ticket> getTickets () {
+        return tickets;
+    }
+    
+    public TrainCard getNumTrainCards (int index) {
+        return numTrainCards[index];
+    }
+    
+    public int getNumTrains () {
+        return numTrains;
+    }
+    
+    public void setNumTrains (int numTrains) {
+        this.numTrains = numTrains;
+    }
+    
 }
