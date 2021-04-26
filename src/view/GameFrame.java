@@ -11,16 +11,16 @@ import javax.swing.*;
  */
 public class GameFrame extends JFrame {
 
-    //Constants
+    // Constants
     private static final int WIDTH = 1920, HEIGHT = 1080;
     
-    //Panels
+    // Panels
     private BoardPanel boardPanel;
     private ScorePanel scorePanel = new ScorePanel(1400,0,520,180);
     private CardPanel cardPanel = new CardPanel(0,900,1400,180);
-    private PlayerPanel playerPanel = new PlayerPanel(1400,180,520,9
+    private PlayerPanel playerPanel = new PlayerPanel(1400,180,520,900);
     
-    //Menubar components
+    // Menubar components
     private JMenuBar menuBar = new JMenuBar();
     
     private JMenu fileMenu = new JMenu("File");
