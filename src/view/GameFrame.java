@@ -3,6 +3,7 @@ package view;
 import model.City;
 import model.Route;
 import util.*;
+
 import javax.swing.*;
 
 /**
@@ -11,17 +12,42 @@ import javax.swing.*;
 public class GameFrame extends JFrame {
 
     //Constants
-    private static final int WIDTH=1920, HEIGHT=1080;
-    
+    private static final int WIDTH = 1920, HEIGHT = 1080;
+
     //Panels
     private BoardPanel boardPanel;
-    private ScorePanel scorePanel = new ScorePanel(1400,0,520,180);
-    private CardPanel cardPanel = new CardPanel(0,860,1400,180);
-    private PlayerPanel playerPanel = new PlayerPanel(1400,180,520,900);
-    
+    private ScorePanel scorePanel = new ScorePanel(1400, 0, 520, 180);
+    private CardPanel cardPanel = new CardPanel(0, 860, 1400, 180);
+    private PlayerPanel playerPanel = new PlayerPanel(1400, 180, 520, 900);
+
     //Menubar components
-    
-    public GameFrame(City[] cities, Route[] routes){
+    private JMenuBar menuBar = new JMenuBar();
+
+    private JMenu fileMenu = new JMenu("File");
+    private JMenuItem newMI = new JMenuItem("New");
+    private JMenuItem saveMI = new JMenuItem("Save");
+    private JMenuItem loadMI = new JMenuItem("Load");
+    private JMenuItem exitMI = new JMenuItem("Exit");
+    private JMenuItem[] fileMenuItems = {newMI, saveMI, loadMI, exitMI};
+
+    private JMenu helpMenu = new JMenu("Help");
+    private JMenuItem helpContentsMI = new JMenuItem("Help Contents");
+    private JMenuItem aboutMI = new JMenuItem("About");
+    private JMenuItem[] helpMenuItems = {helpContentsMI, aboutMI};
+
+    public GameFrame(City[] cities, Route[] routes) {
+        for (JMenuItem item : fileMenuItems) {
+            fileMenu.add(item);
+        }
+
+        for (JMenuItem item : helpMenuItems) {
+            helpMenu.add(item);
+        }
+
+        menuBar.add(fileMenu);
+        menuBar.add(helpMenu);
+        setJMenuBar(menuBar);
+
         boardPanel = new BoardPanel(cities, routes);
 
         add(boardPanel);
@@ -33,5 +59,5 @@ public class GameFrame extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    
+
 }
