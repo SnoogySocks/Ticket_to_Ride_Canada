@@ -39,7 +39,7 @@ public class PlayerPanel extends JPanel {
         final int PANEL_PADDING = width/20;
         final int LABEL_HEIGHT = height*3/160;
         final int PREFERRED_WIDTH = width-PANEL_PADDING*2;
-        final int HALF_PREFERRED_WIDTH = width/2-PANEL_PADDING;
+        final int HALF_PREFERRED_WIDTH = PREFERRED_WIDTH/2;
         int curY = 0;
     
         panelTitle = new JLabel("PLAYER PANEL");

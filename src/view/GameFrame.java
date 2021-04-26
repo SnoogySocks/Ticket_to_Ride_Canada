@@ -11,19 +11,18 @@ import javax.swing.*;
 public class GameFrame extends JFrame {
 
     //Constants
-    private static final int WIDTH=1920, HEIGHT=1080;
+    private static final int WIDTH = 1920, HEIGHT = 1080;
     
     //Panels
     private BoardPanel boardPanel;
     private ScorePanel scorePanel = new ScorePanel(1400,0,520,180);
-    private CardPanel cardPanel = new CardPanel(0,860,1400,180);
+    private CardPanel cardPanel = new CardPanel(0,900,1400,180);
     private PlayerPanel playerPanel = new PlayerPanel(1400,180,520,900);
     
     //Menubar components
     
     public GameFrame(City[] cities, Route[] routes){
-        boardPanel = new BoardPanel(cities, routes);
-
+        boardPanel = new BoardPanel(0, 0, 1400,900, cities, routes);
         add(boardPanel);
         setSize(WIDTH, HEIGHT);
         setLayout(null);

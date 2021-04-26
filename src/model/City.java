@@ -13,7 +13,7 @@ public class City extends JLabel {
     private Coordinate point;
     
     public City (String name, Coordinate point) {
-//        setIcon(new ImageIcon("images/city.png"));
+//        setIcon(new ImageIcon("./images/city.png"));
         this.name = name;
         this.point = point;
     }
