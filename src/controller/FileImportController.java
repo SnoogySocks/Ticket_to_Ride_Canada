@@ -63,35 +63,32 @@ public final class FileImportController {
     }
     
     /**
-     * @implNote call this before importRoutes()
-     * @author Nathan
+     * @author Felix
      */
-    private static void importCities() {
-    
+    private static void importRoutes() {
+        
         try {
             
-            Scanner input = new Scanner(new File(cityPath));
+            Scanner input = new Scanner(new File(routePath));
             input.useDelimiter(",");
             
-            while (input.hasNext()){
+            while (input.hasNext()) {
                 
-                String name = input.next();
-                int x = input.nextInt();
-                int y = input.nextInt();
+                String city1 = input.next(), city2 = input.next();
+                int length = input.nextInt();
+                Color colour = ColorConverter.parseColor(input.next());
+                Coordinate completionPoint = new Coordinate(input.nextInt(), input.nextInt());
+                boolean isDualRoute = Boolean.parseBoolean(input.next());
                 
-                City city = new City(name, new Coordinate(x,y));
-                
-                cities.add(city);
-                cityMap.put(name, city);
+                routes.add(new Route(cityMap.get(city1), cityMap.get(city2), length, colour, completionPoint, isDualRoute));
                 
             }
-        
+            
             input.close();
-        
+            
         } catch (FileNotFoundException e) {
-            System.err.println(e);
+            System.err.println("Route not found");
         }
-
         
     }
     
@@ -106,16 +103,13 @@ public final class FileImportController {
 
                 String firstCity = input.next(), secondCity = input.next();
                 int val = input.nextInt();
-                //T for ticket
-                City firstCityT = new City(firstCity);
-                City secondCityT = new City(secondCity);
-                Ticket ticket = new Ticket(firstCity, secondCity, val);
 
-                tickets.add(ticket);
-
-
-
-            
+                Ticket ticket = new Ticket(cityMap.get(firstCity), cityMap.get(secondCity), val, false);
+                tickets.push(ticket);
+                
+                
+                
+                
             }
         
             input.close();

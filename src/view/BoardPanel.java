@@ -3,6 +3,8 @@ package view;
 import model.City;
 import model.Route;
 
+import static controller.FileImportController.*;
+
 import javax.swing.*;
 
 /**
@@ -24,13 +26,13 @@ public class BoardPanel extends JPanel {
         this.cities = cities;
         this.routes = routes;
 
-//        // Add the cities to the game board
-//        for (int i = 0; i<this.cities.length; ++i) {
-//            gameBoardImage.add(cities[i]);
-//        }
-//        for (int i = 0; i<this.routes.length; ++i) {
-//            gameBoardImage.add(routes[i]);
-//        }
+        // Add the cities to the game board
+        for (City city : cities) {
+            gameBoardImage.add(city);
+        }
+        for (Route route : routes) {
+            gameBoardImage.add(route);
+        }
     
         setVisible(true);
     

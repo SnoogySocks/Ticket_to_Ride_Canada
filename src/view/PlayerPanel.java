@@ -18,7 +18,7 @@ public class PlayerPanel extends JPanel {
     
     // Titles and player colour
     private PlayerColour playerColour;
-    private JLabel panelTitle, playerNameTitle, playerColourTitle, ticketTitle, trainCardTitle, numTrainsTitle;
+    private final JLabel panelTitle, playerNameTitle, playerColourTitle, ticketTitle, trainCardTitle, numTrainsTitle;
     
     // Ticket Scroll pane
     private JTextArea ticketPaneText;

@@ -13,6 +13,7 @@ public class ScorePanel extends JPanel implements Observer {
     private JLabel[] playerScoreLabels = new JLabel[4];
     
     public ScorePanel(int x, int y, int width, int height){
+        
         setLayout(null);
         setBounds(x, y, width, height);
 
@@ -25,6 +26,7 @@ public class ScorePanel extends JPanel implements Observer {
             playerScoreLabels[i].setBounds(100, 80 + 25 * i, 200,25);
             add(playerScoreLabels[i]);
         }
+        
     }
     
     public void update(Observable obj, EventType event){

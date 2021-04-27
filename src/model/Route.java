@@ -85,4 +85,17 @@ public class Route extends JLabel {
         isDualRoute = dualRoute;
     }
     
+    @Override
+    public String toString () {
+        return "Route{"+
+                "owner="+owner+
+                ", city1="+city1+
+                ", city2="+city2+
+                ", length="+length+
+                ", colour="+colour+
+                ", completionPoint="+completionPoint+
+                ", isDualRoute="+isDualRoute+
+                '}';
+    }
+    
 }

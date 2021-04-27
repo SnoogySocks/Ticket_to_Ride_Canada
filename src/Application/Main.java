@@ -1,5 +1,7 @@
 package Application;
 
+import controller.FileImportController;
+import controller.TTRController;
 import model.CardColour;
 import view.CardPanel;
 import view.GameFrame;
@@ -22,8 +24,13 @@ public class Main {
 //        frame.add(playerPanel);
 
 //        frame.setVisible(true);
-        GameFrame frame = new GameFrame(null, null);
-    
+//        GameFrame frame = new GameFrame(null, null);
+        
+        TTRController controller = new TTRController();
+        
+        System.out.println(FileImportController.cities);
+        System.out.println(FileImportController.routes);
+        System.out.println(FileImportController.tickets);
     
     }
     

@@ -9,7 +9,7 @@ public class Ticket {
     private int val;
     private boolean completed;
     
-    public Ticket (City city1, City city2, int val) {
+    public Ticket (City city1, City city2, int val, boolean completed) {
         
         this.city1 = city1;
         this.city2 = city2;
