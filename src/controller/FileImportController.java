@@ -103,6 +103,18 @@ public final class FileImportController {
             input.useDelimiter(",");
         
             while (input.hasNext()) {
+
+                String firstCity = input.next(), secondCity = input.next();
+                int val = input.nextInt();
+                //T for ticket
+                City firstCityT = new City(firstCity);
+                City secondCityT = new City(secondCity);
+                Ticket ticket = new Ticket(firstCity, secondCity, val);
+
+                tickets.add(ticket);
+
+
+
             
             }
         
