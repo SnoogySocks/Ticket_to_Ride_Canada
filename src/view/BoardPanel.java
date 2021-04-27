@@ -13,18 +13,13 @@ import javax.swing.*;
 public class BoardPanel extends JPanel {
 
     private JLabel gameBoardImage;
-    private final City[] cities;
-    private final Route[] routes;
     
-    public BoardPanel (int x, int y, int width, int height, City[] cities, Route[] routes) {
+    public BoardPanel (int x, int y, int width, int height) {
        
         setBounds(x, y, width, height);
         gameBoardImage = new JLabel(new ImageIcon("./images/board.png"));
         gameBoardImage.setBounds(0,0, this.getWidth(), this.getHeight());
         add(gameBoardImage);
-        
-        this.cities = cities;
-        this.routes = routes;
 
         // Add the cities to the game board
         for (City city : cities) {
@@ -44,14 +39,6 @@ public class BoardPanel extends JPanel {
     
     public void setGameBoardImage (JLabel gameBoardImage) {
         this.gameBoardImage = gameBoardImage;
-    }
-    
-    public City getCity (int index) {
-        return cities[index];
-    }
-
-    public Route getRoute (int index) {
-        return routes[index];
     }
     
 }

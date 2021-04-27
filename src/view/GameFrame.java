@@ -35,7 +35,7 @@ public class GameFrame extends JFrame {
     private JMenuItem aboutMI = new JMenuItem("About");
     private JMenuItem[] helpMenuItems = {helpContentsMI, aboutMI};
     
-    public GameFrame(City[] cities, Route[] routes) {
+    public GameFrame() {
         
         for (JMenuItem item : fileMenuItems) {
             fileMenu.add(item);
@@ -49,7 +49,7 @@ public class GameFrame extends JFrame {
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
 
-        boardPanel = new BoardPanel(0, 0, 1400, 900, cities, routes);
+        boardPanel = new BoardPanel(0, 0, 1400, 900);
 
         add(boardPanel);
         setSize(WIDTH, HEIGHT);

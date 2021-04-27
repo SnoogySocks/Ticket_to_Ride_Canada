@@ -21,44 +21,58 @@ public final class FileImportController {
     
     public static final ArrayList<Route> routes = new ArrayList<>();
     public static final ArrayList<City> cities = new ArrayList<>();
-    public static final ArrayList<Ticket> tickets = new ArrayList<>();
+    public static final Stack<Ticket> tickets = new Stack<>();
     
     private static final HashMap<String, City> cityMap = new HashMap<>();
     
     public static void init () {
-    
+        
         importCities();
         importRoutes();
         importTickets();
         
+        Collections.shuffle(tickets);
+        
     }
     
     /**
-     * @author Felix
+     * returns a sanitized string name
+     * @author Nathan, Felix
      */
-    private static void importRoutes() {
+    private static String sanitize(String s){
+        return s.replace("\n", "").replace("\r", "");
+    }
     
+    /**
+     * @implNote call this before importRoutes()
+     * @author Nathan
+     */
+    private static void importCities() {
+        
         try {
             
-            Scanner input = new Scanner(new File(routePath));
+            Scanner input = new Scanner(new File(cityPath));
             input.useDelimiter(",");
             
-            while (input.hasNext()) {
+            while (input.hasNext()){
                 
-                String city1 = input.next(), city2 = input.next();
-                int length = input.nextInt();
-                Color colour = ColorConverter.parseColor(input.next());
-                Coordinate completionPoint = new Coordinate(input.nextInt(), input.nextInt());
-                boolean isDualRoute = Boolean.parseBoolean(input.next());
-                routes.add(new Route(cityMap.get(city1), cityMap.get(city2), length, colour, completionPoint, isDualRoute));
+                String name = sanitize(input.next());
+                int x = input.nextInt();
+                int y = input.nextInt();
+                
+                City city = new City(name, new Coordinate(x,y));
+                
+                cities.add(city);
+                cityMap.put(name, city);
                 
             }
-    
+            
             input.close();
             
         } catch (FileNotFoundException e) {
-            System.err.println("Route not found");
+            System.err.println(e);
         }
+        
         
     }
     
@@ -93,14 +107,14 @@ public final class FileImportController {
     }
     
     private static void importTickets() {
-    
-        try {
         
+        try {
+            
             Scanner input = new Scanner(new File(ticketPath));
             input.useDelimiter(",");
-        
+            
             while (input.hasNext()) {
-
+                
                 String firstCity = input.next(), secondCity = input.next();
                 int val = input.nextInt();
 
@@ -111,9 +125,9 @@ public final class FileImportController {
                 
                 
             }
-        
+            
             input.close();
-        
+            
         } catch (FileNotFoundException e) {
             System.err.println("Ticket not found");
         }
