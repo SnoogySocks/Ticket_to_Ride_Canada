@@ -35,7 +35,7 @@ public class GameFrame extends JFrame {
     private JMenuItem aboutMI = new JMenuItem("About");
     private JMenuItem[] helpMenuItems = {helpContentsMI, aboutMI};
     
-    public GameFrame() {
+    public GameFrame () {
         
         for (JMenuItem item : fileMenuItems) {
             fileMenu.add(item);
