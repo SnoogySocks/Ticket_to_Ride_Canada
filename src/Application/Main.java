@@ -24,13 +24,13 @@ public class Main {
 //        frame.add(playerPanel);
 
 //        frame.setVisible(true);
-//        GameFrame frame = new GameFrame(null, null);
+        GameFrame frame = new GameFrame();
         
-        TTRController controller = new TTRController();
-        
-        System.out.println(FileImportController.cities);
-        System.out.println(FileImportController.routes);
-        System.out.println(FileImportController.tickets);
+//        TTRController controller = new TTRController();
+//
+//        System.out.println(FileImportController.cities);
+//        System.out.println(FileImportController.routes);
+//        System.out.println(FileImportController.tickets);
     
     }
     
