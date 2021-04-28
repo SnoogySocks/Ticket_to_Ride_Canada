@@ -115,7 +115,8 @@ public final class FileImportController {
             
             while (input.hasNext()) {
                 
-                String firstCity = input.next(), secondCity = input.next();
+                String firstCity = sanitize(input.next());
+                String secondCity = sanitize(input.next());
                 int val = input.nextInt();
 
                 Ticket ticket = new Ticket(cityMap.get(firstCity), cityMap.get(secondCity), val, false);

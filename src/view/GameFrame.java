@@ -1,7 +1,6 @@
 package view;
 
-import model.City;
-import model.Route;
+import model.*;
 import util.*;
 
 import javax.swing.*;

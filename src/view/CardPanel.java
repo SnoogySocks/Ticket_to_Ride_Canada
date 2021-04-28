@@ -3,6 +3,8 @@ package view;
 /**
  * @author Cerena
  */
+import controller.TicketController;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -103,7 +105,8 @@ public class CardPanel extends JPanel implements ActionListener {
     // Train deck function
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ticketDeckButton) {
-            new SelectTickets();
+            TicketController controller = new TicketController(); // TODO remove after testing
+            controller.showTicketSelectionDialogue();
             
         }
     }

@@ -53,8 +53,8 @@ public class Ticket {
     @Override
     public String toString () {
         return "Ticket{"+
-                "city1="+city1+
-                ", city2="+city2+
+                "city1="+city1.getName()+
+                ", city2="+city2.getName()+
                 ", val="+val+
                 ", completed="+completed+
                 '}';
