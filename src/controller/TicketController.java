@@ -1,5 +1,6 @@
 package controller;
 
+import model.City;
 import model.Player;
 import model.Route;
 import model.Ticket;
@@ -13,8 +14,6 @@ import javax.swing.*;
  * @author Nathan
  */
 public class TicketController {
-
-
 
     public void showTicketSelectionDialogue() {
         int size = Math.min(TTRController.tickets.size(), 3);
@@ -33,22 +32,59 @@ public class TicketController {
         new TicketDialogue(choices, null); //TODO require player to be passed as a param
     }
 
-    public void checkTicketComplete(Ticket ticket, Player owner) {
+    public boolean checkTicketComplete(Ticket ticket, Player owner) {
 
+        //nodes - cities, edges - routes
+        //start - city1, destination - city2
 
-        Queue<Route> queue = new LinkedList<>();
+        HashMap<City, Boolean> explored = new HashMap<>();
+        City destination = ticket.getCity2();
 
-        while(!queue.isEmpty()){
-            Route next = queue.poll();
-
-
+        for(City c : FileImportController.cities){
+            explored.put(c, false);
         }
 
+        Queue<City> queue = new LinkedList<>();
+        queue.add(ticket.getCity1());
+
+        //TODO this implementation of BFS hasn't been tested... idk it works
+        while(!queue.isEmpty()){
+            City current = queue.poll();
+            explored.replace(current, true);
+
+            for(Route r : current.ownedRoutes(owner)){
+                //switch depending on which city is the destination
+                City c1 = r.getCity1();
+                City c2 = r.getCity2();
+
+                if(c1.equals(destination) || c2.equals(destination)){
+                    ticket.setCompleted(true);
+                    return true;
+                }
+
+                if(!c1.equals(current) && !explored.get(c1)){
+                    queue.add(c1);
+                } else if (!explored.get(c2)) {
+                    queue.add(c2);
+                }
+            }
+        }
+
+        return false;
 
         //run BFS or DFS to see if the ticket is complete then set its complete field to true
     }
 
     public void scoreTickets(Player[] players) {
+        for(Player player : players){
+            for(Ticket ticket : player.getTickets()){
+                if(checkTicketComplete(ticket, player)){
+                    player.setScore(player.getScore() + ticket.getVal());
+                } else {
+                    player.setScore(player.getScore() - ticket.getVal());
+                }
+            }
+        }
         //run isTicketComplete() for each ticket that the player owns?
     }
 

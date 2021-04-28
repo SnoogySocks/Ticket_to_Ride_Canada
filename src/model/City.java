@@ -14,7 +14,7 @@ public class City extends JLabel {
     private Coordinate point;
 
 
-    private ArrayList<Route> routes;
+    private ArrayList<Route> routes = new ArrayList<>();
 
     public City (String name, Coordinate point) {
 //        setIcon(new ImageIcon("./images/city.png"));
@@ -44,6 +44,33 @@ public class City extends JLabel {
 
     public void setRoutes(ArrayList<Route> routes) {
         this.routes = routes;
+    }
+
+    /**
+     * @author Nathan
+     */
+    public boolean playerHasConnection(Player player){
+        for(Route r : routes){
+            if(r.getOwner().equals(player)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @author Nathan
+     */
+    public ArrayList<Route> ownedRoutes(Player player){
+        ArrayList<Route> list = new ArrayList<>();
+
+        for(Route r: routes){
+            if(r.getOwner().equals(player)){
+                list.add(r);
+            }
+        }
+
+        return list;
     }
 
     public boolean equals(City other){

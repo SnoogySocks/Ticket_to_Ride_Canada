@@ -30,12 +30,6 @@ public final class FileImportController {
         importCities();
         importRoutes();
         importTickets();
-
-        for(Route r : routes) {
-            System.out.println(r);
-        }
-
-
         bfsHelper();
         
         Collections.shuffle(tickets);
