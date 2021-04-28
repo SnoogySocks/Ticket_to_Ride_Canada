@@ -49,18 +49,6 @@ public class City extends JLabel {
     /**
      * @author Nathan
      */
-    public boolean playerHasConnection(Player player){
-        for(Route r : routes){
-            if(r.getOwner().equals(player)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @author Nathan
-     */
     public ArrayList<Route> ownedRoutes(Player player){
         ArrayList<Route> list = new ArrayList<>();
 
