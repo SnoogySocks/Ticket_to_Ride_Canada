@@ -19,6 +19,7 @@ public final class ColorConverter {
         put("PURPLE", new Color(255, 0, 171)); // hot pink best pink
         put("ORANGE", Color.ORANGE);
         put("YELLOW", Color.YELLOW);
+        put("BLACK", Color.BLACK);
         
     }};
     

@@ -23,16 +23,40 @@ public final class FileImportController {
     public static final ArrayList<City> cities = new ArrayList<>();
     public static final Stack<Ticket> tickets = new Stack<>();
     
-    private static final HashMap<String, City> cityMap = new HashMap<>();
+    public static final HashMap<String, City> cityMap = new HashMap<>();
     
     public static void init () {
         
         importCities();
         importRoutes();
         importTickets();
+
+        for(Route r : routes) {
+            System.out.println(r);
+        }
+
+
+        bfsHelper();
         
         Collections.shuffle(tickets);
         
+    }
+
+    /**
+     * Help breadth first search by creating edges(routes) between each node(city)
+     * @author Nathan
+     */
+    private static void bfsHelper(){
+        for(Map.Entry<String, City> e : cityMap.entrySet()){
+            City c = e.getValue();
+
+            for(Route r : routes){
+                if(r.getCity1().equals(c) || r.getCity2().equals(c)){
+                    c.getRoutes().add(r);
+                }
+            }
+
+        }
     }
     
     /**
@@ -88,7 +112,8 @@ public final class FileImportController {
             
             while (input.hasNext()) {
                 
-                String city1 = input.next(), city2 = input.next();
+                String city1 = sanitize(input.next());
+                String city2 = sanitize(input.next());
                 int length = input.nextInt();
                 Color colour = ColorConverter.parseColor(input.next());
                 Coordinate completionPoint = new Coordinate(input.nextInt(), input.nextInt());
@@ -121,10 +146,6 @@ public final class FileImportController {
 
                 Ticket ticket = new Ticket(cityMap.get(firstCity), cityMap.get(secondCity), val, false);
                 tickets.push(ticket);
-                
-                
-                
-                
             }
             
             input.close();

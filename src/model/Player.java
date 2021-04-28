@@ -29,6 +29,11 @@ public class Player extends Observable {
         this.numTrains = score = 0;
         
     }
+
+    public void addTicket(Ticket ticket){
+        tickets.add(ticket);
+        notifyObservers(EventType.UPDATE_SCORES);
+    }
     
     public String getName () {
         return name;
