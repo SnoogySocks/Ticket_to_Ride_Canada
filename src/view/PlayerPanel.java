@@ -1,6 +1,7 @@
 package view;
 
 import model.*;
+import util.Observer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import util.*;
+
 /**
  * @author Felix
  */
-public class PlayerPanel extends JPanel {
+public class PlayerPanel extends JPanel implements Observer {
     
     // Titles and player colour
     private PlayerColour playerColour;
@@ -178,6 +181,18 @@ public class PlayerPanel extends JPanel {
     
     public void setNumTrains (int numTrains) {
         this.numTrains = numTrains;
+    }
+    
+    @Override
+    public void update (Observable obj, EventType event) {
+        
+        if(event == EventType.NEXT_TURN){
+            //update gui
+        }
+        else if (event == EventType.UPDATE_TICKETS){
+        
+        }
+        
     }
     
 }

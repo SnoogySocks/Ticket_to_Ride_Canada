@@ -18,73 +18,41 @@ public class Player extends Observable {
     private int numTrains;
     private int score;
     
-    public Player (String name, PlayerColour playerColour, ArrayList<Ticket> tickets, ArrayList<Route> claimedRoutes, int[] cards, int numTrains) {
+    public Player (String name, PlayerColour playerColour) {
         
         this.name = name;
         this.playerColour = playerColour;
-        this.tickets = tickets;
-        this.claimedRoutes = claimedRoutes;
-        this.numCardsOfColour = cards;
-        this.numTrains = numTrains;
+        this.tickets = new ArrayList<>();
+        this.claimedRoutes = new ArrayList<>();
+        this.numCardsOfColour = new int[CardColour.values().length];
+        this.numTrains = 0;
         this.numTrains = score = 0;
         
     }
-
-    public void addTicket(Ticket ticket){
+    
+    public void addTicket (Ticket ticket) {
         tickets.add(ticket);
         notifyObservers(EventType.UPDATE_SCORES);
-    }
-    
-    public String getName () {
-        return name;
-    }
-    
-    public void setName (String name) {
-        this.name = name;
-    }
-    
-    public PlayerColour getPlayerColour () {
-        return playerColour;
-    }
-    
-    public void setPlayerColour (PlayerColour playerColour) {
-        this.playerColour = playerColour;
-    }
-    
-    public ArrayList<Ticket> getTickets () {
-        return tickets;
-    }
-    
-    public void setTickets (ArrayList<Ticket> tickets) {
-        this.tickets = tickets;
     }
     
     public ArrayList<Route> getClaimedRoutes () {
         return claimedRoutes;
     }
     
-    public void setClaimedRoutes (ArrayList<Route> claimedRoutes) {
-        this.claimedRoutes = claimedRoutes;
-    }
-    
-    public int[] getNumCardsOfColour () {
-        return numCardsOfColour;
-    }
-    
-    public void setNumCardsOfColour (int[] numCardsOfColour) {
-        this.numCardsOfColour = numCardsOfColour;
-    }
-    
-    public int getNumTrains () {
-        return numTrains;
-    }
-    
-    public void setNumTrains (int numTrains) {
-        this.numTrains = numTrains;
-    }
-    
     public int getScore () {
         return score;
+    }
+    
+    public void addTrainCard (TrainCard card) {
+        numCardsOfColour[card.getColour().getValue()]++;
+    }
+    
+    public void removeTrainCard (TrainCard card) {
+        numCardsOfColour[card.getColour().getValue()]--;
+    }
+    
+    public ArrayList<Ticket> getTickets(){
+        return tickets;
     }
     
     public void setScore (int score) {

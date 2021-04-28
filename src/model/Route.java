@@ -88,13 +88,10 @@ public class Route extends JLabel {
     @Override
     public String toString () {
         return "Route{"+
-                "owner="+owner+
-                ", city1="+city1.getName()+
-                ", city2="+city2.getName()+
+                "city1="+city1+
+                ", city2="+city2+
                 ", length="+length+
                 ", colour="+colour+
-                ", completionPoint="+completionPoint+
-                ", isDualRoute="+isDualRoute+
                 '}';
     }
     

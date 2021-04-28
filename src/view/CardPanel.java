@@ -5,18 +5,14 @@ package view;
  */
 import controller.TicketController;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-        
-        import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
 
-public class CardPanel extends JPanel implements ActionListener {
+import javax.swing.*;
+import util.*;
+import controller.*;
+
+public class CardPanel extends JPanel implements ActionListener, Observer {
     
     // Buttons
     private JButton ticketDeckButton, cardDeckButton, train1Button, train2Button, train3Button, train4Button, train5Button;
@@ -64,7 +60,7 @@ public class CardPanel extends JPanel implements ActionListener {
         for(int i = 1; i <= 5; i++){
             trainButtons[i - 1]  = new JButton();
             JButton trainButton = trainButtons[i-1];
-            trainButton.setText("Placeholder :)");
+          //  trainButton.setText("Placeholder :)");
             trainButton.setBounds(140 + 200 * i, 10, 125, 90);
             trainButton.setFocusable(false);
             add(trainButton);
@@ -110,51 +106,65 @@ public class CardPanel extends JPanel implements ActionListener {
             
         }
     }
-
-    public class SelectTickets extends JFrame implements ActionListener {
-
-        private JLabel selectingTicketsInstructions;
-        private JButton okButton;
-        private JCheckBox cb1, cb2, cb3;
- 
-        public SelectTickets () {
-
-            selectingTicketsInstructions = new JLabel("Select at least 1 ticket.");
-            selectingTicketsInstructions.setBounds(20,0,400, 60);
-
-            okButton = new JButton("OK");
-            okButton.addActionListener(this);
-            okButton.setBounds(250,200,50,50);
-
-            cb1 = new JCheckBox("sahhk");
-            cb1.setBounds(30,40,400,20);
-
-            cb2 = new JCheckBox("AHHH");
-            cb2.setBounds(30,80,400,20);
-
-            cb3 = new JCheckBox("REEEEE");
-            cb3.setBounds(30,120,400,20);
+    
+    @Override
+    public void update (Observable obj, EventType event) {
+        
+        if(event == EventType.UPDATE_SHOWN_CARDS){
             
-            add(okButton);
-            add(cb1);
-            add(cb2);
-            add(cb3);
-            add(selectingTicketsInstructions);
-            setTitle("Select your train cards");
-            setSize(500, 300);
-            setLayout(null);
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            setVisible(true);
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == okButton) {
-            
+            //here lies an hour of painful debugging... we forgot to pass something
+            for(int i = 0; i < 5; i++){
+                trainButtons[i].setIcon(new ImageIcon(TTRController.shownCards.get(i).getColour().getImagePath()));
             }
-        }
 
+        }
+        
     }
+    
+//    public class SelectTickets extends JFrame implements ActionListener {
+//
+//        private JLabel selectingTicketsInstructions;
+//        private JButton okButton;
+//        private JCheckBox cb1, cb2, cb3;
+//
+//        public SelectTickets () {
+//
+//            selectingTicketsInstructions = new JLabel("Select at least 1 ticket.");
+//            selectingTicketsInstructions.setBounds(20,0,400, 60);
+//
+//            okButton = new JButton("OK");
+//            okButton.addActionListener(this);
+//            okButton.setBounds(250,200,50,50);
+//
+//            cb1 = new JCheckBox("sahhk");
+//            cb1.setBounds(30,40,400,20);
+//
+//            cb2 = new JCheckBox("AHHH");
+//            cb2.setBounds(30,80,400,20);
+//
+//            cb3 = new JCheckBox("REEEEE");
+//            cb3.setBounds(30,120,400,20);
+//
+//            add(okButton);
+//            add(cb1);
+//            add(cb2);
+//            add(cb3);
+//            add(selectingTicketsInstructions);
+//            setTitle("Select your train cards");
+//            setSize(500, 300);
+//            setLayout(null);
+//            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//            setVisible(true);
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            if (e.getSource() == okButton) {
+//
+//            }
+//        }
+//
+//    }
 
 }
 

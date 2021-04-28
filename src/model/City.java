@@ -45,7 +45,6 @@ public class City extends JLabel {
         this.routes = routes;
     }
 
-    // TODO maybe put in route controller? or give player a routes list?
     /**
      * @author Nathan
      */
@@ -67,10 +66,7 @@ public class City extends JLabel {
 
     @Override
     public String toString () {
-        return "City{"+
-                "name='"+name+'\''+
-                ", point="+point+
-                '}';
+        return name;
     }
     
 }

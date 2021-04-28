@@ -5,13 +5,30 @@ package model;
  */
 public enum CardColour {
     
-    RAINBOW(0), BLACK(1), BLUE(2),
-    GREEN(3), ORANGE(4), PURPLE(5),
-    RED(6), WHITE(7), YELLOW(8);
+    RAINBOW(0, "./images/trainCardRainbow.png"),
+    BLACK(1, "./images/trainCardBlack.png"),
+    BLUE(2, "./images/trainCardBlue.png"),
+    GREEN(3, "./images/trainCardGreen.png"),
+    ORANGE(4, "./images/trainCardOrange.png"),
+    PURPLE(5, "./images/trainCardPurple.png"),
+    RED(6, "./images/trainCardRed.png"),
+    WHITE(7, "./images/trainCardWhite.png"),
+    YELLOW(8, "./images/trainCardYellow.png");
     
     private int value;
-    CardColour(int value) {
+    private String imgPath;
+    
+    CardColour (int value, String imgPath) {
         this.value = value;
+        this.imgPath = imgPath;
     }
-
+    
+    public int getValue () {
+        return value;
+    }
+    
+    public String getImagePath () {
+        return imgPath;
+    }
+    
 }

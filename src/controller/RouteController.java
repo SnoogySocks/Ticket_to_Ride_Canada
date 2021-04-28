@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static controller.TTRController.routes;
+import static controller.TTRController.*;
 
 /**
  * @author Felix
@@ -22,35 +22,20 @@ public class RouteController {
         put(4, 7);
         put(5, 10);
         put(6, 15);
-        // TODO add score for a length of 7
+        put(7, 18);
     }};
     
-    public static ArrayList<Route> generateAllAvailableRoutes () {
+    /**
+     * Called from the claim route button
+     * Provide player with list of available routes
+     */
+    public static Route getPlayerRouteChoice () {
         
-        ArrayList<Route> availableRoutes = new ArrayList<>();
-        
-        for (int i = 0 ; i<routes.size(); ++i) {
-            if (routes.get(i).getOwner()==null) {
-                availableRoutes.add(routes.get(i));
-            }
-        }
-        
-        return availableRoutes;
-        
-    }
+        return (Route) JOptionPane.showInputDialog(null, "Choose route to claim...",
+                "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
+                availableRoutes.toArray(),
+                availableRoutes.get(0));
     
-    public static ArrayList<Route> generateAllOwnedRoutes (Player player) {
-    
-        ArrayList<Route> ownedRoutes = new ArrayList<>();
-        
-        for (Route route: routes) {
-            if (route.getOwner()==player) {
-                ownedRoutes.add(route);
-            }
-        }
-        
-        return ownedRoutes;
-        
     }
     
     public static void removeCompletedRouteCards () {
@@ -60,8 +45,10 @@ public class RouteController {
     public static int scoreRoutes (Player player) {
         
         int score = 0;
-        for (Route route: generateAllOwnedRoutes(player)) {
-            score += routeScoringTable.get(route.getLength());
+        for (Route route: player.getClaimedRoutes()) {
+            if (route.getOwner()==player) {
+                score += routeScoringTable.get(route.getLength());
+            }
         }
         
         return score;
