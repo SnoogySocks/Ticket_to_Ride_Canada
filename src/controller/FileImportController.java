@@ -31,9 +31,9 @@ public final class FileImportController {
         importRoutes();
         importTickets();
         
-        for (Route r : routes) {
-            System.out.println(r);
-        }
+//        for (Route r : routes) {
+//            System.out.println(r);
+//        }
         
         bfsHelper();
         

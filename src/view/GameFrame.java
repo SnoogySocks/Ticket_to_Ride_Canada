@@ -60,5 +60,69 @@ public class GameFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
     }
-
+    
+    public static int getWIDTH () {
+        return WIDTH;
+    }
+    
+    public static int getHEIGHT () {
+        return HEIGHT;
+    }
+    
+    public BoardPanel getBoardPanel () {
+        return boardPanel;
+    }
+    
+    public ScorePanel getScorePanel () {
+        return scorePanel;
+    }
+    
+    public CardPanel getCardPanel () {
+        return cardPanel;
+    }
+    
+    public PlayerPanel getPlayerPanel () {
+        return playerPanel;
+    }
+    
+    public JMenu getFileMenu () {
+        return fileMenu;
+    }
+    
+    public JMenuItem getNewMI () {
+        return newMI;
+    }
+    
+    public JMenuItem getSaveMI () {
+        return saveMI;
+    }
+    
+    public JMenuItem getLoadMI () {
+        return loadMI;
+    }
+    
+    public JMenuItem getExitMI () {
+        return exitMI;
+    }
+    
+    public JMenuItem[] getFileMenuItems () {
+        return fileMenuItems;
+    }
+    
+    public JMenu getHelpMenu () {
+        return helpMenu;
+    }
+    
+    public JMenuItem getHelpContentsMI () {
+        return helpContentsMI;
+    }
+    
+    public JMenuItem getAboutMI () {
+        return aboutMI;
+    }
+    
+    public JMenuItem[] getHelpMenuItems () {
+        return helpMenuItems;
+    }
+    
 }

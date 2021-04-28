@@ -12,8 +12,7 @@ public class City extends JLabel {
     
     private String name;
     private Coordinate point;
-
-
+    
     private ArrayList<Route> routes = new ArrayList<>();
 
     public City (String name, Coordinate point) {
@@ -46,13 +45,14 @@ public class City extends JLabel {
         this.routes = routes;
     }
 
+    // TODO maybe put in route controller? or give player a routes list?
     /**
      * @author Nathan
      */
-    public ArrayList<Route> ownedRoutes(Player player){
+    public ArrayList<Route> generateOwnedRoutes (Player player){
         ArrayList<Route> list = new ArrayList<>();
 
-        for(Route r: routes){
+        for(Route r: routes) {
             if(r.getOwner().equals(player)){
                 list.add(r);
             }
@@ -61,8 +61,8 @@ public class City extends JLabel {
         return list;
     }
 
-    public boolean equals(City other){
-        return this.name == other.name;
+    public boolean equals (City other) {
+        return this.name.equals(other.name);
     }
 
     @Override

@@ -1,9 +1,6 @@
 package view;
 
-import model.CardColour;
-import model.PlayerColour;
-import model.Ticket;
-import model.TrainCard;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
