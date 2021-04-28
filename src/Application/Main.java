@@ -11,6 +11,8 @@ import view.PlayerPanel;;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static controller.TTRController.players;
 
@@ -26,4 +28,5 @@ public class Main {
         //        System.out.println(controller.checkTicketComplete(TTRController.tickets.pop(), player));
         
     }
+    
 }

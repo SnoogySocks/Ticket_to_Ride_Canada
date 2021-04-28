@@ -29,8 +29,8 @@ public class RouteController {
      * Called from the claim route button
      * Provide player with list of available routes
      */
-    public static Route getPlayerRouteChoice () {
-        
+    public Route getPlayerRouteChoice () {
+    
         return (Route) JOptionPane.showInputDialog(null, "Choose route to claim...",
                 "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
                 availableRoutes.toArray(),
@@ -38,11 +38,7 @@ public class RouteController {
     
     }
     
-    public static void removeCompletedRouteCards () {
-        // TODO
-    }
-    
-    public static int scoreRoutes (Player player) {
+    public int scoreRoutes (Player player) {
         
         int score = 0;
         for (Route route: player.getClaimedRoutes()) {
