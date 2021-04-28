@@ -19,9 +19,7 @@ public class TTRController {
     public static ArrayList<Route> routes = new ArrayList<>();
     public static ArrayList<City> cities = new ArrayList<>();
     public static Stack<Ticket> tickets = new Stack<>();
-
-
-
+    
     
     public TTRController () {
 

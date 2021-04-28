@@ -30,55 +30,59 @@ public final class FileImportController {
         importCities();
         importRoutes();
         importTickets();
+        
+        for (Route r : routes) {
+            System.out.println(r);
+        }
+        
         bfsHelper();
         
         Collections.shuffle(tickets);
         
     }
-
+    
     /**
      * Help breadth first search by creating edges(routes) between each node(city)
-     * @author Nathan
      */
-    private static void bfsHelper(){
-        for(Map.Entry<String, City> e : cityMap.entrySet()){
+    private static void bfsHelper () {
+       
+        for (Map.Entry<String, City> e : cityMap.entrySet()) {
+       
             City c = e.getValue();
-
-            for(Route r : routes){
-                if(r.getCity1().equals(c) || r.getCity2().equals(c)){
+            
+            for (Route r : routes) {
+                if (r.getCity1().equals(c) || r.getCity2().equals(c)) {
                     c.getRoutes().add(r);
                 }
             }
-
+            
         }
     }
     
     /**
      * returns a sanitized string name
-     * @author Nathan, Felix
      */
-    private static String sanitize(String s){
+    private static String sanitize (String s) {
         return s.replace("\n", "").replace("\r", "");
     }
     
     /**
-     * @implNote call this before importRoutes()
-     * @author Nathan
+     *
      */
-    private static void importCities() {
+    private static void importCities () {
         
         try {
             
             Scanner input = new Scanner(new File(cityPath));
             input.useDelimiter(",");
             
-            while (input.hasNext()){
+            while (input.hasNext()) {
                 
                 String name = sanitize(input.next());
                 int x = input.nextInt();
                 int y = input.nextInt();
                 
-                City city = new City(name, new Coordinate(x,y));
+                City city = new City(name, new Coordinate(x, y));
                 
                 cities.add(city);
                 cityMap.put(name, city);
@@ -91,13 +95,12 @@ public final class FileImportController {
             System.err.println(e);
         }
         
-        
     }
     
     /**
-     * @author Felix
+     *
      */
-    private static void importRoutes() {
+    private static void importRoutes () {
         
         try {
             
@@ -125,7 +128,7 @@ public final class FileImportController {
         
     }
     
-    private static void importTickets() {
+    private static void importTickets () {
         
         try {
             
@@ -137,7 +140,7 @@ public final class FileImportController {
                 String firstCity = sanitize(input.next());
                 String secondCity = sanitize(input.next());
                 int val = input.nextInt();
-
+                
                 Ticket ticket = new Ticket(cityMap.get(firstCity), cityMap.get(secondCity), val, false);
                 tickets.push(ticket);
             }
