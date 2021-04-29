@@ -85,7 +85,7 @@ public class TTRController extends Observable implements ActionListener {
     public void createPlayers() {
         PlayerColour[] clrValues = PlayerColour.values();
         for (int i = 0; i<players.length; ++i) {
-            players[i] = new Player("Player ", clrValues[i]);
+            players[i] = new Player("Player " + (i + 1), clrValues[i]);
         }
     }
     
