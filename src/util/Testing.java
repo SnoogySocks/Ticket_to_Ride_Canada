@@ -13,8 +13,13 @@ public class Testing {
         Route r1 = FileImportController.routes.get(56);
         Route r2 = FileImportController.routes.get(62);
 
-        player.getClaimedRoutes().add(r1);
-        player.getClaimedRoutes().add(r2);
+        System.out.println(t);
+        System.out.println(r1);
+        System.out.println(r2);
+
+        r1.setOwner(player);
+        r2.setOwner(player);
+
         player.addTicket(t);
 
 
