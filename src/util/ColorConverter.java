@@ -10,10 +10,14 @@ import java.util.HashMap;
  */
 public final class ColorConverter {
     
-    private static HashMap<String, CardColour> string2ColourConversions = new HashMap<>() {{
+    private static final HashMap<String, CardColour> string2ColourConversions = new HashMap<>() {{
+        
         for (CardColour colour: CardColour.values()) {
             put(colour.toString(), colour);
         }
+        // Gray card colours are considered rainbow, or wild cards
+        put("GRAY", CardColour.RAINBOW);
+        
     }};
     
     public static CardColour parseColor (String s){

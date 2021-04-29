@@ -10,11 +10,13 @@ import java.util.*;
  */
 public class Player extends Observable {
 
-    private String name;
-    private PlayerColour playerColour;
-    private ArrayList<Ticket> tickets;
-    private ArrayList<Route> claimedRoutes;
-    private int[] numCardsOfColour;
+    private final String name;
+    private final PlayerColour playerColour;
+    private final ArrayList<Ticket> tickets;
+    private final ArrayList<Route> claimedRoutes;
+    
+    private int totalCards;
+    private final int[] numCardsOfColour;
     private int numTrains;
     private int score;
     
@@ -26,7 +28,7 @@ public class Player extends Observable {
         this.claimedRoutes = new ArrayList<>();
         this.numCardsOfColour = new int[CardColour.values().length];
         this.numTrains = 45;
-        this.score = 0;
+        this.totalCards = this.score = 0;
         
     }
     
@@ -42,21 +44,23 @@ public class Player extends Observable {
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
     
     public int getScore () {
         return score;
     }
     
     public void addTrainCard (TrainCard card) {
-        numCardsOfColour[card.getColour().getValue()]++;
+        ++totalCards;
+        ++numCardsOfColour[card.getColour().getValue()];
     }
     
-    public void removeTrainCard (TrainCard card) {
-        numCardsOfColour[card.getColour().getValue()]--;
+    public void removeTrainCards (int cardColour, int numberRemoved) {
+        totalCards -= totalCards;
+        numCardsOfColour[cardColour] -= numberRemoved;
+    }
+    
+    public int getTotalCards () {
+        return totalCards;
     }
     
     public ArrayList<Ticket> getTickets(){
@@ -78,10 +82,6 @@ public class Player extends Observable {
     
     public int getNumCardsOfColour (int index) {
         return numCardsOfColour[index];
-    }
-    
-    public void setNumCardsOfColour (int index, int num) {
-        this.numCardsOfColour[index] = num;
     }
     
     public PlayerColour getPlayerColour () {

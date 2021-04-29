@@ -92,7 +92,7 @@ public class PlayerPanel extends JPanel implements Observer {
             
             // Create a new JLabel to display the card colour
             JLabel cardColour = new JLabel(values[i].toString());
-            cardColour.setBounds(PANEL_PADDING*3, curY+LABEL_HEIGHT*2*(i+1), PANEL_PADDING*4, LABEL_HEIGHT);
+            cardColour.setBounds(PANEL_PADDING*2, curY+LABEL_HEIGHT*2*(i+1), PANEL_PADDING*4, LABEL_HEIGHT);
             cardColour.setHorizontalAlignment(JLabel.RIGHT);
             add(cardColour);
             
