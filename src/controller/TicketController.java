@@ -27,7 +27,7 @@ public class TicketController {
 
         while (!hasSelected) {
             JCheckBox[] checkBoxes = new JCheckBox[size];
-            Object[] parameters = {"Select Tickets", checkBoxes};
+            Object[] parameters = {TTRController.getCurrentPlayer().getName() + " select at least 1 ticket! ", checkBoxes};
 
             for (int i = 0; i < size; i++) {
                 checkBoxes[i] = new JCheckBox(choices[i].toString());
@@ -74,6 +74,8 @@ public class TicketController {
         for (int i = 0; i < size; i++) {
             choices[i] = TTRController.tickets.pop();
         }
+
+        renderDialogue(choices);
     }
 
     public boolean checkTicketComplete(Ticket ticket, Player owner) {

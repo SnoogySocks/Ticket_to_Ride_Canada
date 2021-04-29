@@ -9,7 +9,7 @@ import java.util.*;
  * @author Nathan Wong
  */
 public class Player extends Observable {
-    
+
     private String name;
     private PlayerColour playerColour;
     private ArrayList<Ticket> tickets;
@@ -37,6 +37,14 @@ public class Player extends Observable {
     
     public ArrayList<Route> getClaimedRoutes () {
         return claimedRoutes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
     
     public int getScore () {
