@@ -35,6 +35,7 @@ public class Route extends JLabel {
     
     public void setOwner (Player owner) {
         this.owner = owner;
+        owner.getClaimedRoutes().add(this);
     }
     
     public City getCity1 () {

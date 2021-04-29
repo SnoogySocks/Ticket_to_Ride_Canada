@@ -48,7 +48,7 @@ public class TicketController {
                 for (int i = 0; i < size; i++) {
                     if (checkBoxes[i].isSelected()) {
                         System.out.println(choices[i]);
-                        TTRController.players[TTRController.playerTurn].addTicket(choices[i]);
+                        TTRController.getCurrentPlayer().addTicket(choices[i]);
                     } else {
                         //place unselected tickets at the bottom of the stack
                         TTRController.tickets.insertElementAt(choices[i], TTRController.tickets.size() - 1);

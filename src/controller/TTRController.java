@@ -11,7 +11,10 @@ import java.util.Stack;
 
 import util.*;
 
-public class TTRController extends Observable{
+import javax.swing.*;
+import java.awt.*;
+
+public class TTRController extends Observable implements ActionListener {
     
     GameFrame frame;
     
@@ -93,6 +96,22 @@ public class TTRController extends Observable{
     
     public static Player getCurrentPlayer() {
         return players[playerTurn];
+    }
+    
+    @Override
+    public void actionPerformed (ActionEvent e) {
+        
+        if (e.getSource()==frame.getCardPanel().getTicketDeckButton()) {
+            ticketController.showTicketSelectionDialogue();
+        }
+        
+        if (e.getSource()==frame.getPlayerPanel().getClaimRouteButton()) {
+            
+            // TODO check if the player has enough trains later
+            
+            
+        }
+        
     }
     
 }

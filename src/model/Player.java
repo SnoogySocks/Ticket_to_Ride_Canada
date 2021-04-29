@@ -25,8 +25,8 @@ public class Player extends Observable {
         this.tickets = new ArrayList<>();
         this.claimedRoutes = new ArrayList<>();
         this.numCardsOfColour = new int[CardColour.values().length];
-        this.numTrains = 0;
-        this.numTrains = score = 0;
+        this.numTrains = 45;
+        this.score = 0;
         
     }
     
