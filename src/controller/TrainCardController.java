@@ -77,6 +77,15 @@ public class TrainCardController extends Observable {
             do stuff yay
          
          */
+
+        int rainbowCardCounter = Collections.frequency(TTRController.shownCards, 0);
+
+        if(rainbowCardCounter == 0){
+            flipFiveCards();
+        }
+
+
+
     }
     
     public void replaceTakenTrainCard() {
