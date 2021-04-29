@@ -78,6 +78,50 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
         
     }
     
+    public JButton getTicketDeckButton () {
+        return ticketDeckButton;
+    }
+    
+    public JButton getCardDeckButton () {
+        return cardDeckButton;
+    }
+    
+    public JButton getTrain1Button () {
+        return train1Button;
+    }
+    
+    public JButton getTrain2Button () {
+        return train2Button;
+    }
+    
+    public JButton getTrain3Button () {
+        return train3Button;
+    }
+    
+    public JButton getTrain4Button () {
+        return train4Button;
+    }
+    
+    public JButton getTrain5Button () {
+        return train5Button;
+    }
+    
+    public JButton[] getTrainButtons () {
+        return trainButtons;
+    }
+    
+    public JLabel getTicketDeckTitle () {
+        return ticketDeckTitle;
+    }
+    
+    public JLabel getCardDeckTitle () {
+        return cardDeckTitle;
+    }
+    
+    public JLabel getCardPanelTitle () {
+        return cardPanelTitle;
+    }
+    
     // Train deck function
     public void actionPerformed (ActionEvent e) {
         if (e.getSource()==ticketDeckButton) {

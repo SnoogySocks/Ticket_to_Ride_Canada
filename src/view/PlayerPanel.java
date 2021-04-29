@@ -102,7 +102,7 @@ public class PlayerPanel extends JPanel implements Observer {
             
         }
         
-        numTrains = 0;
+        numTrains = 45;
         numTrainsTitle = new JLabel("NUMBER OF TRAINS:    "+numTrains);
         numTrainsTitle.setBounds(width/2, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
         add(numTrainsTitle);

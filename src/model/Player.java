@@ -60,6 +60,22 @@ public class Player extends Observable {
         notifyObservers(EventType.UPDATE_SCORES);
     }
     
+    public int getNumTrains () {
+        return numTrains;
+    }
+    
+    public void setNumTrains (int numTrains) {
+        this.numTrains = numTrains;
+    }
+    
+    public int getNumCardsOfColour (int index) {
+        return numCardsOfColour[index];
+    }
+    
+    public void setNumCardsOfColour (int index, int num) {
+        this.numCardsOfColour[index] = num;
+    }
+    
     @Override
     public String toString () {
         return "Player{"+

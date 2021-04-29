@@ -1,5 +1,6 @@
 package controller;
 
+import model.CardColour;
 import model.City;
 import model.Route;
 import model.Ticket;
@@ -108,7 +109,7 @@ public final class FileImportController {
                 String city1 = sanitize(input.next());
                 String city2 = sanitize(input.next());
                 int length = input.nextInt();
-                Color colour = ColorConverter.parseColor(input.next());
+                CardColour colour = ColorConverter.parseColor(input.next());
                 Coordinate completionPoint = new Coordinate(input.nextInt(), input.nextInt());
                 boolean isDualRoute = Boolean.parseBoolean(input.next());
                 

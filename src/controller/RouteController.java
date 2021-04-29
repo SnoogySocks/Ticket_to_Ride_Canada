@@ -29,14 +29,29 @@ public class RouteController {
      * Called from the claim route button
      * Provide player with list of available routes
      */
-    public Route getPlayerRouteChoice () {
+    public Route getPlayerRouteChoice (Player player) {
     
+        // Find the routes that the player can go to
+        ArrayList<Route> validRoutes = new ArrayList<>();
+        
+        // Routes are valid if
+        // 1. The player has enough of trains
+        // 2. The player has enough train cards of that colour
+        for (Route route: availableRoutes) {
+            if (player.getNumTrains()>=route.getLength()
+                    && player.getNumCardsOfColour(route.getColour().getValue())>=route.getLength()) {
+                validRoutes.add(route);
+            }
+        }
+        
         return (Route) JOptionPane.showInputDialog(null, "Choose route to claim...",
                 "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
-                availableRoutes.toArray(),
-                availableRoutes.get(0));
+                validRoutes.toArray(),
+                validRoutes.get(0));
     
     }
+    
+    
     
     public int scoreRoutes (Player player) {
         

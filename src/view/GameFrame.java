@@ -16,8 +16,8 @@ public class GameFrame extends JFrame {
     // Panels
     private BoardPanel boardPanel = new BoardPanel(0, 0, 1400, 900);
     private ScorePanel scorePanel = new ScorePanel(1400,0,520,180);
-    private CardPanel cardPanel = new CardPanel(0,900,1400,180);
-    private PlayerPanel playerPanel = new PlayerPanel(1400,180,520,900);
+    private CardPanel cardPanel = new CardPanel(0,700,1400,180);
+    private PlayerPanel playerPanel = new PlayerPanel(1000,180,520,900);
     
     // Menubar components
     private JMenuBar menuBar = new JMenuBar();
@@ -52,8 +52,8 @@ public class GameFrame extends JFrame {
         setLayout(null);
         add(scorePanel);
         add(cardPanel);
-        add(boardPanel);
         add(playerPanel);
+        add(boardPanel);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         

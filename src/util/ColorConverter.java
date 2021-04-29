@@ -1,5 +1,7 @@
 package util;
 
+import model.CardColour;
+
 import java.util.HashMap;
 import java.awt.Color;
 
@@ -9,21 +11,15 @@ import java.awt.Color;
  */
 public final class ColorConverter {
     
-    private static HashMap<String, Color> string2ColourConversions = new HashMap<>() {{
+    private static HashMap<String, CardColour> string2ColourConversions = new HashMap<>() {{
         
-        put("GRAY", Color.GRAY);
-        put("RED", Color.RED);
-        put("GREEN", Color.GREEN);
-        put("BLUE", Color.BLUE);
-        put("WHITE", Color.WHITE);
-        put("PURPLE", new Color(255, 0, 171)); // hot pink best pink
-        put("ORANGE", Color.ORANGE);
-        put("YELLOW", Color.YELLOW);
-        put("BLACK", Color.BLACK);
+        for (CardColour colour: CardColour.values()) {
+            put(colour.toString(), colour);
+        }
         
     }};
     
-    public static Color parseColor (String s){
+    public static CardColour parseColor (String s){
         return string2ColourConversions.get(s);
     }
     
