@@ -15,8 +15,6 @@ import util.*;
  */
 public class PlayerPanel extends JPanel implements Observer {
     
-    private Player currentPlayer;
-    
     // Titles and player colour
     private final JLabel panelTitle, playerNameTitle, playerColourTitle, ticketTitle, trainCardTitle, numTrainsTitle;
     
@@ -81,7 +79,7 @@ public class PlayerPanel extends JPanel implements Observer {
         add(trainCardTitle);
         
         // Create the numTrainCard list
-        RouteColour[] values = RouteColour.values();
+        CardColour[] values = CardColour.values();
         numTrainCards = new TrainCard[values.length];
         for (int i = 0; i<numTrainCards.length; ++i) {
             
@@ -116,13 +114,8 @@ public class PlayerPanel extends JPanel implements Observer {
         
     }
     
-    public Player getCurrentPlayer () {
-        return currentPlayer;
-    }
-    
     public void setCurrentPlayer (Player currentPlayer) {
         
-        this.currentPlayer = currentPlayer;
         playerNameTitle.setText("NAME:    Player "+currentPlayer.getPlayerColour().getValue());
         playerColourTitle.setText("COLOUR:    "+currentPlayer.getPlayerColour());
         updateTrains();
@@ -131,9 +124,9 @@ public class PlayerPanel extends JPanel implements Observer {
     
     public void updateTrains () {
         
-        numTrainsTitle.setText("NUMBER OF TRAINS:    "+currentPlayer.getNumTrains());
+        numTrainsTitle.setText("NUMBER OF TRAINS:    "+TTRController.getCurrentPlayer().getNumTrains());
         for (int i = 0; i<numTrainCards.length; ++i) {
-            numTrainCards[i].setText(Integer.toString(currentPlayer.getNumCardsOfColour(i)));
+            numTrainCards[i].setText(Integer.toString(TTRController.getCurrentPlayer().getNumCardsOfColour(i)));
         }
         
     }

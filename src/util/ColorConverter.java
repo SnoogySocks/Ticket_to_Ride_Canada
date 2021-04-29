@@ -1,6 +1,6 @@
 package util;
 
-import model.RouteColour;
+import model.CardColour;
 
 import java.util.HashMap;
 
@@ -10,13 +10,13 @@ import java.util.HashMap;
  */
 public final class ColorConverter {
     
-    private static HashMap<String, RouteColour> string2ColourConversions = new HashMap<>() {{
-        for (RouteColour colour: RouteColour.values()) {
+    private static HashMap<String, CardColour> string2ColourConversions = new HashMap<>() {{
+        for (CardColour colour: CardColour.values()) {
             put(colour.toString(), colour);
         }
     }};
     
-    public static RouteColour parseColor (String s){
+    public static CardColour parseColor (String s){
         return string2ColourConversions.get(s);
     }
     

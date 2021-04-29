@@ -12,11 +12,11 @@ public class Route extends JLabel {
     private Player owner;
     private City city1, city2;
     private int length;
-    private RouteColour colour;
+    private CardColour colour;
     private Coordinate completionPoint;
     private boolean isDualRoute;
     
-    public Route (City city1, City city2, int length, RouteColour colour, Coordinate completionPoint, boolean isDualRoute) {
+    public Route (City city1, City city2, int length, CardColour colour, Coordinate completionPoint, boolean isDualRoute) {
         
         this.owner = null;
         this.city1 = city1;
@@ -61,11 +61,11 @@ public class Route extends JLabel {
         this.length = length;
     }
     
-    public RouteColour getColour () {
+    public CardColour getColour () {
         return colour;
     }
     
-    public void setColour (RouteColour colour) {
+    public void setColour (CardColour colour) {
         this.colour = colour;
     }
     

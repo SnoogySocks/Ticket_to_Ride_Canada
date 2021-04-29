@@ -1,6 +1,6 @@
 package controller;
 
-import model.RouteColour;
+import model.CardColour;
 import model.Player;
 import model.TrainCard;
 
@@ -23,7 +23,7 @@ public class TrainCardController extends Observable {
         
         Stack<TrainCard> stack = new Stack<>();
         
-        RouteColour[] values = RouteColour.values();
+        CardColour[] values = CardColour.values();
         //Generates 12 of each colour
         for (int i = 1; i<values.length; ++i) {
             for (int j = 0; j < 12; j++) {
@@ -33,7 +33,7 @@ public class TrainCardController extends Observable {
         
         //Generate 14 rainbow cards and add to stack
         for (int x = 0; x<14; x++) {
-            stack.push(new TrainCard(RouteColour.RAINBOW));
+            stack.push(new TrainCard(CardColour.RAINBOW));
         }
         
         //Shuffle array list and return it

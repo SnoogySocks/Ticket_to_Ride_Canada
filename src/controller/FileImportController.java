@@ -1,6 +1,6 @@
 package controller;
 
-import model.RouteColour;
+import model.CardColour;
 import model.City;
 import model.Route;
 import model.Ticket;
@@ -108,7 +108,7 @@ public final class FileImportController {
                 String city1 = sanitize(input.next());
                 String city2 = sanitize(input.next());
                 int length = input.nextInt();
-                RouteColour colour = ColorConverter.parseColor(input.next());
+                CardColour colour = ColorConverter.parseColor(input.next());
                 if (colour==null) {
                     System.out.println("not ok");
                 }
