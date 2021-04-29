@@ -1,11 +1,10 @@
 package controller;
 
-import model.CardColour;
+import model.RouteColour;
 import model.City;
 import model.Route;
 import model.Ticket;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -109,7 +108,10 @@ public final class FileImportController {
                 String city1 = sanitize(input.next());
                 String city2 = sanitize(input.next());
                 int length = input.nextInt();
-                CardColour colour = ColorConverter.parseColor(input.next());
+                RouteColour colour = ColorConverter.parseColor(input.next());
+                if (colour==null) {
+                    System.out.println("not ok");
+                }
                 Coordinate completionPoint = new Coordinate(input.nextInt(), input.nextInt());
                 boolean isDualRoute = Boolean.parseBoolean(input.next());
                 

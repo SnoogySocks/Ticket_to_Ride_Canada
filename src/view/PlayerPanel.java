@@ -1,13 +1,12 @@
 package view;
 
+import controller.TTRController;
 import model.*;
 import util.Observer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 import util.*;
 
@@ -16,8 +15,9 @@ import util.*;
  */
 public class PlayerPanel extends JPanel implements Observer {
     
+    private Player currentPlayer;
+    
     // Titles and player colour
-    private PlayerColour playerColour;
     private final JLabel panelTitle, playerNameTitle, playerColourTitle, ticketTitle, trainCardTitle, numTrainsTitle;
     
     // Ticket Scroll pane
@@ -30,32 +30,31 @@ public class PlayerPanel extends JPanel implements Observer {
     // Lists
     private ArrayList<Ticket> tickets;
     private TrainCard[] numTrainCards;
-    private int numTrains;
     
     public PlayerPanel (int x, int y, int width, int height) {
-    
+        
         setBounds(x, y, width, height);
         setLayout(null);
+        
         final int PANEL_PADDING = width/20;
         final int LABEL_HEIGHT = height*3/160;
         final int PREFERRED_WIDTH = width-PANEL_PADDING*2;
         final int HALF_PREFERRED_WIDTH = PREFERRED_WIDTH/2;
         int curY = 0;
-    
+        
         panelTitle = new JLabel("PLAYER PANEL");
         curY += PANEL_PADDING;
         panelTitle.setBounds(0, curY, width, LABEL_HEIGHT);
         panelTitle.setHorizontalAlignment(JLabel.CENTER);
         add(panelTitle);
-    
-        playerColour = PlayerColour.RED;
-        playerNameTitle = new JLabel("NAME:    Player "+playerColour);
+        
+        playerNameTitle = new JLabel();
         curY += LABEL_HEIGHT*2;
         playerNameTitle.setBounds(PANEL_PADDING, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
         playerNameTitle.setHorizontalAlignment(JLabel.CENTER);
         add(playerNameTitle);
-    
-        playerColourTitle = new JLabel("COLOUR:    "+playerColour.toString());
+        
+        playerColourTitle = new JLabel();
         playerColourTitle.setBounds(width/2, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
         playerColourTitle.setHorizontalAlignment(JLabel.CENTER);
         add(playerColourTitle);
@@ -82,31 +81,29 @@ public class PlayerPanel extends JPanel implements Observer {
         add(trainCardTitle);
         
         // Create the numTrainCard list
-        CardColour[] values = CardColour.values();
+        RouteColour[] values = RouteColour.values();
         numTrainCards = new TrainCard[values.length];
-        for (int i = 0; i<values.length; ++i) {
-    
+        for (int i = 0; i<numTrainCards.length; ++i) {
+            
             numTrainCards[i] = new TrainCard(values[i]);
-    
+            
             // numTrainCards will contain the number of each card in the label
             numTrainCards[i].setBounds(PANEL_PADDING*3, curY+LABEL_HEIGHT*2*(i+1), PANEL_PADDING*4, LABEL_HEIGHT);
             numTrainCards[i].setHorizontalAlignment(JLabel.RIGHT);
-            numTrainCards[i].setText("0");
             add(numTrainCards[i]);
             
             // Create a new JLabel to display the card colour
             JLabel cardColour = new JLabel(values[i].toString());
-            cardColour.setBounds(PANEL_PADDING*3, curY+LABEL_HEIGHT*2*(i+1), PANEL_PADDING*2, LABEL_HEIGHT);
+            cardColour.setBounds(PANEL_PADDING*3, curY+LABEL_HEIGHT*2*(i+1), PANEL_PADDING*4, LABEL_HEIGHT);
             cardColour.setHorizontalAlignment(JLabel.RIGHT);
             add(cardColour);
             
         }
         
-        numTrains = 45;
-        numTrainsTitle = new JLabel("NUMBER OF TRAINS:    "+numTrains);
+        numTrainsTitle = new JLabel();
         numTrainsTitle.setBounds(width/2, curY, HALF_PREFERRED_WIDTH, LABEL_HEIGHT);
         add(numTrainsTitle);
-    
+        
         claimRouteButton = new JButton("CLAIM ROUTE");
         curY += LABEL_HEIGHT*10;
         claimRouteButton.setBounds(width/2, curY, HALF_PREFERRED_WIDTH-18, LABEL_HEIGHT*4);
@@ -119,78 +116,42 @@ public class PlayerPanel extends JPanel implements Observer {
         
     }
     
-    public PlayerColour getPlayerColour () {
-        return playerColour;
+    public Player getCurrentPlayer () {
+        return currentPlayer;
     }
     
-    public void setPlayerColour (PlayerColour playerColour) {
-        this.playerColour = playerColour;
+    public void setCurrentPlayer (Player currentPlayer) {
+        
+        this.currentPlayer = currentPlayer;
+        playerNameTitle.setText("NAME:    Player "+currentPlayer.getPlayerColour().getValue());
+        playerColourTitle.setText("COLOUR:    "+currentPlayer.getPlayerColour());
+        updateTrains();
+        
     }
     
-    public JLabel getPanelTitle () {
-        return panelTitle;
-    }
-    
-    public JLabel getPlayerNameTitle () {
-        return playerNameTitle;
-    }
-    
-    public JLabel getPlayerColourTitle () {
-        return playerColourTitle;
-    }
-    
-    public JLabel getTicketTitle () {
-        return ticketTitle;
-    }
-    
-    public JLabel getTrainCardTitle () {
-        return trainCardTitle;
-    }
-    
-    public JLabel getNumTrainsTitle () {
-        return numTrainsTitle;
-    }
-    
-    public JTextArea getTicketPaneText () {
-        return ticketPaneText;
-    }
-    
-    public JScrollPane getTicketPane () {
-        return ticketPane;
+    public void updateTrains () {
+        
+        numTrainsTitle.setText("NUMBER OF TRAINS:    "+currentPlayer.getNumTrains());
+        for (int i = 0; i<numTrainCards.length; ++i) {
+            numTrainCards[i].setText(Integer.toString(currentPlayer.getNumCardsOfColour(i)));
+        }
+        
     }
     
     public JButton getClaimRouteButton () {
         return claimRouteButton;
     }
     
-    public JButton getNextTurnButton () {
-        return nextTurnButton;
-    }
-    
-    public ArrayList<Ticket> getTickets () {
-        return tickets;
-    }
-    
-    public TrainCard getNumTrainCards (int index) {
-        return numTrainCards[index];
-    }
-    
-    public int getNumTrains () {
-        return numTrains;
-    }
-    
-    public void setNumTrains (int numTrains) {
-        this.numTrains = numTrains;
-    }
-    
     @Override
     public void update (Observable obj, EventType event) {
         
-        if(event == EventType.NEXT_TURN){
-            //update gui
+        if (event==EventType.UPDATE_TRAINS) {
+            updateTrains();
+        } else if (event==EventType.UPDATE_TICKETS) {
+    
         }
-        else if (event == EventType.UPDATE_TICKETS){
-        
+        else if (event==EventType.NEXT_TURN) {
+            setCurrentPlayer(TTRController.getCurrentPlayer());
         }
         
     }

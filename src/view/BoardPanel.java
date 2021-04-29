@@ -12,7 +12,7 @@ import javax.swing.*;
  */
 public class BoardPanel extends JPanel {
 
-    private JLabel gameBoardImage;
+    private final JLabel gameBoardImage;
     
     public BoardPanel (int x, int y, int width, int height) {
        
@@ -31,14 +31,6 @@ public class BoardPanel extends JPanel {
     
         setVisible(true);
     
-    }
-    
-    public JLabel getGameBoardImage () {
-        return gameBoardImage;
-    }
-    
-    public void setGameBoardImage (JLabel gameBoardImage) {
-        this.gameBoardImage = gameBoardImage;
     }
     
 }

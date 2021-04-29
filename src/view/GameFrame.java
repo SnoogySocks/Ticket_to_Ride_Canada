@@ -50,9 +50,9 @@ public class GameFrame extends JFrame {
         
         setSize(WIDTH, HEIGHT);
         setLayout(null);
+        add(playerPanel);
         add(scorePanel);
         add(cardPanel);
-        add(playerPanel);
         add(boardPanel);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

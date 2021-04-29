@@ -3,7 +3,7 @@ package model;
 /**
  * @author Cerena
  */
-public enum CardColour {
+public enum RouteColour {
     
     RAINBOW(0, "./images/trainCardRainbow.png"),
     BLACK(1, "./images/trainCardBlack.png"),
@@ -18,7 +18,7 @@ public enum CardColour {
     private int value;
     private String imgPath;
     
-    CardColour (int value, String imgPath) {
+    RouteColour (int value, String imgPath) {
         this.value = value;
         this.imgPath = imgPath;
     }

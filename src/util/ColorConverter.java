@@ -1,9 +1,8 @@
 package util;
 
-import model.CardColour;
+import model.RouteColour;
 
 import java.util.HashMap;
-import java.awt.Color;
 
 /**
  * Utility for string conversion to colour
@@ -11,15 +10,13 @@ import java.awt.Color;
  */
 public final class ColorConverter {
     
-    private static HashMap<String, CardColour> string2ColourConversions = new HashMap<>() {{
-        
-        for (CardColour colour: CardColour.values()) {
+    private static HashMap<String, RouteColour> string2ColourConversions = new HashMap<>() {{
+        for (RouteColour colour: RouteColour.values()) {
             put(colour.toString(), colour);
         }
-        
     }};
     
-    public static CardColour parseColor (String s){
+    public static RouteColour parseColor (String s){
         return string2ColourConversions.get(s);
     }
     

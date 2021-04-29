@@ -8,17 +8,17 @@ import javax.swing.*;
  */
 public class TrainCard extends JLabel {
 
-    private CardColour colour;
+    private RouteColour colour;
     
-    public TrainCard(CardColour colour){
+    public TrainCard(RouteColour colour){
         this.colour = colour;
     }
     
-    public CardColour getColour () {
+    public RouteColour getColour () {
         return colour;
     }
     
-    public void setColour (CardColour colour) {
+    public void setColour (RouteColour colour) {
         this.colour = colour;
     }
     

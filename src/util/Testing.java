@@ -5,8 +5,12 @@ import controller.*;
 
 import java.awt.*;
 
+/**
+ * Basic test utilities
+ * @author Nathan Wong
+ */
 public class Testing {
-    public static Player playerWithCompleteRoute() {
+    public static void BFSIsWorking(TicketController controller) {
         Player player = new Player("Hi", PlayerColour.BLUE);
 
         Ticket t = FileImportController.tickets.get(49);
@@ -22,7 +26,9 @@ public class Testing {
 
         player.addTicket(t);
 
-
-        return player;
+        assert(controller.checkTicketComplete(t, player));
+        assert(!controller.checkTicketComplete(FileImportController.tickets.get(0), player));
+    
+        System.out.println("[TESTING] BFS for tickets test --> Passed");
     }
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Stack;
 
 import util.*;
@@ -16,18 +17,21 @@ import java.awt.*;
 
 public class TTRController extends Observable implements ActionListener {
     
-    GameFrame frame;
+    // Frame
+    public static GameFrame frame;
     
+    // Controllers
     public static TrainCardController tCController;
     public static TicketController ticketController;
     public static RouteController routeController;
     
+    // Players
     public static Player[] players;
     public static int playerTurn;
     
+    // Models
     public static ArrayList<Route> routes;
-    public static ArrayList<Route> availableRoutes;
-    public static ArrayList<Route> ownedRoutes;
+    public static HashSet<Route> availableRoutes;
     public static ArrayList<City> cities;
     public static Stack<Ticket> tickets;
     
@@ -41,8 +45,7 @@ public class TTRController extends Observable implements ActionListener {
         players = new Player[4];
         
         routes = (ArrayList<Route>) FileImportController.routes.clone();
-        availableRoutes = new ArrayList<>(routes);  // TODO Check if elements pass by reference
-        ownedRoutes = new ArrayList<>();
+        availableRoutes = new HashSet<>(routes);
         
         cities = (ArrayList<City>) FileImportController.cities.clone();
         tickets = (Stack<Ticket>) FileImportController.tickets.clone();
@@ -57,11 +60,7 @@ public class TTRController extends Observable implements ActionListener {
         frame.getPlayerPanel().getClaimRouteButton().addActionListener(this);
         
         tCController.addObserver(frame.getCardPanel());
-        
         tCController.flipFiveCards();
-        
-        Player p = Testing.playerWithCompleteRoute();
-        System.out.println(ticketController.checkTicketComplete(p.getTickets().get(0), p));
         
         newGame();
         
@@ -83,10 +82,18 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     public void createPlayers() {
+        
         PlayerColour[] clrValues = PlayerColour.values();
         for (int i = 0; i<players.length; ++i) {
-            players[i] = new Player("Player ", clrValues[i]);
+            
+            players[i] = new Player("Player ", clrValues[i+1]);
+            
+            // Make the player panel observe the players
+            players[i].addObserver(frame.getPlayerPanel());
+            
         }
+        frame.getPlayerPanel().setCurrentPlayer(getCurrentPlayer());
+        
     }
     
     public static void nextTurn () {
@@ -106,10 +113,7 @@ public class TTRController extends Observable implements ActionListener {
         }
         
         if (e.getSource()==frame.getPlayerPanel().getClaimRouteButton()) {
-            
-            // TODO check if the player has enough trains later
-            
-            
+            routeController.getPlayerRouteChoice(getCurrentPlayer());
         }
         
     }

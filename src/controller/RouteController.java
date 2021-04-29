@@ -3,6 +3,8 @@ package controller;
 import model.City;
 import model.Player;
 import model.Route;
+import model.TrainCard;
+import util.EventType;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class RouteController {
      * Called from the claim route button
      * Provide player with list of available routes
      */
-    public Route getPlayerRouteChoice (Player player) {
+    public void getPlayerRouteChoice (Player player) {
     
         // Find the routes that the player can go to
         ArrayList<Route> validRoutes = new ArrayList<>();
@@ -44,14 +46,40 @@ public class RouteController {
             }
         }
         
-        return (Route) JOptionPane.showInputDialog(null, "Choose route to claim...",
+        // If there are no choices available, cancel the transaction
+        if (validRoutes.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "NO ROUTES AVAILABLE - CANCEL TRANSAcTION");
+            return;
+        }
+    
+        Route route = (Route) JOptionPane.showInputDialog(null, "Choose route to claim...",
                 "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
                 validRoutes.toArray(),
                 validRoutes.get(0));
+        
+        // Use the player's trains
+        player.setNumTrains(player.getNumTrains()-route.getLength());
+        
+        // Claim the route
+        player.getClaimedRoutes().add(route);
+        
+        // Title case the colour to set a checkmark for the route
+        String colour = player.getPlayerColour().toString().toLowerCase();
+        colour = Character.toUpperCase(colour.charAt(0))+colour.substring(1);
+        route.setIcon(new ImageIcon("./images/checkmark"+colour+".png"));
+        
+        // Update the player panel
+        player.notifyObservers(EventType.UPDATE_TRAINS);
+    
+        // Put the used player trainCards in the discard pile
+        for (int i = 0; i<player.getNumCardsOfColour(route.getColour().getValue()); ++i) {
+            trainCardDiscards.push(new TrainCard(route.getColour()));
+        }
+        
+        // Make the route unavailable
+        availableRoutes.remove(route);
     
     }
-    
-    
     
     public int scoreRoutes (Player player) {
         

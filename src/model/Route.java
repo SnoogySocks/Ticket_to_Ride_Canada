@@ -3,7 +3,6 @@ package model;
 import util.Coordinate;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author Felix
@@ -13,11 +12,11 @@ public class Route extends JLabel {
     private Player owner;
     private City city1, city2;
     private int length;
-    private CardColour colour;
+    private RouteColour colour;
     private Coordinate completionPoint;
     private boolean isDualRoute;
     
-    public Route (City city1, City city2, int length, CardColour colour, Coordinate completionPoint, boolean isDualRoute) {
+    public Route (City city1, City city2, int length, RouteColour colour, Coordinate completionPoint, boolean isDualRoute) {
         
         this.owner = null;
         this.city1 = city1;
@@ -62,11 +61,11 @@ public class Route extends JLabel {
         this.length = length;
     }
     
-    public CardColour getColour () {
+    public RouteColour getColour () {
         return colour;
     }
     
-    public void setColour (CardColour colour) {
+    public void setColour (RouteColour colour) {
         this.colour = colour;
     }
     
