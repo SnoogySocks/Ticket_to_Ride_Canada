@@ -63,6 +63,9 @@ public class TTRController extends Observable{
         tCController.addObserver(frame.getCardPanel());
         
         tCController.flipFiveCards();
+
+        Player p = Testing.playerWithCompleteRoute();
+        System.out.println(ticketController.checkTicketComplete(p.getTickets().get(0), p));
         
     }
     

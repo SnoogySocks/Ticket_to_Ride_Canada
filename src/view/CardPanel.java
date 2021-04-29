@@ -112,7 +112,7 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
         
         if(event == EventType.UPDATE_SHOWN_CARDS){
             
-            //here lies an hour of painful debugging... we forgot to pass something
+            //here lies an hour of painful debugging... we forgot to pass something into the constructor ;-;
             for(int i = 0; i < 5; i++){
                 trainButtons[i].setIcon(new ImageIcon(TTRController.shownCards.get(i).getColour().getImagePath()));
             }

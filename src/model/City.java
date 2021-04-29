@@ -52,7 +52,7 @@ public class City extends JLabel {
         ArrayList<Route> list = new ArrayList<>();
 
         for(Route r: routes) {
-            if(r.getOwner().equals(player)){
+            if(r.getOwner() != null && r.getOwner().equals(player)){
                 list.add(r);
             }
         }
