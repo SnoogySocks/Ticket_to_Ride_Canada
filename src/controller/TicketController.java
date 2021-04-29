@@ -47,7 +47,7 @@ public class TicketController {
         Queue<City> queue = new LinkedList<>();
         queue.add(ticket.getCity1());
         
-        //TODO this implementation of BFS hasn't been tested... idk it works
+        //TODO this implementation of BFS hasn't been tested... idk if it works
         while (!queue.isEmpty()) {
             City current = queue.poll();
             explored.replace(current, true);

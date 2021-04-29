@@ -33,7 +33,7 @@ public final class FileImportController {
         
         bfsHelper();
         
-        Collections.shuffle(tickets);
+        //Collections.shuffle(tickets);
         
     }
     
