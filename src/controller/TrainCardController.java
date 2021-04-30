@@ -96,6 +96,8 @@ public class TrainCardController extends Observable {
     }
     
     public void replaceTakenTrainCard() {
+        //TODO if the stack is empty we switch to the discard pile
+
         TTRController.shownCards.add(TTRController.trainCardDeck.pop());
         notifyObservers(EventType.UPDATE_SHOWN_CARDS);
     }

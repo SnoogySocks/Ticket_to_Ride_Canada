@@ -96,6 +96,10 @@ public class TTRController extends Observable implements ActionListener {
         
     }
 
+    public void endGame() {
+        ticketController.scoreTickets();
+    }
+
     private void setupActionListeners() {
         frame.getPlayerPanel().getNextTurnButton().addActionListener(this);
         frame.getPlayerPanel().getClaimRouteButton().addActionListener(this);
@@ -104,6 +108,7 @@ public class TTRController extends Observable implements ActionListener {
     private static void setupObservers() {
         for(Player p : players){
             p.addObserver(frame.getPlayerPanel());
+            p.addObserver(frame.getScorePanel());
         }
 
         TTRController.addStaticObserver(frame.getCardPanel());
