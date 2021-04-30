@@ -1,9 +1,11 @@
 package util;
 
+import java.io.Serializable;
+
 /**
  * @author Felix
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
     
     private int x, y;
     

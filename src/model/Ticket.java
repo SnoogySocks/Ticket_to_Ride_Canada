@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * @author Nathan Wong
  */
-public class Ticket {
+public class Ticket implements Serializable {
     
     private City city1, city2;
     private int val;

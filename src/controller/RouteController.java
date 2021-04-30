@@ -69,7 +69,7 @@ public class RouteController {
                 ? getPlayerTrainChoice(player, route) : null;
         
         updateGame(player, route, numTrainCardsUsed);
-        TTRController.ticketController.scoreTickets(player);
+        TTRController.ticketController.scoreTicketsOnRouteAdded(player);
         //nextTurn();
         // TODO check when ticket is complete
     

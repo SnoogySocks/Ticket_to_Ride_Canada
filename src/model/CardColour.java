@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * @author Cerena
  */
-public enum CardColour {
+public enum CardColour implements Serializable {
     
     RAINBOW(0, "./images/trainCardRainbow.png"),
     BLACK(1, "./images/trainCardBlack.png"),

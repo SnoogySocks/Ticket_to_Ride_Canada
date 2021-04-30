@@ -3,12 +3,13 @@ package model;
 import util.EventType;
 import util.Observable;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * @author Nathan Wong
  */
-public class Player extends Observable {
+public class Player extends Observable implements Serializable {
 
     private final String name;
     private final PlayerColour playerColour;
@@ -50,8 +51,10 @@ public class Player extends Observable {
     }
     
     public void addCard (TrainCard card) {
-        ++totalCards;
-        ++numCardsOfColour[card.getColour().getValue()];
+        totalCards++;
+        numCardsOfColour[card.getColour().getValue()] += 1;
+
+        System.out.println(Arrays.toString(numCardsOfColour));
         notifyObservers(EventType.UPDATE_TRAINS);
     }
     

@@ -120,15 +120,25 @@ public class TicketController {
     }
     
     /**
-     * Scores
-     * @param player
+     * Scores the tickets every time they add a route
      */
-    public void scoreTickets (Player player) {
+    public void scoreTicketsOnRouteAdded(Player player) {
         for (Ticket ticket : player.getTickets()) {
-            if (checkTicketComplete(ticket, player)) {
-                player.setScore(player.getScore()+ticket.getVal());
-            } else {
-                player.setScore(player.getScore()-ticket.getVal());
+            if(!ticket.isCompleted()){
+                checkTicketComplete(ticket, player);
+            }
+        }
+    }
+
+    /**
+     * Applies ticket points at the end of each game
+     */
+    public void scoreTicketsEndGame(){
+        for(Player player : TTRController.players){
+            for(Ticket t : player.getTickets()){
+                if (t.isCompleted()){
+                    player.setScore(player.getScore() + t.getVal());
+                }
             }
         }
     }

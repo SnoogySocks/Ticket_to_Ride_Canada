@@ -3,11 +3,12 @@ package model;
 import util.Coordinate;
 
 import javax.swing.*;
+import java.io.Serializable;
 
 /**
  * @author Felix
  */
-public class Route extends JLabel {
+public class Route extends JLabel implements Serializable {
     
     private Player owner, owner2 = null;
     private City city1, city2;

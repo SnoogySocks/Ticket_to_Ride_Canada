@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * @author Cerena
  */
-public enum PlayerColour {
+public enum PlayerColour implements Serializable {
     
     WHITE(0), RED(1), GREEN(2), BLUE(3), YELLOW(4);
     

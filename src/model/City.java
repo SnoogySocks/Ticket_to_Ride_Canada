@@ -3,12 +3,13 @@ package model;
 import util.Coordinate;
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Felix
  */
-public class City extends JLabel {
+public class City extends JLabel implements Serializable {
     
     private String name;
     private Coordinate point;

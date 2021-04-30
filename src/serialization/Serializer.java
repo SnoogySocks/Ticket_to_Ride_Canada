@@ -7,7 +7,6 @@ import java.io.*;
  * @author Nathan
  */
 public class Serializer {
-    
     /**
      * Writes an obect to the specified file path
      * @param filePath the path to write to
@@ -16,7 +15,7 @@ public class Serializer {
      */
     public static <T extends Serializable> void serialize(String filePath, T object) {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("filePath");
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             
             objectOutputStream.writeObject(object);
@@ -35,7 +34,7 @@ public class Serializer {
      */
     public static <T extends Serializable> T deserialize(String filePath) {
         try {
-            FileInputStream fileInputStream = new FileInputStream("filePath");
+            FileInputStream fileInputStream = new FileInputStream(filePath);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             T obj = (T) objectInputStream.readObject();
