@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import static controller.TTRController.*;
@@ -56,7 +57,7 @@ public class RouteController {
         
         // If there are no choices available, cancel the transaction
         if (validRoutes.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "NO ROUTES AVAILABLE - CANCEL TRANSACTION");
+            JOptionPane.showMessageDialog(frame, "NO ROUTES AVAILABLE - CANCELING TRANSACTION...");
             return;
         }
         
@@ -118,12 +119,18 @@ public class RouteController {
         int totalChosenCards;
         do {
             
+            // Reset fields
             totalChosenCards = 0;
+            Arrays.fill(numTrainCardsUsed, 0);
+            
             JOptionPane.showMessageDialog(frame, parameters.toArray(), "Train Cards", JOptionPane.QUESTION_MESSAGE);
             
             // Check if the cards exactly match a total of route.getLength()
-            for (JFormattedTextField text: input) {
-                 totalChosenCards += Integer.parseInt(text.getText());
+            for (int i = 0; i<input.size(); ++i) {
+                
+                numTrainCardsUsed[i] = Integer.parseInt(input.get(i).getText());
+                totalChosenCards += numTrainCardsUsed[i];
+                
             }
             if (totalChosenCards!=route.getLength()) {
                 JOptionPane.showMessageDialog(frame, "Too many or too little trains. Try again.", "Alert", JOptionPane.ERROR_MESSAGE);
@@ -131,7 +138,20 @@ public class RouteController {
             
         } while (totalChosenCards!=route.getLength());
     
-        JOptionPane.showMessageDialog(frame, "Successfully obtained route "+route, "Success", JOptionPane.INFORMATION_MESSAGE);
+        // Display success pane
+        parameters.clear();
+        parameters.add("Successfully obtained");
+        parameters.add(route.toString());
+        parameters.add("Used the following train cards:");
+        
+        // Display the used cards
+        for (int i = 0; i<values.length; ++i) {
+            if (numTrainCardsUsed[i]!=0) {
+                parameters.add(values[i].toString()+": "+numTrainCardsUsed[i]);
+            }
+        }
+        
+        JOptionPane.showMessageDialog(frame, parameters.toArray(), "Success", JOptionPane.INFORMATION_MESSAGE);
         
         return numTrainCardsUsed;
         
