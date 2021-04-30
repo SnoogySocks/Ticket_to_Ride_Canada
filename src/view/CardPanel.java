@@ -73,6 +73,7 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
             //  trainButton.setText("Placeholder :)");
             trainButton.setBounds(buttonStartX+buttonStartX/2+buttonWidth+buttonSpacing*i, buttonY, buttonWidth, buttonHeight);
             trainButton.setFocusable(false);
+            trainButton.addActionListener(this);
             add(trainButton);
         }
         
@@ -84,26 +85,6 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
     
     public JButton getCardDeckButton () {
         return cardDeckButton;
-    }
-    
-    public JButton getTrain1Button () {
-        return train1Button;
-    }
-    
-    public JButton getTrain2Button () {
-        return train2Button;
-    }
-    
-    public JButton getTrain3Button () {
-        return train3Button;
-    }
-    
-    public JButton getTrain4Button () {
-        return train4Button;
-    }
-    
-    public JButton getTrain5Button () {
-        return train5Button;
     }
     
     public JButton[] getTrainButtons () {
@@ -125,9 +106,14 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
     // Train deck function
     public void actionPerformed (ActionEvent e) {
         if (e.getSource()==ticketDeckButton) {
-            TicketController controller = new TicketController(); // TODO remove after testing
-            controller.showTicketSelectionDialogue();
-            
+            TTRController.ticketController.showTicketSelectionDialogue();
+        }
+
+        for(int i = 0; i < trainButtons.length; i++){
+            JButton btn = trainButtons[i];
+            if(e.getSource() == btn){
+                TTRController.tCController.giveShownCard(i);
+            }
         }
     }
     
@@ -136,7 +122,7 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
         
         if (event==EventType.UPDATE_SHOWN_CARDS) {
             
-            //here lies an hour of painful debugging... we forgot to pass something
+            //here lies an hour of painful debugging... we forgot to pass something into the constructor
             for (int i = 0; i<5; i++) {
                 trainButtons[i].setIcon(new ImageIcon(TTRController.shownCards.get(i).getColour().getImagePath()));
             }

@@ -1,5 +1,6 @@
 package view;
 
+import controller.TTRController;
 import util.*;
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class ScorePanel extends JPanel implements Observer {
         add(title);
 
         for(int i = 0; i < 4; i++){
-            playerScoreLabels[i] = new JLabel("Player " + (i + 1));
+            playerScoreLabels[i] = new JLabel("Player " + (i + 1) + ": 0");
             playerScoreLabels[i].setBounds(100, 80 + 25 * i, 200,25);
             add(playerScoreLabels[i]);
         }
@@ -30,7 +31,11 @@ public class ScorePanel extends JPanel implements Observer {
     }
     
     public void update(Observable obj, EventType event){
-        //once set up this method should be called every time the players' scores are changed
+        if(event == EventType.UPDATE_SCORES) {
+            for (int i = 0; i < TTRController.players.length; i++) {
+                playerScoreLabels[i].setText("Player " + (i + 1) + ": " + TTRController.players[i].getScore());
+            }
+        }
     }
     
 }

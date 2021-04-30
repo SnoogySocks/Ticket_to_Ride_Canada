@@ -8,5 +8,6 @@ public enum EventType {
     UPDATE_SCORES,
     UPDATE_TICKETS,
     UPDATE_TRAINS,
-    NEXT_TURN
+    NEXT_TURN,
+    LOCK_CONTROLS,
 }

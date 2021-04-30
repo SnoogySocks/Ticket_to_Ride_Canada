@@ -34,7 +34,7 @@ public class Player extends Observable {
     
     public void addTicket (Ticket ticket) {
         tickets.add(ticket);
-        notifyObservers(EventType.UPDATE_SCORES);
+        notifyObservers(EventType.UPDATE_TICKETS);
     }
     
     public ArrayList<Route> getClaimedRoutes () {
@@ -52,6 +52,7 @@ public class Player extends Observable {
     public void addTrainCard (TrainCard card) {
         ++totalCards;
         ++numCardsOfColour[card.getColour().getValue()];
+        notifyObservers(EventType.UPDATE_TRAINS);
     }
     
     public void removeTrainCards (int cardColour, int numberRemoved) {

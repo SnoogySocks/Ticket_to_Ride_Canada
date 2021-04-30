@@ -57,8 +57,7 @@ public class TTRController extends Observable implements ActionListener {
         
         trainCardDeck = tCController.generateTrainCardDeck();
         frame = new GameFrame();
-        frame.getPlayerPanel().getClaimRouteButton().addActionListener(this);
-        
+
         tCController.addObserver(frame.getCardPanel());
         tCController.flipFiveCards();
         
@@ -76,7 +75,11 @@ public class TTRController extends Observable implements ActionListener {
         // TODO add below methods
         // showNextPlayer();
 //        enableGUIElements(true);
-        
+
+        setupObservers();
+        setupActionListeners();
+
+        notifyStaticObservers(EventType.NEXT_TURN); // necessary to initialize GUI to player 1
         JOptionPane.showMessageDialog(frame, "GAME STARTING - Player 1 Begins");
         
     }
@@ -86,18 +89,32 @@ public class TTRController extends Observable implements ActionListener {
         PlayerColour[] clrValues = PlayerColour.values();
         for (int i = 0; i<players.length; ++i) {
             
-            players[i] = new Player("Player ", clrValues[i+1]);
-            
-            // Make the player panel observe the players
-            players[i].addObserver(frame.getPlayerPanel());
+            players[i] = new Player("Player " + (i+1), clrValues[i+1]);
             
         }
         frame.getPlayerPanel().setCurrentPlayer(getCurrentPlayer());
         
     }
+
+    private void setupActionListeners() {
+        frame.getPlayerPanel().getNextTurnButton().addActionListener(this);
+        frame.getPlayerPanel().getClaimRouteButton().addActionListener(this);
+    }
+
+    private static void setupObservers() {
+        for(Player p : players){
+            p.addObserver(frame.getPlayerPanel());
+        }
+
+        TTRController.addStaticObserver(frame.getCardPanel());
+        TTRController.addStaticObserver(frame.getPlayerPanel());
+        TTRController.addStaticObserver(frame.getScorePanel());
+
+        tCController.addObserver(frame.getCardPanel());
+    }
     
     public static void nextTurn () {
-        playerTurn = playerTurn==3 ? 0 : playerTurn+1;
+        playerTurn = playerTurn == 3 ? 0 : playerTurn+1;
         notifyStaticObservers(EventType.NEXT_TURN);
     }
     
@@ -114,6 +131,10 @@ public class TTRController extends Observable implements ActionListener {
         
         if (e.getSource()==frame.getPlayerPanel().getClaimRouteButton()) {
             routeController.getPlayerRouteChoice(getCurrentPlayer());
+        }
+
+        if(e.getSource() == frame.getPlayerPanel().getNextTurnButton()){
+            nextTurn();
         }
         
     }
