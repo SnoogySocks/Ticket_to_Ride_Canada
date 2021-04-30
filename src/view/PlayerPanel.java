@@ -137,82 +137,82 @@ public class PlayerPanel extends JPanel implements Observer {
     public JButton getClaimRouteButton () {
         return claimRouteButton;
     }
-
-    public JLabel getPanelTitle() {
+    
+    public JLabel getPanelTitle () {
         return panelTitle;
     }
-
-    public JLabel getPlayerNameTitle() {
+    
+    public JLabel getPlayerNameTitle () {
         return playerNameTitle;
     }
-
-    public JLabel getPlayerColourTitle() {
+    
+    public JLabel getPlayerColourTitle () {
         return playerColourTitle;
     }
-
-    public JLabel getTicketTitle() {
+    
+    public JLabel getTicketTitle () {
         return ticketTitle;
     }
-
-    public JLabel getTrainCardTitle() {
+    
+    public JLabel getTrainCardTitle () {
         return trainCardTitle;
     }
-
-    public JLabel getNumTrainsTitle() {
+    
+    public JLabel getNumTrainsTitle () {
         return numTrainsTitle;
     }
-
-    public JTextArea getTicketPaneText() {
+    
+    public JTextArea getTicketPaneText () {
         return ticketPaneText;
     }
-
-    public void setTicketPaneText(JTextArea ticketPaneText) {
+    
+    public void setTicketPaneText (JTextArea ticketPaneText) {
         this.ticketPaneText = ticketPaneText;
     }
-
-    public JScrollPane getTicketPane() {
+    
+    public JScrollPane getTicketPane () {
         return ticketPane;
     }
-
-    public void setTicketPane(JScrollPane ticketPane) {
+    
+    public void setTicketPane (JScrollPane ticketPane) {
         this.ticketPane = ticketPane;
     }
-
-    public void setClaimRouteButton(JButton claimRouteButton) {
+    
+    public void setClaimRouteButton (JButton claimRouteButton) {
         this.claimRouteButton = claimRouteButton;
     }
-
-    public JButton getNextTurnButton() {
+    
+    public JButton getNextTurnButton () {
         return nextTurnButton;
     }
-
-    public void setNextTurnButton(JButton nextTurnButton) {
+    
+    public void setNextTurnButton (JButton nextTurnButton) {
         this.nextTurnButton = nextTurnButton;
     }
-
-    public ArrayList<Ticket> getTickets() {
+    
+    public ArrayList<Ticket> getTickets () {
         return tickets;
     }
-
-    public void setTickets(ArrayList<Ticket> tickets) {
+    
+    public void setTickets (ArrayList<Ticket> tickets) {
         this.tickets = tickets;
     }
-
-    public TrainCard[] getNumTrainCards() {
+    
+    public TrainCard[] getNumTrainCards () {
         return numTrainCards;
     }
-
-    public void setNumTrainCards(TrainCard[] numTrainCards) {
+    
+    public void setNumTrainCards (TrainCard[] numTrainCards) {
         this.numTrainCards = numTrainCards;
     }
-
-    private void updateTickets() {
+    
+    private void updateTickets () {
         ticketPaneText.setText("");
-        for(Ticket t : TTRController.getCurrentPlayer().getTickets()){
-            ticketPaneText.append(t.toString() + "\n");
+        for (Ticket t : TTRController.getCurrentPlayer().getTickets()) {
+            ticketPaneText.append(t.toString()+"\n");
         }
     }
-
+    
     @Override
     public void update (Observable obj, EventType event) {
         
@@ -220,8 +220,7 @@ public class PlayerPanel extends JPanel implements Observer {
             updateTrains();
         } else if (event==EventType.UPDATE_TICKETS) {
             updateTickets();
-        }
-        else if (event==EventType.NEXT_TURN) {
+        } else if (event==EventType.NEXT_TURN) {
             setCurrentPlayer(TTRController.getCurrentPlayer());
             updateTickets();
         }

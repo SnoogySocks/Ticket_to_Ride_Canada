@@ -55,6 +55,9 @@ public class City extends JLabel {
             if(r.getOwner() != null && r.getOwner().equals(player)){
                 list.add(r);
             }
+            else if (r.isDualRoute() && r.getOwner2() != null && r.getOwner2().equals(player)){
+                list.add(r);
+            }
         }
 
         return list;

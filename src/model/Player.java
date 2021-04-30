@@ -49,13 +49,13 @@ public class Player extends Observable {
         return score;
     }
     
-    public void addTrainCard (TrainCard card) {
+    public void addCard (TrainCard card) {
         ++totalCards;
         ++numCardsOfColour[card.getColour().getValue()];
         notifyObservers(EventType.UPDATE_TRAINS);
     }
     
-    public void removeTrainCards (int cardColour, int numberRemoved) {
+    public void removeCards (int cardColour, int numberRemoved) {
         totalCards -= totalCards;
         numCardsOfColour[cardColour] -= numberRemoved;
     }

@@ -83,8 +83,6 @@ public class TicketController {
         //nodes - cities, edges - routes
         //start - city1, destination - city2
 
-        System.out.println("Hello World");
-
         HashMap<City, Boolean> explored = new HashMap<>();
         City destination = ticket.getCity2();
 
@@ -119,20 +117,19 @@ public class TicketController {
         }
 
         return false;
-
-        //run BFS or DFS to see if the ticket is complete then set its complete field to true
     }
-
-    public void scoreTickets() {
-        for (Player player : TTRController.players) {
-            for (Ticket ticket : player.getTickets()) {
-                if (checkTicketComplete(ticket, player)) {
-                    player.setScore(player.getScore() + ticket.getVal());
-                } else {
-                    player.setScore(player.getScore() - ticket.getVal());
-                }
+    
+    /**
+     * Scores
+     * @param player
+     */
+    public void scoreTickets(Player player) {
+        for (Ticket ticket : player.getTickets()) {
+            if (checkTicketComplete(ticket, player)) {
+                player.setScore(player.getScore() + ticket.getVal());
+            } else {
+                player.setScore(player.getScore() - ticket.getVal());
             }
         }
-        //run isTicketComplete() for each ticket that the player owns?
     }
 }

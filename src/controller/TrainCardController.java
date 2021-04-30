@@ -46,7 +46,7 @@ public class TrainCardController extends Observable {
         
         for (Player player : TTRController.players) {
             for (int i = 0; i<4; i++) {
-                player.addTrainCard(TTRController.trainCardDeck.pop());
+                player.addCard(TTRController.trainCardDeck.pop());
             }
         }
         
@@ -54,13 +54,13 @@ public class TrainCardController extends Observable {
 
     public void giveShownCard(int index){
         TrainCard card = TTRController.shownCards.get(index);
-        TTRController.getCurrentPlayer().addTrainCard(card);
+        TTRController.getCurrentPlayer().addCard(card);
         TTRController.shownCards.remove(card);
         replaceTakenTrainCard();
     }
     
     public void dealSingleTrainCards (Player player) {
-        player.addTrainCard(TTRController.trainCardDeck.pop());
+        player.addCard(TTRController.trainCardDeck.pop());
     }
     
     public void flipFiveCards () {

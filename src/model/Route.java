@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class Route extends JLabel {
     
-    private Player owner;
+    private Player owner, owner2 = null;
     private City city1, city2;
     private int length;
     private CardColour colour;
@@ -83,6 +83,14 @@ public class Route extends JLabel {
     
     public void setDualRoute (boolean dualRoute) {
         isDualRoute = dualRoute;
+    }
+    
+    public Player getOwner2() {
+        return owner2;
+    }
+    
+    public void setOwner2(Player player){
+        owner2 = player;
     }
     
     @Override

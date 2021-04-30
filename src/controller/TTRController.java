@@ -97,7 +97,7 @@ public class TTRController extends Observable implements ActionListener {
     }
 
     public void endGame() {
-        ticketController.scoreTickets();
+//        ticketController.scoreTickets();
     }
 
     private void setupActionListeners() {

@@ -65,12 +65,14 @@ public class RouteController {
                 validRoutes.toArray(),
                 validRoutes.get(0));
         
+        // TODO rainbow routes are just a place holder
         int[] numTrainCardsUsed = route.getColour()==CardColour.RAINBOW
                 ? getPlayerTrainChoice(player, route) : null;
-        // TODO consider asking for the number of rainbow cards they will use
         
         updateGame(player, route, numTrainCardsUsed);
+        TTRController.ticketController.scoreTickets(player);
         //nextTurn();
+        // TODO check when ticket is complete
     
     }
     
@@ -81,50 +83,29 @@ public class RouteController {
      * @return an array indicating the train cards to use
      */
     public int[] getPlayerTrainChoice (Player player, Route route) {
-        
+    
         CardColour[] values = CardColour.values();
         int[] numTrainCardsUsed = new int[values.length];
         
-        // Make a JOption pane with checkboxes displaying
-        // the CardColours the player can choose from
-        JCheckBox[] checkBoxes = new JCheckBox[values.length];
-        for (int i = 0; i<values.length; ++i) {
-            checkBoxes[i] = new JCheckBox(values[i].toString());
-        }
-        
-        // Loop until the player has chosen card colours
-        // with enough cards to fill the route with
-        int totalChosenCards = 0;
-        while (totalChosenCards<route.getLength()) {
-            
-            JOptionPane.showMessageDialog(frame, checkBoxes);
-            
-            for (int i = 0; i<checkBoxes.length; ++i) {
-                if (checkBoxes[i].isSelected()) {
-                    totalChosenCards += player.getNumCardsOfColour(i);
-                }
-            }
-            
-        }
-        
         ArrayList<Object> parameters = new ArrayList<>();
         // Create the message
-        parameters.add("How many train cards of each type are there?");
+        parameters.add("Required # of train cards: "+route.getLength());
+        parameters.add("How many train cards of each type will you use?");
         
         // Create the formatter for the text fields
         NumberFormatter formatter = new NumberFormatter(NumberFormat.getInstance());
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
         ArrayList<JFormattedTextField> input = new ArrayList<>();
         
         // Create the JOptionPane
-        for (int i = 0; i<checkBoxes.length; ++i) {
+        for (int i = 0; i<values.length; ++i) {
             
-            if (!checkBoxes[i].isSelected()) continue;
             parameters.add(values[i].toString()+" train cards:");
             
-            formatter.setMaximum(player.getNumCardsOfColour(i));
             input.add(new JFormattedTextField(formatter));
             input.get(i).setText("0");
             parameters.add(input.get(i));
@@ -134,17 +115,23 @@ public class RouteController {
         // Prompt the user for the number of trains to use
         // from their selected train cards until the
         // totalChosenCards==route.getLength()
-        totalChosenCards = 0;
-        while (totalChosenCards!=route.getLength()) {
+        int totalChosenCards;
+        do {
             
-            JOptionPane.showMessageDialog(frame, parameters, "Train Cards", JOptionPane.QUESTION_MESSAGE);
+            totalChosenCards = 0;
+            JOptionPane.showMessageDialog(frame, parameters.toArray(), "Train Cards", JOptionPane.QUESTION_MESSAGE);
             
-        }
-        
-        //        Route route = (Route) JOptionPane.showInputDialog(frame, "Choose route to claim...",
-        //                "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
-        //                validRoutes.toArray(),
-        //                validRoutes.get(0));
+            // Check if the cards exactly match a total of route.getLength()
+            for (JFormattedTextField text: input) {
+                 totalChosenCards += Integer.parseInt(text.getText());
+            }
+            if (totalChosenCards!=route.getLength()) {
+                JOptionPane.showMessageDialog(frame, "Too many or too little trains. Try again.", "Alert", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } while (totalChosenCards!=route.getLength());
+    
+        JOptionPane.showMessageDialog(frame, "Successfully obtained route "+route, "Success", JOptionPane.INFORMATION_MESSAGE);
         
         return numTrainCardsUsed;
         
@@ -152,21 +139,33 @@ public class RouteController {
     
     public void updateGame (Player player, Route route, int[] numTrainCardsUsed) {
         
+        final int routeColourValue = route.getColour().getValue();
+        
         // Remove the player's trains
         player.setNumTrains(player.getNumTrains()-route.getLength());
         
         if (numTrainCardsUsed==null) {
-            player.removeTrainCards(route.getColour().getValue(), route.getLength());
+            
+            // If the player has enough cards of that colour, use them
+            final int difference = player.getNumCardsOfColour(routeColourValue)-route.getLength();
+            if (difference>=0) {
+                player.removeCards(routeColourValue, route.getLength());
+                
+            // Otherwise, accommodate by using rainbow cards
+            } else {
+                player.removeCards(routeColourValue, player.getNumCardsOfColour(routeColourValue));
+                player.removeCards(CardColour.RAINBOW.getValue(), -difference);
+            }
+            
         } else {
             for (int i = 0; i<numTrainCardsUsed.length; ++i) {
-                player.removeTrainCards(i, numTrainCardsUsed[i]);
+                player.removeCards(i, numTrainCardsUsed[i]);
             }
         }
     
         // Claim the route
         player.getClaimedRoutes().add(route);
         player.setScore(player.getScore() + routeScoringTable.get(route.getLength()));
-        System.out.println("Is this being called?");
     
         // Title case the colour to set a checkmark for the route
         String colour = player.getPlayerColour().toString().toLowerCase();
@@ -178,7 +177,7 @@ public class RouteController {
         player.notifyObservers(EventType.UPDATE_SCORES);
     
         // Put the used player trainCards in the discard pile
-        for (int i = 0; i<player.getNumCardsOfColour(route.getColour().getValue()); ++i) {
+        for (int i = 0; i<player.getNumCardsOfColour(routeColourValue); ++i) {
             trainCardDiscards.push(new TrainCard(route.getColour()));
         }
     
