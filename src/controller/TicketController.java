@@ -123,8 +123,8 @@ public class TicketController {
         //run BFS or DFS to see if the ticket is complete then set its complete field to true
     }
 
-    public void scoreTickets(Player[] players) {
-        for (Player player : players) {
+    public void scoreTickets() {
+        for (Player player : TTRController.players) {
             for (Ticket ticket : player.getTickets()) {
                 if (checkTicketComplete(ticket, player)) {
                     player.setScore(player.getScore() + ticket.getVal());

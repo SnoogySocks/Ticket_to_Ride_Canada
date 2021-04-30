@@ -51,6 +51,13 @@ public class TrainCardController extends Observable {
         }
         
     }
+
+    public void giveShownCard(int index){
+        TrainCard card = TTRController.shownCards.get(index);
+        TTRController.getCurrentPlayer().addTrainCard(card);
+        TTRController.shownCards.remove(card);
+        replaceTakenTrainCard();
+    }
     
     public void dealSingleTrainCards (Player player) {
         player.addTrainCard(TTRController.trainCardDeck.pop());
@@ -89,9 +96,10 @@ public class TrainCardController extends Observable {
     }
     
     public void replaceTakenTrainCard() {
-    
+        //TODO if the stack is empty we switch to the discard pile
+
         TTRController.shownCards.add(TTRController.trainCardDeck.pop());
-    
+        notifyObservers(EventType.UPDATE_SHOWN_CARDS);
     }
     
     

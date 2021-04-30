@@ -70,14 +70,14 @@ public class RouteController {
         // TODO consider asking for the number of rainbow cards they will use
         
         updateGame(player, route, numTrainCardsUsed);
-        nextTurn();
-        
+        //nextTurn();
+    
     }
     
     /**
      * Called when the route is gray (any train card can be used)
      * @param player = current player
-     * @param route  = chosen route
+     * @param route = chosen route
      * @return an array indicating the train cards to use
      */
     public int[] getPlayerTrainChoice (Player player, Route route) {
@@ -162,10 +162,12 @@ public class RouteController {
                 player.removeTrainCards(i, numTrainCardsUsed[i]);
             }
         }
-        
+    
         // Claim the route
         player.getClaimedRoutes().add(route);
-        
+        player.setScore(player.getScore() + routeScoringTable.get(route.getLength()));
+        System.out.println("Is this being called?");
+    
         // Title case the colour to set a checkmark for the route
         String colour = player.getPlayerColour().toString().toLowerCase();
         colour = Character.toUpperCase(colour.charAt(0))+colour.substring(1);
@@ -173,17 +175,19 @@ public class RouteController {
         
         // Update the player panel
         player.notifyObservers(EventType.UPDATE_TRAINS);
-        
+        player.notifyObservers(EventType.UPDATE_SCORES);
+    
         // Put the used player trainCards in the discard pile
         for (int i = 0; i<player.getNumCardsOfColour(route.getColour().getValue()); ++i) {
             trainCardDiscards.push(new TrainCard(route.getColour()));
         }
-        
+    
         // Make the route unavailable
         availableRoutes.remove(route);
         
     }
-    
+
+    //TODO for deletion - we might score routes every time they are added to the player instead
     public int scoreRoutes (Player player) {
         
         int score = 0;
