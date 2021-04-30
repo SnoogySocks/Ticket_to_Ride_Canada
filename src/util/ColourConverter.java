@@ -8,7 +8,7 @@ import java.util.HashMap;
  * Utility for string conversion to colour
  * @author Nathan
  */
-public final class ColorConverter {
+public final class ColourConverter {
     
     private static final HashMap<String, CardColour> string2ColourConversions = new HashMap<>() {{
         
@@ -20,7 +20,7 @@ public final class ColorConverter {
         
     }};
     
-    public static CardColour parseColor (String s){
+    public static CardColour parseColor (String s) {
         return string2ColourConversions.get(s);
     }
     

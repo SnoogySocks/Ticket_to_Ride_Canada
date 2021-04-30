@@ -108,7 +108,7 @@ public final class FileImportController {
                 String city1 = sanitize(input.next());
                 String city2 = sanitize(input.next());
                 int length = input.nextInt();
-                CardColour colour = ColorConverter.parseColor(input.next());
+                CardColour colour = ColourConverter.parseColor(input.next());
                 Coordinate completionPoint = new Coordinate(input.nextInt(), input.nextInt());
                 boolean isDualRoute = Boolean.parseBoolean(input.next());
                 
