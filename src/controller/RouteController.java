@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static controller.TTRController.*;
-
 /**
  * @author Felix
  */
@@ -37,7 +35,7 @@ public class RouteController {
         // Find the routes that the player can go to
         ArrayList<Route> validRoutes = new ArrayList<>();
         
-        for (Route route : availableRoutes) {
+        for (Route route : TTRController.availableRoutes) {
             
             // Routes are valid if
             // 1. The player has enough trains and (
@@ -57,11 +55,11 @@ public class RouteController {
         
         // If there are no choices available, cancel the transaction
         if (validRoutes.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "NO ROUTES AVAILABLE - CANCELING TRANSACTION...");
+            JOptionPane.showMessageDialog(TTRController.frame, "NO ROUTES AVAILABLE - CANCELING TRANSACTION...");
             return;
         }
         
-        Route route = (Route) JOptionPane.showInputDialog(frame, "Choose route to claim...",
+        Route route = (Route) JOptionPane.showInputDialog(TTRController.frame, "Choose route to claim...",
                 "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
                 validRoutes.toArray(),
                 validRoutes.get(0));
@@ -86,7 +84,6 @@ public class RouteController {
     public int[] getPlayerTrainChoice (Player player, Route route) {
     
         CardColour[] values = CardColour.values();
-        int[] numTrainCardsUsed = new int[values.length];
         
         ArrayList<Object> parameters = new ArrayList<>();
         // Create the message
@@ -116,6 +113,7 @@ public class RouteController {
         // Prompt the user for the number of trains to use
         // from their selected train cards until the
         // totalChosenCards==route.getLength()
+        int[] numTrainCardsUsed = new int[values.length];
         int totalChosenCards;
         do {
             
@@ -123,7 +121,7 @@ public class RouteController {
             totalChosenCards = 0;
             Arrays.fill(numTrainCardsUsed, 0);
             
-            JOptionPane.showMessageDialog(frame, parameters.toArray(), "Train Cards", JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(TTRController.frame, parameters.toArray(), "Train Cards", JOptionPane.QUESTION_MESSAGE);
             
             // Check if the cards exactly match a total of route.getLength()
             for (int i = 0; i<input.size(); ++i) {
@@ -131,9 +129,15 @@ public class RouteController {
                 numTrainCardsUsed[i] = Integer.parseInt(input.get(i).getText());
                 totalChosenCards += numTrainCardsUsed[i];
                 
+                // Invalid input if the player does not have enough train cards
+                if (player.getNumCardsOfColour(i)<numTrainCardsUsed[i]) {
+                    totalChosenCards = route.getLength()+1;
+                    break;
+                }
+                
             }
             if (totalChosenCards!=route.getLength()) {
-                JOptionPane.showMessageDialog(frame, "Too many or too little trains. Try again.", "Alert", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(TTRController.frame, "Too many or too little trains. Try again.", "Alert", JOptionPane.ERROR_MESSAGE);
             }
             
         } while (totalChosenCards!=route.getLength());
@@ -151,7 +155,7 @@ public class RouteController {
             }
         }
         
-        JOptionPane.showMessageDialog(frame, parameters.toArray(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(TTRController.frame, parameters.toArray(), "Success", JOptionPane.INFORMATION_MESSAGE);
         
         return numTrainCardsUsed;
         
@@ -166,6 +170,7 @@ public class RouteController {
         
         if (numTrainCardsUsed==null) {
             
+            // TODO put the success pane here
             // If the player has enough cards of that colour, use them
             final int difference = player.getNumCardsOfColour(routeColourValue)-route.getLength();
             if (difference>=0) {
@@ -198,11 +203,11 @@ public class RouteController {
     
         // Put the used player trainCards in the discard pile
         for (int i = 0; i<player.getNumCardsOfColour(routeColourValue); ++i) {
-            trainCardDiscards.push(new TrainCard(route.getColour()));
+            TTRController.trainCardDiscards.push(new TrainCard(route.getColour()));
         }
     
         // Make the route unavailable
-        availableRoutes.remove(route);
+        TTRController.availableRoutes.remove(route);
         
     }
 
