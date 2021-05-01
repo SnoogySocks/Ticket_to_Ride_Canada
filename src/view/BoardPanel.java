@@ -11,7 +11,7 @@ import javax.swing.*;
  * @author Felix
  */
 public class BoardPanel extends JPanel {
-
+    
     private final JLabel gameBoardImage;
     
     public BoardPanel (int x, int y, int width, int height) {
@@ -31,6 +31,10 @@ public class BoardPanel extends JPanel {
     
         setVisible(true);
     
+    }
+    
+    public JLabel getGameBoardImage () {
+        return gameBoardImage;
     }
     
 }

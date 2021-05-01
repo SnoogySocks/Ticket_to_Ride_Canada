@@ -15,10 +15,11 @@ public enum CardColour implements Serializable {
     PURPLE(5, "./images/trainCardPurple.png"),
     RED(6, "./images/trainCardRed.png"),
     WHITE(7, "./images/trainCardWhite.png"),
-    YELLOW(8, "./images/trainCardYellow.png");
+    YELLOW(8, "./images/trainCardYellow.png"),
+    GRAY(0, null);
     
-    private int value;
-    private String imgPath;
+    private final int value;
+    private final String imgPath;
     
     CardColour (int value, String imgPath) {
         this.value = value;

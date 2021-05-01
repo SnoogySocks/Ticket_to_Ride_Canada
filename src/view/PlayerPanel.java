@@ -83,7 +83,7 @@ public class PlayerPanel extends JPanel implements Observer {
         
         // Create the numTrainCard list
         CardColour[] values = CardColour.values();
-        numTrainCards = new TrainCard[values.length];
+        numTrainCards = new TrainCard[values.length-1];
         for (int i = 0; i<numTrainCards.length; ++i) {
             
             numTrainCards[i] = new TrainCard(values[i]);
@@ -171,9 +171,12 @@ public class PlayerPanel extends JPanel implements Observer {
         switch (event) {
             case UPDATE_TRAINS: updateTrains(); break;
             case UPDATE_TICKETS: updateTickets(); break;
+            case LOCK_CONTROLS: case CARD_TAKEN:
+                claimRouteButton.setEnabled(false); break;
             case NEXT_TURN:
                 updateCurrentPlayer(TTRController.getCurrentPlayer());
                 updateTickets();
+                claimRouteButton.setEnabled(true);
                 break;
         }
         

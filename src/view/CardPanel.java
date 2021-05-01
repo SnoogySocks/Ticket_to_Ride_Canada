@@ -65,6 +65,7 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
         cardDeckButton = new JButton(cardDeckImage);
         cardDeckButton.setBounds(buttonStartX+buttonStartX/2+buttonWidth, buttonY, buttonWidth, buttonHeight);
         cardDeckButton.setFocusable(false);
+        cardDeckButton.addActionListener(this);
         add(cardDeckButton);
         
         for (int i = 1; i<=5; i++) {
@@ -108,8 +109,12 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
         
         if (e.getSource()==ticketDeckButton) {
             TTRController.ticketController.showTicketSelectionDialogue();
-//        } else if (e.getSource()==cardDeckbutton) {
-//            TTRController.ticketController
+            //        } else if (e.getSource()==cardDeckButton) {
+            //            TTRController.ticketController
+        }
+        
+        if (e.getSource()==cardDeckButton) {
+            TTRController.tCController.giveDeckCard();
         }
         
         for (int i = 0; i<trainButtons.length; i++) {
@@ -118,20 +123,38 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
                 TTRController.tCController.giveShownCard(i);
             }
         }
+        
     }
     
     @Override
     public void update (Observable obj, EventType event) {
         
-        if (event==EventType.UPDATE_SHOWN_CARDS) {
-            
-            //here lies an hour of painful debugging... we forgot to pass something into the constructor
-            for (int i = 0; i<5; i++) {
-                trainButtons[i].setIcon(new ImageIcon(TTRController.shownCards.get(i).getColour().getImagePath()));
-            }
-            
+        switch (event) {
+            case UPDATE_SHOWN_CARDS:
+                //here lies an hour of painful debugging... we forgot to pass something into the constructor
+                for (int i = 0; i<5; i++) {
+                    trainButtons[i].setIcon(new ImageIcon(TTRController.shownCards.get(i).getColour().getImagePath()));
+                }
+                break;
+            case CARD_TAKEN:
+                ticketDeckButton.setEnabled(false);
+                break;
+            case LOCK_CONTROLS:
+                setButtonsEnabled(false);
+                break;
+            case NEXT_TURN:
+                setButtonsEnabled(true);
+                break;
         }
         
+    }
+    
+    private void setButtonsEnabled (boolean isEnabled) {
+        for (int i = 0; i<5; i++) {
+            trainButtons[i].setEnabled(isEnabled);
+        }
+        cardDeckButton.setEnabled(isEnabled);
+        ticketDeckButton.setEnabled(isEnabled);
     }
     
 }

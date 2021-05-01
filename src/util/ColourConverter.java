@@ -15,8 +15,6 @@ public final class ColourConverter {
         for (CardColour colour: CardColour.values()) {
             put(colour.toString(), colour);
         }
-        // Gray card colours are considered rainbow, or wild cards
-        put("GRAY", CardColour.RAINBOW);
         
     }};
     

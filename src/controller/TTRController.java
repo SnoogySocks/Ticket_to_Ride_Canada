@@ -72,10 +72,10 @@ public class TTRController extends Observable implements ActionListener {
         createPlayers();
         tCController.dealTrainCards();
         tCController.flipFiveCards();
-        //ticketController.dealStartingTickets(); //TODO uncomment for prod
+        ticketController.dealStartingTickets();
         // TODO add below methods
         // showNextPlayer();
-//        enableGUIElements(true);
+        // enableGUIElements(true);
 
         setupObservers();
         setupActionListeners();
@@ -86,12 +86,11 @@ public class TTRController extends Observable implements ActionListener {
     }
 
     public void createPlayers() {
+        
         players = new Player[4];
         PlayerColour[] clrValues = PlayerColour.values();
         for (int i = 0; i < players.length; ++i) {
-
             players[i] = new Player("Player " + (i + 1), clrValues[i + 1]);
-
         }
 
     }
@@ -103,6 +102,8 @@ public class TTRController extends Observable implements ActionListener {
     private void setupActionListeners() {
         frame.getPlayerPanel().getNextTurnButton().addActionListener(this);
         frame.getPlayerPanel().getClaimRouteButton().addActionListener(this);
+        frame.getNewMI().addActionListener(this);
+        frame.getExitMI().addActionListener(this);
         frame.getLoadMI().addActionListener(this);
         frame.getSaveMI().addActionListener(this);
     }
@@ -138,6 +139,7 @@ public class TTRController extends Observable implements ActionListener {
      * @author Nathan
      */
     public static void loadGame() {
+        
         //deserialize saved game
         GameState state = Serializer.deserialize("./saveGames/save.ser");
 
@@ -175,7 +177,7 @@ public class TTRController extends Observable implements ActionListener {
     @Override
     public void actionPerformed (ActionEvent e) {
 
-        //a switch would be much nicer but these aren't constant values :(
+        // A switch would be much nicer but these aren't constant values :(
         if (e.getSource()==frame.getCardPanel().getTicketDeckButton()) {
             ticketController.showTicketSelectionDialogue();
             notifyStaticObservers(EventType.LOCK_CONTROLS);
@@ -183,11 +185,17 @@ public class TTRController extends Observable implements ActionListener {
             routeController.getPlayerRouteChoice(getCurrentPlayer());
         } else if (e.getSource()==frame.getPlayerPanel().getNextTurnButton()) {
             nextTurn();
-            notifyStaticObservers(EventType.LOCK_CONTROLS);
         } else if (e.getSource()==frame.getSaveMI()) {
             saveGame();
         } else if (e.getSource()==frame.getLoadMI()) {
             loadGame();
+          
+        //Cerena
+        } else if (e.getSource()==frame.getNewMI()) {
+            newGame();
+        }
+        else if (e.getSource()==frame.getExitMI()) {
+            System.exit(0);
         }
 
     }

@@ -8,6 +8,7 @@ import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -25,6 +26,42 @@ public class RouteController {
         put(7, 18);
     }};
     
+    public ArrayList<Route> getAvailableRoutes (Player player) {
+        
+        ArrayList<Route> validRoutes = new ArrayList<>();
+        for (Route route : TTRController.availableRoutes) {
+        
+            // Routes are valid if
+            // 1. The player has enough trains and (
+            //      1.1. The player has enough cards when the route is rainbow
+            //      1.2. or the player has enough cards cards of that colour including rainbow
+            // )
+            if (route.getLength()<=player.getNumTrains() && (
+                    route.getLength()<=player.getTotalCards() && route.getColour()==CardColour.GRAY
+                            || route.getLength()<=
+                            player.getNumCardsOfColour(route.getColour().getValue())
+                                    +player.getNumCardsOfColour(CardColour.RAINBOW.getValue())
+            )) {
+                validRoutes.add(route);
+            }
+        
+        }
+        Collections.sort(validRoutes);
+        return validRoutes;
+        
+    }
+    
+    /**
+     *
+     * @author Cerena
+     * @param routes
+     */
+    public void highlightRoutes (ArrayList<Route> routes) {
+    
+    
+    
+    }
+    
     /**
      * Called from the claim route button
      * Provide player with list of available routes
@@ -33,25 +70,8 @@ public class RouteController {
     public void getPlayerRouteChoice (Player player) {
         
         // Find the routes that the player can go to
-        ArrayList<Route> validRoutes = new ArrayList<>();
-        
-        for (Route route : TTRController.availableRoutes) {
-            
-            // Routes are valid if
-            // 1. The player has enough trains and (
-            //      1.1. The player has enough cards when the route is rainbow
-            //      1.2. or the player has enough cards cards of that colour including rainbow
-            // )
-            if (route.getLength()<=player.getNumTrains() && (
-                    route.getLength()<=player.getTotalCards() && route.getColour()==CardColour.RAINBOW
-                            || route.getLength()<=
-                            player.getNumCardsOfColour(route.getColour().getValue())
-                                    +player.getNumCardsOfColour(CardColour.RAINBOW.getValue())
-            )) {
-                validRoutes.add(route);
-            }
-            
-        }
+        ArrayList<Route> validRoutes = getAvailableRoutes(player);
+        highlightRoutes(validRoutes);
         
         // If there are no choices available, cancel the transaction
         if (validRoutes.isEmpty()) {
@@ -59,18 +79,18 @@ public class RouteController {
             return;
         }
         
-        Route route = (Route) JOptionPane.showInputDialog(TTRController.frame, "Choose route to claim...",
+        Route route = (Route) JOptionPane.showInputDialog(TTRController.frame,
+                "Choose route to claim...",
                 "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
                 validRoutes.toArray(),
                 validRoutes.get(0));
-
+        
         //if route is null then the player has cancelled the selection
         if (route==null) {
             return;
         }
-
-        // TODO rainbow routes are just a place holder
-        int[] numTrainCardsUsed = route.getColour()==CardColour.RAINBOW
+        
+        int[] numTrainCardsUsed = route.getColour()==CardColour.GRAY
                 ? getPlayerTrainChoice(player, route) : null;
         
         updateGame(player, route, numTrainCardsUsed);
@@ -107,6 +127,7 @@ public class RouteController {
         // Create the JOptionPane
         for (int i = 0; i<values.length; ++i) {
             
+            if (values[i]==CardColour.GRAY) continue;
             parameters.add(values[i].toString()+" train cards:");
             
             input.add(new JFormattedTextField(formatter));
@@ -165,7 +186,7 @@ public class RouteController {
         parameters.add("Used the following train cards:");
         
         // TODO rainbow is place holder colour
-        if (route.getColour()!=CardColour.RAINBOW) {
+        if (route.getColour()!=CardColour.GRAY) {
             
             // If the player has enough cards of that colour, use them
             final int difference = player.getNumCardsOfColour(routeColourValue)-route.getLength();
@@ -236,6 +257,18 @@ public class RouteController {
         }
         
         return score;
+        
+    }
+    
+    /**
+     * adds ten points to their score if good
+     * @return owners of the longest continuous path
+     */
+    public ArrayList<Player> getLongestContinuousPathOwners () {
+        
+        ArrayList<Player> owners = new ArrayList<>();
+        
+        return owners;
         
     }
     

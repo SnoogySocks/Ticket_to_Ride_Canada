@@ -20,6 +20,7 @@ public class City extends JLabel implements Serializable {
 //        setIcon(new ImageIcon("./images/city.png"));
         this.name = name;
         this.point = point;
+        // TODO setBounds
     }
 
     public String getName () {
@@ -54,9 +55,6 @@ public class City extends JLabel implements Serializable {
 
         for(Route r: routes) {
             if(r.getOwner() != null && r.getOwner().equals(player)){
-                list.add(r);
-            }
-            else if (r.isDualRoute() && r.getOwner2() != null && r.getOwner2().equals(player)){
                 list.add(r);
             }
         }
