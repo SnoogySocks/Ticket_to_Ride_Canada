@@ -70,7 +70,7 @@ public class RouteController {
         
         updateGame(player, route, numTrainCardsUsed);
         TTRController.ticketController.scoreTicketsOnRouteAdded(player);
-        //nextTurn();
+        TTRController.nextTurn();
         // TODO check when ticket is complete
     
     }
@@ -141,21 +141,6 @@ public class RouteController {
             }
             
         } while (totalChosenCards!=route.getLength());
-    
-        // Display success pane
-        parameters.clear();
-        parameters.add("Successfully obtained");
-        parameters.add(route.toString());
-        parameters.add("Used the following train cards:");
-        
-        // Display the used cards
-        for (int i = 0; i<values.length; ++i) {
-            if (numTrainCardsUsed[i]!=0) {
-                parameters.add(values[i].toString()+": "+numTrainCardsUsed[i]);
-            }
-        }
-        
-        JOptionPane.showMessageDialog(TTRController.frame, parameters.toArray(), "Success", JOptionPane.INFORMATION_MESSAGE);
         
         return numTrainCardsUsed;
         
@@ -164,29 +149,53 @@ public class RouteController {
     public void updateGame (Player player, Route route, int[] numTrainCardsUsed) {
         
         final int routeColourValue = route.getColour().getValue();
-        
+    
         // Remove the player's trains
         player.setNumTrains(player.getNumTrains()-route.getLength());
+    
+        // Set up the success pane
+        ArrayList<Object> parameters = new ArrayList<>();
+        parameters.add("Successfully obtained");
+        parameters.add(route.toString());
+        parameters.add("Used the following train cards:");
         
-        if (numTrainCardsUsed==null) {
+        // TODO rainbow is place holder colour
+        if (route.getColour()!=CardColour.RAINBOW) {
             
-            // TODO put the success pane here
             // If the player has enough cards of that colour, use them
             final int difference = player.getNumCardsOfColour(routeColourValue)-route.getLength();
             if (difference>=0) {
+                
                 player.removeCards(routeColourValue, route.getLength());
+                parameters.add(route.getColour().toString()+": "+route.getLength());
                 
             // Otherwise, accommodate by using rainbow cards
             } else {
+    
+                parameters.add(route.getColour().toString()+": "+player.getNumCardsOfColour(routeColourValue));
                 player.removeCards(routeColourValue, player.getNumCardsOfColour(routeColourValue));
+                
+                parameters.add(CardColour.RAINBOW.toString()+": "+(-difference));
                 player.removeCards(CardColour.RAINBOW.getValue(), -difference);
+                
             }
             
         } else {
-            for (int i = 0; i<numTrainCardsUsed.length; ++i) {
+            
+            // Update the player's cards according to their choices
+            CardColour[] values = CardColour.values();
+            for (int i = 0; i<values.length; ++i) {
+                
+                if (numTrainCardsUsed[i]==0) continue;
                 player.removeCards(i, numTrainCardsUsed[i]);
+                parameters.add(values[i].toString()+": "+numTrainCardsUsed[i]);
+                
             }
+            
         }
+        
+        // Display the success pane
+        JOptionPane.showMessageDialog(TTRController.frame, parameters.toArray(), "Success", JOptionPane.INFORMATION_MESSAGE);
     
         // Claim the route
         player.getClaimedRoutes().add(route);

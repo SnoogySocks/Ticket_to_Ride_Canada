@@ -159,36 +159,33 @@ public class TTRController extends Observable implements ActionListener {
 
     }
 
-    public static void nextTurn() {
-        playerTurn = playerTurn == 3 ? 0 : playerTurn + 1;
+    public static void nextTurn () {
+
+        playerTurn = playerTurn==3 ? 0 : playerTurn+1;
         notifyStaticObservers(EventType.NEXT_TURN);
+        JOptionPane.showMessageDialog(frame,
+                getCurrentPlayer().getName()+"'s turn",
+                "Alert", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
-    public static Player getCurrentPlayer() {
+    public static Player getCurrentPlayer () {
         return players[playerTurn];
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed (ActionEvent e) {
 
         //a switch would be much nicer but these aren't constant values :(
-        if (e.getSource() == frame.getCardPanel().getTicketDeckButton()) {
+        if (e.getSource()==frame.getCardPanel().getTicketDeckButton()) {
             ticketController.showTicketSelectionDialogue();
-        }
-
-        else if (e.getSource() == frame.getPlayerPanel().getClaimRouteButton()) {
+        } else if (e.getSource()==frame.getPlayerPanel().getClaimRouteButton()) {
             routeController.getPlayerRouteChoice(getCurrentPlayer());
-        }
-
-        else if (e.getSource() == frame.getPlayerPanel().getNextTurnButton()) {
+        } else if (e.getSource()==frame.getPlayerPanel().getNextTurnButton()) {
             nextTurn();
-        }
-
-        else if(e.getSource() == frame.getSaveMI()){
+        } else if (e.getSource()==frame.getSaveMI()) {
             saveGame();
-        }
-
-        else if(e.getSource() == frame.getLoadMI()){
+        } else if (e.getSource()==frame.getLoadMI()) {
             loadGame();
         }
 
