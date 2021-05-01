@@ -178,10 +178,12 @@ public class TTRController extends Observable implements ActionListener {
         //a switch would be much nicer but these aren't constant values :(
         if (e.getSource()==frame.getCardPanel().getTicketDeckButton()) {
             ticketController.showTicketSelectionDialogue();
+            notifyStaticObservers(EventType.LOCK_CONTROLS);
         } else if (e.getSource()==frame.getPlayerPanel().getClaimRouteButton()) {
             routeController.getPlayerRouteChoice(getCurrentPlayer());
         } else if (e.getSource()==frame.getPlayerPanel().getNextTurnButton()) {
             nextTurn();
+            notifyStaticObservers(EventType.LOCK_CONTROLS);
         } else if (e.getSource()==frame.getSaveMI()) {
             saveGame();
         } else if (e.getSource()==frame.getLoadMI()) {

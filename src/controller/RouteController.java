@@ -63,14 +63,19 @@ public class RouteController {
                 "Claim Route", JOptionPane.QUESTION_MESSAGE, null,
                 validRoutes.toArray(),
                 validRoutes.get(0));
-        
+
+        //if route is null then the player has cancelled the selection
+        if (route==null) {
+            return;
+        }
+
         // TODO rainbow routes are just a place holder
         int[] numTrainCardsUsed = route.getColour()==CardColour.RAINBOW
                 ? getPlayerTrainChoice(player, route) : null;
         
         updateGame(player, route, numTrainCardsUsed);
         TTRController.ticketController.scoreTicketsOnRouteAdded(player);
-        TTRController.nextTurn();
+        TTRController.notifyStaticObservers(EventType.LOCK_CONTROLS);
         // TODO check when ticket is complete
         
     }

@@ -49,7 +49,6 @@ public class TrainCardController extends Observable {
                 player.addCard(TTRController.trainCardDeck.pop());
             }
         }
-        
     }
 
     public void giveShownCard(int index){
@@ -85,23 +84,25 @@ public class TrainCardController extends Observable {
          
          */
 
-        int rainbowCardCounter = Collections.frequency(TTRController.shownCards, 0);
+        int rainbowCardCounter = Collections.frequency(TTRController.shownCards, CardColour.RAINBOW);
 
-        if(rainbowCardCounter == 0){
+        if(rainbowCardCounter == 3){
             flipFiveCards();
         }
-
-
 
     }
     
     public void replaceTakenTrainCard() {
         //TODO if the stack is empty we switch to the discard pile
 
-        TTRController.shownCards.add(TTRController.trainCardDeck.pop());
+        if(TTRController.trainCardDeck.isEmpty()){
+            TTRController.shownCards.add(TTRController.trainCardDiscards.pop());
+        }
+        else{
+            TTRController.shownCards.add(TTRController.trainCardDeck.pop());
+        }
+
         notifyObservers(EventType.UPDATE_SHOWN_CARDS);
     }
-    
-    
     
 }
