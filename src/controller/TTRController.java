@@ -3,14 +3,12 @@ package controller;
 import model.*;
 import serialization.GameState;
 import serialization.Serializer;
+import util.Observable;
 import view.GameFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
 
 import util.*;
 
@@ -43,7 +41,9 @@ public class TTRController extends Observable implements ActionListener {
     public TTRController() {
 
         FileImportController.init();
-        players = new Player[4];
+        createPlayers();
+
+        System.out.println(Arrays.toString(players));
 
         routes = (ArrayList<Route>) FileImportController.routes.clone();
         availableRoutes = new HashSet<>(routes);
@@ -60,6 +60,7 @@ public class TTRController extends Observable implements ActionListener {
         frame = new GameFrame();
 
         tCController.addObserver(frame.getCardPanel());
+        frame.getPlayerPanel().updateCurrentPlayer(getCurrentPlayer());
 
         newGame();
 
@@ -85,14 +86,13 @@ public class TTRController extends Observable implements ActionListener {
     }
 
     public void createPlayers() {
-
+        players = new Player[4];
         PlayerColour[] clrValues = PlayerColour.values();
         for (int i = 0; i < players.length; ++i) {
 
             players[i] = new Player("Player " + (i + 1), clrValues[i + 1]);
 
         }
-        frame.getPlayerPanel().updateCurrentPlayer(getCurrentPlayer());
 
     }
 
