@@ -77,10 +77,10 @@ public class TrainCardController extends Observable {
         
         notifyStaticObservers(EventType.CARD_TAKEN);
         
-//        if (cardsTaken==2) {
-//            cardsTaken = 0;
-//            notifyStaticObservers(EventType.LOCK_CONTROLS);
-//        }
+        if (cardsTaken==2) {
+            cardsTaken = 0;
+            notifyStaticObservers(EventType.LOCK_CONTROLS);
+        }
     }
     
     public void giveDeckCard () {
@@ -97,12 +97,11 @@ public class TrainCardController extends Observable {
             notifyStaticObservers(EventType.CARD_TAKEN);
             
         }
-        
-        // If >= 2 then lock controls and reset to 0
-//        if (cardsTaken>=2) {
-//            cardsTaken = 0;
-//            notifyStaticObservers(EventType.LOCK_CONTROLS);
-//        }
+
+        if (cardsTaken>=2) {
+            cardsTaken = 0;
+            notifyStaticObservers(EventType.LOCK_CONTROLS);
+        }
         
     }
     
@@ -149,6 +148,7 @@ public class TrainCardController extends Observable {
                 JOptionPane.showMessageDialog(TTRController.frame,
                         "Tree rainbow cards were found! Redrawing...",
                         "Alert", JOptionPane.INFORMATION_MESSAGE);
+                cardsTaken = 0;
             }
             notifyObservers(EventType.UPDATE_SHOWN_CARDS);
             
