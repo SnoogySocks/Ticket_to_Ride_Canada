@@ -108,7 +108,7 @@ public class CardPanel extends JPanel implements ActionListener, Observer {
     public void actionPerformed (ActionEvent e) {
         
         if (e.getSource()==ticketDeckButton) {
-            TTRController.ticketController.showTicketSelectionDialogue();
+            TTRController.ticketController.showTicketSelectionDialogue(true);
             //        } else if (e.getSource()==cardDeckButton) {
             //            TTRController.ticketController
         }

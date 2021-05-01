@@ -21,12 +21,12 @@ public class TicketController {
      */
     public void dealStartingTickets () {
         for (Player player : TTRController.players) {
-            showTicketSelectionDialogue();
+            showTicketSelectionDialogue(false);
             TTRController.nextTurn();
         }
     }
     
-    private void renderDialogue (Ticket[] choices) {
+    private void renderDialogue (Ticket[] choices, boolean canCancel) {
         
         boolean hasSelected = false;
         int size = choices.length;
@@ -55,10 +55,15 @@ public class TicketController {
             
             //Restart the process if a ticket hasn't been selected
             if (numSelected<1) {
-                int i = JOptionPane.showConfirmDialog(TTRController.frame, "You must choose at least 1 ticket.", "Continue?", JOptionPane.OK_CANCEL_OPTION);
-                
-                if (i == 2){
-                    return;
+                if (canCancel) {
+                    int i = JOptionPane.showConfirmDialog(TTRController.frame, "You must choose at least 1 ticket.", "Continue?", JOptionPane.OK_CANCEL_OPTION);
+                    
+                    if (i==2) {
+                        return;
+                    }
+                } else {
+                    // TODO test
+                    JOptionPane.showMessageDialog(TTRController.frame, "You must choose at least 1 ticket");
                 }
             } else {
                 //Add the selected tickets to the player
@@ -81,7 +86,7 @@ public class TicketController {
     /**
      * Shows the player 3 tickets that they must pick from in a JOptionPane
      */
-    public void showTicketSelectionDialogue () {
+    public void showTicketSelectionDialogue (boolean canCancel) {
         
         int size = Math.min(TTRController.tickets.size(), 3);
         
@@ -98,7 +103,7 @@ public class TicketController {
         }
         
         //Call renderDialogue to show the JOptionPane
-        renderDialogue(choices);
+        renderDialogue(choices, canCancel);
         
     }
     
@@ -109,8 +114,8 @@ public class TicketController {
      */
     public boolean checkTicketComplete (Ticket ticket, Player owner) {
         
-        //nodes - cities, edges - routes
-        //start - city1, destination - city2
+        // nodes - cities, edges - routes
+        // start - city1, destination - city2
         
         HashMap<City, Boolean> explored = new HashMap<>();
         City destination = ticket.getCity2();
@@ -137,6 +142,9 @@ public class TicketController {
                 //If any of the cities are the destination then the ticket is complete
                 if (c1.equals(destination) || c2.equals(destination)) {
                     ticket.setCompleted(true);
+                    JOptionPane.showMessageDialog(TTRController.frame,
+                            "You completed a ticket: "+ticket.getCity1()+" --> "+ticket.getCity2(),
+                            "Alert", JOptionPane.INFORMATION_MESSAGE);
                     return true;
                 }
                 
