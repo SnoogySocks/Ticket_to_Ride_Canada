@@ -32,7 +32,11 @@ public class Player extends Observable implements Serializable {
         this.totalCards = this.score = 0;
         
     }
-    
+
+    /**
+     * Adds a ticket to the player's owned tickets
+     * @param ticket
+     */
     public void addTicket (Ticket ticket) {
         tickets.add(ticket);
         notifyObservers(EventType.UPDATE_TICKETS);
@@ -49,15 +53,20 @@ public class Player extends Observable implements Serializable {
     public int getScore () {
         return score;
     }
-    
+
+    /**
+     * Adds a train card of a certain colour to the player
+     * @param card
+     */
     public void addCard (TrainCard card) {
         totalCards++;
         numCardsOfColour[card.getColour().getValue()] += 1;
-
-        System.out.println(Arrays.toString(numCardsOfColour));
         notifyObservers(EventType.UPDATE_TRAINS);
     }
-    
+
+    /**
+     * Removes train cards of a certain colour from the player
+     */
     public void removeCards (int cardColour, int numberRemoved) {
         totalCards -= totalCards;
         numCardsOfColour[cardColour] -= numberRemoved;

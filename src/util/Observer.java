@@ -12,5 +12,10 @@ package util;
  * @author Nathan
  */
 public interface Observer {
+    /**
+     * Called whenever an observed object emits an event
+     * @param obj the observable object that emitted the event
+     * @param event the event
+     */
     void update(Observable obj, EventType event);
 }

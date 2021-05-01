@@ -8,7 +8,7 @@ import java.io.*;
  */
 public class Serializer {
     /**
-     * Writes an obect to the specified file path
+     * Writes an object to the specified file path
      * @param filePath the path to write to
      * @param object the object to write
      * @param <T> the type of the object
@@ -27,7 +27,7 @@ public class Serializer {
     }
     
     /**
-     * Returns a java object of type <code>T</code> from a serialized file
+     * Returns a java object of type T from a serialized file
      * @param filePath the path to the file to read from
      * @param <T> the type of object to be read in
      * @return An object of the specified type

@@ -61,7 +61,6 @@ public class TTRController extends Observable implements ActionListener {
         frame = new GameFrame();
 
         tCController.addObserver(frame.getCardPanel());
-        tCController.flipFiveCards();
 
         newGame();
 
@@ -113,11 +112,13 @@ public class TTRController extends Observable implements ActionListener {
      * @author Nathan
      */
     private static void setupObservers() {
+        // For any GUI elements that need to be updated when something changes for a player
         for (Player p : players) {
             p.addObserver(frame.getPlayerPanel());
             p.addObserver(frame.getScorePanel());
         }
 
+        // For any GUI elements that need to be updated when the next turn is called
         TTRController.addStaticObserver(frame.getCardPanel());
         TTRController.addStaticObserver(frame.getPlayerPanel());
         TTRController.addStaticObserver(frame.getScorePanel());
@@ -129,19 +130,19 @@ public class TTRController extends Observable implements ActionListener {
      * @author Nathan
      */
     public static void saveGame() {
+        //Copy our game data into an object then serialize it
         GameState state = new GameState(false);
-
-        System.out.println(state);
-
         Serializer.serialize("./saveGames/save.ser", state);
     }
 
+    /**
+     * @author Nathan
+     */
     public static void loadGame() {
-        GameState state = new GameState(true);
-        state = Serializer.deserialize("./saveGames/save.ser");
+        //deserialize saved game
+        GameState state = Serializer.deserialize("./saveGames/save.ser");
 
-        System.out.println(state);
-
+        //set the static variables to the new loaded data
         routes = state.routes;
         availableRoutes = state.availableRoutes;
         cities = state.cities;
@@ -151,8 +152,6 @@ public class TTRController extends Observable implements ActionListener {
         shownCards = state.shownCards;
         players = state.players;
         playerTurn = state.playerTurn;
-
-        System.out.println("loaded stuff");
 
         setupObservers();
         notifyStaticObservers(EventType.NEXT_TURN); //initializes frames to current player
