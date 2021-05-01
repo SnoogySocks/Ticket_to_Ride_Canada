@@ -108,7 +108,6 @@ public class Player extends Observable implements Serializable {
                 ", playerColour="+playerColour+
                 ", tickets="+tickets+
                 ", claimedRoutes="+claimedRoutes+
-                ", cards="+Arrays.toString(numCardsOfColour)+
                 ", numTrains="+numTrains+
                 ", score="+score+
                 '}';

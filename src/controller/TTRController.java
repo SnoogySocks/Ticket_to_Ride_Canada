@@ -15,7 +15,6 @@ import java.util.Stack;
 import util.*;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class TTRController extends Observable implements ActionListener {
 
@@ -93,7 +92,7 @@ public class TTRController extends Observable implements ActionListener {
             players[i] = new Player("Player " + (i + 1), clrValues[i + 1]);
 
         }
-        frame.getPlayerPanel().setCurrentPlayer(getCurrentPlayer());
+        frame.getPlayerPanel().updateCurrentPlayer(getCurrentPlayer());
 
     }
 

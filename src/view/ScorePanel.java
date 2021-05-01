@@ -23,7 +23,7 @@ public class ScorePanel extends JPanel implements Observer {
         add(title);
 
         for(int i = 0; i < 4; i++){
-            playerScoreLabels[i] = new JLabel("Player " + (i + 1) + ": 0");
+            playerScoreLabels[i] = new JLabel(TTRController.players[i].getName()+": 0");
             playerScoreLabels[i].setBounds(100, 80 + 25 * i, 200,25);
             add(playerScoreLabels[i]);
         }

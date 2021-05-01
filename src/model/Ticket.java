@@ -58,7 +58,6 @@ public class Ticket implements Serializable {
                 "city1="+city1.getName()+
                 ", city2="+city2.getName()+
                 ", val="+val+
-                ", completed="+completed+
                 '}';
     }
     

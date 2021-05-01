@@ -72,17 +72,17 @@ public class RouteController {
         TTRController.ticketController.scoreTicketsOnRouteAdded(player);
         TTRController.nextTurn();
         // TODO check when ticket is complete
-    
+        
     }
     
     /**
      * Called when the route is gray (any train card can be used)
      * @param player = current player
-     * @param route = chosen route
+     * @param route  = chosen route
      * @return an array indicating the train cards to use
      */
     public int[] getPlayerTrainChoice (Player player, Route route) {
-    
+        
         CardColour[] values = CardColour.values();
         
         ArrayList<Object> parameters = new ArrayList<>();
@@ -109,7 +109,7 @@ public class RouteController {
             parameters.add(input.get(i));
             
         }
-    
+        
         // Prompt the user for the number of trains to use
         // from their selected train cards until the
         // totalChosenCards==route.getLength()
@@ -149,10 +149,10 @@ public class RouteController {
     public void updateGame (Player player, Route route, int[] numTrainCardsUsed) {
         
         final int routeColourValue = route.getColour().getValue();
-    
+        
         // Remove the player's trains
         player.setNumTrains(player.getNumTrains()-route.getLength());
-    
+        
         // Set up the success pane
         ArrayList<Object> parameters = new ArrayList<>();
         parameters.add("Successfully obtained");
@@ -169,9 +169,9 @@ public class RouteController {
                 player.removeCards(routeColourValue, route.getLength());
                 parameters.add(route.getColour().toString()+": "+route.getLength());
                 
-            // Otherwise, accommodate by using rainbow cards
+                // Otherwise, accommodate by using rainbow cards
             } else {
-    
+                
                 parameters.add(route.getColour().toString()+": "+player.getNumCardsOfColour(routeColourValue));
                 player.removeCards(routeColourValue, player.getNumCardsOfColour(routeColourValue));
                 
@@ -196,11 +196,11 @@ public class RouteController {
         
         // Display the success pane
         JOptionPane.showMessageDialog(TTRController.frame, parameters.toArray(), "Success", JOptionPane.INFORMATION_MESSAGE);
-    
+        
         // Claim the route
         player.getClaimedRoutes().add(route);
-        player.setScore(player.getScore() + routeScoringTable.get(route.getLength()));
-    
+        player.setScore(player.getScore()+routeScoringTable.get(route.getLength()));
+        
         // Title case the colour to set a checkmark for the route
         String colour = player.getPlayerColour().toString().toLowerCase();
         colour = Character.toUpperCase(colour.charAt(0))+colour.substring(1);
@@ -209,17 +209,17 @@ public class RouteController {
         // Update the player panel
         player.notifyObservers(EventType.UPDATE_TRAINS);
         player.notifyObservers(EventType.UPDATE_SCORES);
-    
+        
         // Put the used player trainCards in the discard pile
         for (int i = 0; i<player.getNumCardsOfColour(routeColourValue); ++i) {
             TTRController.trainCardDiscards.push(new TrainCard(route.getColour()));
         }
-    
+        
         // Make the route unavailable
         TTRController.availableRoutes.remove(route);
         
     }
-
+    
     //TODO for deletion - we might score routes every time they are added to the player instead
     public int scoreRoutes (Player player) {
         
