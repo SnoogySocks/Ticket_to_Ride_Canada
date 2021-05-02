@@ -1,15 +1,13 @@
 package controller;
 
 import model.*;
+import util.ContinuousPath;
 import util.EventType;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * @author Felix
@@ -261,15 +259,59 @@ public class RouteController {
     }
     
     /**
-     * adds ten points to their score if good
-     * @return owners of the longest continuous path
+     * Method to determine who will obtain 10 points for the
+     * longest continuous path.
+     * @return Owner of hte longest continuous path.
+     * If there are multiple owners, return them.
      */
     public ArrayList<Player> getLongestContinuousPathOwners () {
         
-        ArrayList<Player> owners = new ArrayList<>();
+        // Initialize the the longest path array
+        int[] playersLongestPathLength = new int[TTRController.players.length];
+        HashSet<Route> visited = new HashSet<>();
         
-        return owners;
+        // Iterate through all the routes to check for their length
+        for (Route route: TTRController.routes) {
+            
+            if (visited.contains(route)) continue;
+            
+            // Find the length of the current path
+            ContinuousPath currentPath = new ContinuousPath();
+            visited.add(route);
+            dfsLengthOfPath(visited, currentPath, route);
+            
+            // Check if the the current path length is longer than the current path
+            int player = route.getOwner().getPlayerColour().getValue();
+            int longestLength = playersLongestPathLength[player];
+            
+            if (longestLength<=currentPath.getLength()) {
+    
+                // Reset array if there is a new longest length
+                if (longestLength<currentPath.getLength()) {
+                    Arrays.fill(playersLongestPathLength, 0);
+                }
+                playersLongestPathLength[player] = currentPath.getLength();
+                
+            }
+            
+        }
         
+        // Return the player(s) with the longest route
+        ArrayList<Player> longestContinuousPathOwners = new ArrayList<>();
+        for (int i = 0; i<playersLongestPathLength.length; ++i) {
+            if (playersLongestPathLength[i]!=0) {
+                longestContinuousPathOwners.add(TTRController.players[i]);
+            }
+        }
+        
+        return longestContinuousPathOwners;
+        
+    }
+    
+    public void dfsLengthOfPath (HashSet<Route> visited, ContinuousPath currentPath, Route currentRoute) {
+    
+    
+    
     }
     
 }
