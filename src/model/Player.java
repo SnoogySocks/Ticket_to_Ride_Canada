@@ -35,7 +35,7 @@ public class Player extends Observable implements Serializable {
 
     /**
      * Adds a ticket to the player's owned tickets
-     * @param ticket
+     * @param ticket = added ticket
      */
     public void addTicket (Ticket ticket) {
         tickets.add(ticket);
@@ -106,8 +106,6 @@ public class Player extends Observable implements Serializable {
         return "Player{"+
                 "name='"+name+'\''+
                 ", playerColour="+playerColour+
-                ", tickets="+tickets+
-                ", claimedRoutes="+claimedRoutes+
                 ", numTrains="+numTrains+
                 ", score="+score+
                 '}';

@@ -33,12 +33,11 @@ public final class FileImportController {
         
         bfsHelper();
         
-        //Collections.shuffle(tickets);
-        
     }
     
     /**
      * Help breadth first search by creating edges(routes) between each node(city)
+     * @author Nathan
      */
     private static void bfsHelper () {
        
@@ -46,13 +45,14 @@ public final class FileImportController {
        
             City c = e.getValue();
             
-            for (Route r : routes) {
-                if (r.getCity1().equals(c) || r.getCity2().equals(c)) {
-                    c.getRoutes().add(r);
+            for (Route route : routes) {
+                if (route.getCity(0).equals(c) || route.getCity(1).equals(c)) {
+                    c.getRoutes().add(route);
                 }
             }
             
         }
+        
     }
     
     /**
@@ -63,7 +63,7 @@ public final class FileImportController {
     }
     
     /**
-     *
+     * @author Nathan
      */
     private static void importCities () {
         
@@ -94,7 +94,7 @@ public final class FileImportController {
     }
     
     /**
-     *
+     * @author Felix
      */
     private static void importRoutes () {
         
@@ -124,6 +124,9 @@ public final class FileImportController {
         
     }
     
+    /**
+     * @author Cerena
+     */
     private static void importTickets () {
         
         try {
@@ -148,4 +151,5 @@ public final class FileImportController {
         }
         
     }
+    
 }

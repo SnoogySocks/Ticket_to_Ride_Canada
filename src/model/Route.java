@@ -14,7 +14,7 @@ public class Route extends JLabel implements Serializable, Comparable<Route> {
     private Player owner;
     private final City[] cities;
     private final int length;
-    private final  CardColour colour;
+    private final CardColour colour;
     private final Coordinate completionPoint;
     private final boolean dualRoute;
     
@@ -65,6 +65,7 @@ public class Route extends JLabel implements Serializable, Comparable<Route> {
                 "cities="+Arrays.toString(cities)+
                 ", length="+length+
                 ", colour="+colour+
+                ", owner="+(owner==null ? "none" : owner.getName())+
                 '}';
     }
     
@@ -72,7 +73,7 @@ public class Route extends JLabel implements Serializable, Comparable<Route> {
     @Override
     public int compareTo (Route o) {
         int firstCompare = cities[0].getName().compareTo(o.cities[0].getName());
-        return firstCompare!=0?firstCompare:cities[1].getName().compareTo(o.cities[1].getName());
+        return firstCompare!=0 ? firstCompare : cities[1].getName().compareTo(o.cities[1].getName());
     }
     
 }

@@ -3,7 +3,7 @@ package serialization;
 import java.io.*;
 
 /**
- * Methods to serialize and deserialize object
+ * Methods to serialize and deserialize objects
  * @author Nathan
  */
 public class Serializer {

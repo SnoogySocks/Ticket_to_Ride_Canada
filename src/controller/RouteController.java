@@ -1,8 +1,9 @@
 package controller;
 
 import model.*;
-import util.PathLength;
+import util.Path;
 import util.EventType;
+import view.HighlightLine;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
@@ -55,9 +56,9 @@ public class RouteController {
      * @param routes
      */
     public void highlightRoutes (ArrayList<Route> routes) {
-    
-    
-    
+        for(Route r : routes) {
+            HighlightLine.drawLine(TTRController.frame.getBoardPanel().getGraphics(), r.getCity(0).getPoint(), r.getCity(1).getPoint());
+        }
     }
     
     /**
@@ -95,6 +96,9 @@ public class RouteController {
         TTRController.ticketController.scoreTicketsOnRouteAdded(player);
         TTRController.notifyStaticObservers(EventType.LOCK_CONTROLS);
         // TODO check when ticket is complete
+        
+        //TODO remove highlights
+        TTRController.frame.getBoardPanel().repaint();
         
     }
     
@@ -243,8 +247,7 @@ public class RouteController {
         TTRController.availableRoutes.remove(route);
         
     }
-    
-    //TODO for deletion - we might score routes every time they are added to the player instead
+
     public int scoreRoutes (Player player) {
         
         int score = 0;
@@ -267,29 +270,33 @@ public class RouteController {
     public ArrayList<Player> getLongestContinuousPathOwners () {
         
         // Initialize the the longest path array
-        int[] playersLongestPathLength = new int[TTRController.players.length];
-        HashMap<Route, Integer> visited = new HashMap<>();
+        int[] playersLongestPathLength = new int[TTRController.players.length+1];
+        HashMap<City, Integer> visited = new HashMap<>();
         
         // Iterate through all the routes
-        for (Route route: TTRController.routes) {
+        for (City city: TTRController.cities) {
             
-            if (visited.containsKey(route)) continue;
+            if (visited.containsKey(city)) continue;
             
-            // Find the length of the current path
-            PathLength pathLength = new PathLength();
-            dfsLengthOfPath(visited, pathLength, route);
-            
-            // Check if the the current path length is longer than the current path
-            int player = route.getOwner().getPlayerColour().getValue();
-            int longestLength = playersLongestPathLength[player];
-            
-            if (longestLength<=pathLength.getLength()) {
+            // Iterate through the players for each city
+            for (Player owner: TTRController.players) {
     
-                // Reset array if there is a new longest length
-                if (longestLength<pathLength.getLength()) {
-                    Arrays.fill(playersLongestPathLength, 0);
+                // Find the length of the current path
+                Path path = new Path(owner);
+                dfsLengthOfPath(visited, path, city);
+    
+                // Check if the the current path length is longer than the current path
+                int longestLength = playersLongestPathLength[owner.getPlayerColour().getValue()];
+    
+                if (longestLength<=path.getLength()) {
+        
+                    // Reset array if there is a new longest length
+                    if (longestLength<path.getLength()) {
+                        Arrays.fill(playersLongestPathLength, 0);
+                    }
+                    playersLongestPathLength[owner.getPlayerColour().getValue()] = path.getLength();
+        
                 }
-                playersLongestPathLength[player] = pathLength.getLength();
                 
             }
             
@@ -308,39 +315,52 @@ public class RouteController {
     }
     
     /**
-     * TODO test the functionallity
+     * TODO test the functionality
      * Dept first search to find the length of the longest path
      * @param visited = All the visited routes so far
-     * @param pathLength = the current path length
-     * @param currentRoute = the current route
+     * @param path = the current path length
+     * @param currentCity = the current city
      */
-    public void dfsLengthOfPath (HashMap<Route, Integer> visited, PathLength pathLength, Route currentRoute) {
+    private void dfsLengthOfPath (HashMap<City, Integer> visited, Path path, City currentCity) {
     
         // Mark the currentRoute as visited and add it to the pathLength
-        visited.put(currentRoute, 1);
-        pathLength.incrementLength();
-        
-        // Iterate through the cities in the route
-        for (int i = 0; i<2; ++i) {
+        visited.put(currentCity, 1);
+
+        // Iterate through the city's routes
+        for (Route route: currentCity.getRoutes()) {
+
+            if (path.getOwner()!=route.getOwner()) continue;
             
-            // Iterate through the cities' routes
-            for (Route nextRoute: currentRoute.getCity(i).getRoutes()) {
+            // Iterate through the route's cities
+            for (int i = 0; i<2; ++i) {
                 
-                // If the route has not been visited and the owner is
-                // the same as the currentRoute's, traverse it
-                if (visited.get(nextRoute)==null && currentRoute.getOwner()==nextRoute.getOwner()) {
-                    dfsLengthOfPath(visited, pathLength, nextRoute);
+                if (route.getCity(i)==currentCity) continue;
                 
-                // Otherwise, if there is a cycle, include
-                // the connecting route with the pathLength
-                } else if (visited.get(nextRoute)==1) {
-                    pathLength.incrementLength();
-                }
                 
             }
-            
+
+            // Iterate through the cities' routes
+            for () {
+
+                if (currentCity.getOwner()!=nextCity.getOwner() || currentCity!=nextCity) {
+                    continue;
+                }
+
+                // If the route has not been visited and the owner is
+                // the same as the currentRoute's, traverse it
+                if (!visited.containsKey(nextCity)) {
+                    dfsLengthOfPath(visited, path, nextCity);
+
+                // Otherwise, if there is a cycle, include
+                // the connecting route with the pathLength
+                } else if (visited.containsKey(nextCity) && visited.get(nextCity)==1) {
+                    path.addLength(nextCity.getLength());
+                }
+
+            }
+
         }
-        
+
         visited.put(currentRoute, 2);
     
     }
