@@ -1,7 +1,7 @@
 package controller;
 
 import model.*;
-import util.ContinuousPath;
+import util.PathLength;
 import util.EventType;
 
 import javax.swing.*;
@@ -268,29 +268,28 @@ public class RouteController {
         
         // Initialize the the longest path array
         int[] playersLongestPathLength = new int[TTRController.players.length];
-        HashSet<Route> visited = new HashSet<>();
+        HashMap<Route, Integer> visited = new HashMap<>();
         
-        // Iterate through all the routes to check for their length
+        // Iterate through all the routes
         for (Route route: TTRController.routes) {
             
-            if (visited.contains(route)) continue;
+            if (visited.containsKey(route)) continue;
             
             // Find the length of the current path
-            ContinuousPath currentPath = new ContinuousPath();
-            visited.add(route);
-            dfsLengthOfPath(visited, currentPath, route);
+            PathLength pathLength = new PathLength();
+            dfsLengthOfPath(visited, pathLength, route);
             
             // Check if the the current path length is longer than the current path
             int player = route.getOwner().getPlayerColour().getValue();
             int longestLength = playersLongestPathLength[player];
             
-            if (longestLength<=currentPath.getLength()) {
+            if (longestLength<=pathLength.getLength()) {
     
                 // Reset array if there is a new longest length
-                if (longestLength<currentPath.getLength()) {
+                if (longestLength<pathLength.getLength()) {
                     Arrays.fill(playersLongestPathLength, 0);
                 }
-                playersLongestPathLength[player] = currentPath.getLength();
+                playersLongestPathLength[player] = pathLength.getLength();
                 
             }
             
@@ -308,9 +307,41 @@ public class RouteController {
         
     }
     
-    public void dfsLengthOfPath (HashSet<Route> visited, ContinuousPath currentPath, Route currentRoute) {
+    /**
+     * TODO test the functionallity
+     * Dept first search to find the length of the longest path
+     * @param visited = All the visited routes so far
+     * @param pathLength = the current path length
+     * @param currentRoute = the current route
+     */
+    public void dfsLengthOfPath (HashMap<Route, Integer> visited, PathLength pathLength, Route currentRoute) {
     
-    
+        // Mark the currentRoute as visited and add it to the pathLength
+        visited.put(currentRoute, 1);
+        pathLength.incrementLength();
+        
+        // Iterate through the cities in the route
+        for (int i = 0; i<2; ++i) {
+            
+            // Iterate through the cities' routes
+            for (Route nextRoute: currentRoute.getCity(i).getRoutes()) {
+                
+                // If the route has not been visited and the owner is
+                // the same as the currentRoute's, traverse it
+                if (visited.get(nextRoute)==null && currentRoute.getOwner()==nextRoute.getOwner()) {
+                    dfsLengthOfPath(visited, pathLength, nextRoute);
+                
+                // Otherwise, if there is a cycle, include
+                // the connecting route with the pathLength
+                } else if (visited.get(nextRoute)==1) {
+                    pathLength.incrementLength();
+                }
+                
+            }
+            
+        }
+        
+        visited.put(currentRoute, 2);
     
     }
     

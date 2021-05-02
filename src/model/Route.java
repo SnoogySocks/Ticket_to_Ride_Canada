@@ -4,6 +4,7 @@ import util.Coordinate;
 
 import javax.swing.*;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @author Felix
@@ -11,7 +12,7 @@ import java.io.Serializable;
 public class Route extends JLabel implements Serializable, Comparable<Route> {
     
     private Player owner;
-    private final City city1, city2;
+    private final City[] cities;
     private final int length;
     private final  CardColour colour;
     private final Coordinate completionPoint;
@@ -21,8 +22,7 @@ public class Route extends JLabel implements Serializable, Comparable<Route> {
         
         setBounds(completionPoint.getX(), completionPoint.getY(), 15, 15);
         this.owner = null;
-        this.city1 = city1;
-        this.city2 = city2;
+        cities = new City[] { city1, city2 };
         this.length = length;
         this.colour = colour;
         this.completionPoint = completionPoint;
@@ -39,12 +39,8 @@ public class Route extends JLabel implements Serializable, Comparable<Route> {
         owner.getClaimedRoutes().add(this);
     }
     
-    public City getCity1 () {
-        return city1;
-    }
-    
-    public City getCity2 () {
-        return city2;
+    public City getCity (int index) {
+        return cities[index];
     }
     
     public int getLength () {
@@ -66,16 +62,17 @@ public class Route extends JLabel implements Serializable, Comparable<Route> {
     @Override
     public String toString () {
         return "Route{"+
-                "city1="+city1+
-                ", city2="+city2+
+                "cities="+Arrays.toString(cities)+
                 ", length="+length+
                 ", colour="+colour+
                 '}';
     }
     
+    // Compare the things in order to sort the routes by cities as a pair
     @Override
     public int compareTo (Route o) {
-        return city1.getName().compareTo(o.city1.getName());
+        int firstCompare = cities[0].getName().compareTo(o.cities[0].getName());
+        return firstCompare!=0?firstCompare:cities[1].getName().compareTo(o.cities[1].getName());
     }
     
 }
