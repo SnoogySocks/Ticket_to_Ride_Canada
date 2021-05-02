@@ -65,6 +65,8 @@ public class TTRController extends Observable implements ActionListener {
         tCController.addObserver(frame.getCardPanel());
         frame.getPlayerPanel().updateCurrentPlayer(getCurrentPlayer());
         
+        setupActionListeners();
+        
         newGame();
         
     }
@@ -75,18 +77,15 @@ public class TTRController extends Observable implements ActionListener {
         createPlayers();
         tCController.dealTrainCards();
         tCController.flipFiveCards();
-        //ticketController.dealStartingTickets(); //TODO uncomment
+        ticketController.dealStartingTickets();
         // TODO add below methods
-        // showNextPlayer();
-        // enableGUIElements(true);
+        //         showNextPlayer();
+        //         enableGUIElements(true);
         
         setupObservers();
-        setupActionListeners();
         
         notifyStaticObservers(EventType.NEXT_TURN); // necessary to initialize GUI to player 1
         JOptionPane.showMessageDialog(frame, "GAME STARTING - Player 1 Begins");
-        // TODO good
-        Testing.longestPathIsWorking(routeController);
         
     }
     
@@ -94,42 +93,43 @@ public class TTRController extends Observable implements ActionListener {
         
         players = new Player[4];
         PlayerColour[] clrValues = PlayerColour.values();
-        for (int i = 0; i<players.length; ++i) {
-            players[i] = new Player("Player "+(i+1), clrValues[i+1]);
+        for (int i = 1; i<=players.length; ++i) {
+            players[i-1] = new Player("Player "+i, clrValues[i]);
         }
         
     }
     
     public static void endGame () {
+        
         ticketController.scoreTicketsEndGame();
         
-        ArrayList<Player> highest = new ArrayList<Player>();
+        ArrayList<Player> highest = new ArrayList<>();
         highest.add(players[0]);
         
-        for(Player p : players){
-            if(p.getScore() == highest.get(0).getScore()){
+        for (Player p : players) {
+            if (p.getScore()==highest.get(0).getScore()) {
                 highest.add(p);
-            }
-            else if (p.getScore() > highest.get(0).getScore()){
+            } else if (p.getScore()>highest.get(0).getScore()) {
                 highest.clear();
                 highest.add(p);
             }
         }
         
-        if(highest.size() > 1){
-            String msg = "Tie: ";
-            for(Player p : highest){
-                msg += p.getName() + " ";
+        if (highest.size()>1) {
+            StringBuilder msg = new StringBuilder("Tie: ");
+            for (Player p : highest) {
+                msg.append(p.getName()).append(" ");
             }
             
-            JOptionPane.showMessageDialog(frame, msg);
+            JOptionPane.showMessageDialog(frame, msg.toString());
         } else {
-            JOptionPane.showMessageDialog(frame, "Winner: " + highest.get(0).getName());
+            JOptionPane.showMessageDialog(frame, "Winner: "+highest.get(0).getName());
         }
         
     }
     
     private void setupActionListeners () {
+        
         frame.getPlayerPanel().getNextTurnButton().addActionListener(this);
         frame.getPlayerPanel().getClaimRouteButton().addActionListener(this);
         frame.getNewMI().addActionListener(this);
@@ -138,6 +138,7 @@ public class TTRController extends Observable implements ActionListener {
         frame.getSaveMI().addActionListener(this);
         frame.getHelpMenu().addActionListener(this);
         frame.getAboutMI().addActionListener(this);
+        
     }
     
     /**
@@ -159,29 +160,29 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     * @author Nathan
+     *
      */
     public static void saveGame () {
         
         JTextField name = new JTextField();
         Object[] params = { name };
-        JOptionPane.showMessageDialog(frame, params, "Save Game Name", JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, params, "Save Game", JOptionPane.QUESTION_MESSAGE);
         
         //Copy our game data into an object then serialize it
         GameState state = new GameState(false);
-        Serializer.serialize("./saveGames/"+name.getText()+".ser", state);
+        Serializer.serialize("./savedGames/"+name.getText()+".ser", state);
     }
     
     /**
-     * @author Nathan
+     *
      */
     public static void loadGame () {
         JTextField name = new JTextField();
         Object[] params = { name };
-        JOptionPane.showMessageDialog(frame, params, "Save Game Name", JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, params, "Load Game", JOptionPane.QUESTION_MESSAGE);
         
         //deserialize saved game
-        GameState state = Serializer.deserialize("./saveGames/"+name.getText()+".ser");
+        GameState state = Serializer.deserialize("./savedGames/"+name.getText()+".ser");
         
         if (state==null) {
             JOptionPane.showMessageDialog(frame, "No Saved Games Found!");
@@ -271,21 +272,22 @@ public class TTRController extends Observable implements ActionListener {
                         "-claim a route\n\t\t"+
                         "-draw Destination Tickets\n"+
                         
-                        "Drawing Train Car Cards:\n\t" +
-                        "-Players are allowed to draw 2 train cards in total, two from the 5 face up cards or 2 from the card deck or one of each\n\t" +
-                        "-If a rainbow card is chosen from one of the 5 face up cards, the player is only able to pick that one rainbow card and not take another train card" +
+                        "Drawing Train Car Cards:\n\t"+
+                        "-Players are allowed to draw 2 train cards in total, two from the 5 face up cards or 2 from the card deck or one of each\n\t"+
+                        "-If a rainbow card is chosen from one of the 5 face up cards, the player is only able to pick that one rainbow card and not take another train card"+
                         
-                        "Claiming Routes:\n\t" +
+                        "Claiming Routes:\n\t"+
                         "-Available routes that a players can claim is highlighted in pink");
     }
     
-    public void aboutMessage(){
-        JOptionPane.showMessageDialog(frame,"" +
-                "\t\tTicket to Ride - Canada Edition\n\n" +
-                "\t\t Created by Cerena, Felix, Nathan\n" +
+    public void aboutMessage () {
+        JOptionPane.showMessageDialog(frame, ""+
+                "\t\tTicket to Ride - Canada Edition\n\n"+
+                "\t\t Created by Cerena, Felix, Nathan\n"+
                 "\t\t 2021");
         
     }
+    
     @Override
     public void actionPerformed (ActionEvent e) {
         
@@ -302,15 +304,14 @@ public class TTRController extends Observable implements ActionListener {
         } else if (e.getSource()==frame.getLoadMI()) {
             loadGame();
             
-            //Cerena
+        //Cerena
         } else if (e.getSource()==frame.getNewMI()) {
             newGame();
         } else if (e.getSource()==frame.getExitMI()) {
             System.exit(0);
         } else if (e.getSource()==frame.getHelpMenu()) {
             helpMenuMessage();
-        }
-        else if(e.getSource()==frame.getAboutMI()){
+        } else if (e.getSource()==frame.getAboutMI()) {
             aboutMessage();
         }
         

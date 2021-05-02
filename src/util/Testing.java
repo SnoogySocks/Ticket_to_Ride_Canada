@@ -39,10 +39,10 @@ public class Testing {
         }
     }
     
+    // Here lies hours of debugging
     public static void longestPathIsWorking (RouteController controller) {
         
         BFSIsWorking(TTRController.ticketController);
-        
         ArrayList<Player> playersLongestPathLength = controller.getLongestContinuousPathOwners();
         System.out.println(playersLongestPathLength);
     

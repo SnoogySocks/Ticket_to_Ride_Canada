@@ -21,7 +21,7 @@ public class BoardPanel extends JPanel {
         gameBoardImage.setBounds(0,0, this.getWidth(), this.getHeight());
         add(gameBoardImage);
 
-        // Add the cities to the game board
+        // Add the cities and routes to the game board
         for (City city : cities) {
             gameBoardImage.add(city);
         }

@@ -9,16 +9,10 @@ import model.Player;
 
 public class Path {
     
-    private Player owner;
     private int length;
     
-    public Path (Player owner) {
-        this.owner = owner;
+    public Path () {
         this.length = 0;
-    }
-    
-    public Player getOwner() {
-        return owner;
     }
     
     public int getLength () {

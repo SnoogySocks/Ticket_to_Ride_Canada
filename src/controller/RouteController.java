@@ -29,7 +29,7 @@ public class RouteController {
         
         ArrayList<Route> validRoutes = new ArrayList<>();
         for (Route route : TTRController.availableRoutes) {
-        
+            
             // Routes are valid if
             // 1. The player has enough trains and (
             //      1.1. The player has enough cards when the route is rainbow
@@ -43,7 +43,7 @@ public class RouteController {
             )) {
                 validRoutes.add(route);
             }
-        
+            
         }
         Collections.sort(validRoutes);
         return validRoutes;
@@ -51,12 +51,10 @@ public class RouteController {
     }
     
     /**
-     *
-     * @author Cerena
-     * @param routes
+     * @param routes = the highlighted routes
      */
     public void highlightRoutes (ArrayList<Route> routes) {
-        for(Route r : routes) {
+        for (Route r : routes) {
             HighlightLine.drawLine(TTRController.frame.getBoardPanel().getGraphics(), r.getCity(0).getPoint(), r.getCity(1).getPoint());
         }
     }
@@ -84,7 +82,7 @@ public class RouteController {
                 validRoutes.toArray(),
                 validRoutes.get(0));
         
-        //if route is null then the player has cancelled the selection
+        // If route is null then the player has cancelled the selection
         if (route==null) {
             return;
         }
@@ -95,9 +93,8 @@ public class RouteController {
         updateGame(player, route, numTrainCardsUsed);
         TTRController.ticketController.scoreTicketsOnRouteAdded(player);
         TTRController.notifyStaticObservers(EventType.LOCK_CONTROLS);
-        // TODO check when ticket is complete
         
-        //TODO remove highlights
+        // Remove highlights
         TTRController.frame.getBoardPanel().repaint();
         
     }
@@ -159,13 +156,13 @@ public class RouteController {
                 
                 // Invalid input if the player does not have enough train cards
                 if (player.getNumCardsOfColour(i)<numTrainCardsUsed[i]) {
-                    totalChosenCards = route.getLength()+1;
+                    totalChosenCards = -1;
                     break;
                 }
                 
             }
             if (totalChosenCards!=route.getLength()) {
-                JOptionPane.showMessageDialog(TTRController.frame, "Too many or too little trains. Try again.", "Alert", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(TTRController.frame, "Too many or too little train cards. Try again.", "Alert", JOptionPane.ERROR_MESSAGE);
             }
             
         } while (totalChosenCards!=route.getLength());
@@ -187,7 +184,6 @@ public class RouteController {
         parameters.add(route.toString());
         parameters.add("Used the following train cards:");
         
-        // TODO rainbow is place holder colour
         if (route.getColour()!=CardColour.GRAY) {
             
             // If the player has enough cards of that colour, use them
@@ -197,7 +193,7 @@ public class RouteController {
                 player.removeCards(routeColourValue, route.getLength());
                 parameters.add(route.getColour().toString()+": "+route.getLength());
                 
-                // Otherwise, accommodate by using rainbow cards
+            // Otherwise, accommodate by using rainbow cards
             } else {
                 
                 parameters.add(route.getColour().toString()+": "+player.getNumCardsOfColour(routeColourValue));
@@ -229,7 +225,7 @@ public class RouteController {
         player.getClaimedRoutes().add(route);
         player.setScore(player.getScore()+routeScoringTable.get(route.getLength()));
         
-        // Title case the colour to set a checkmark for the route
+        // Set a checkmark for the route
         String colour = player.getPlayerColour().toString().toLowerCase();
         colour = Character.toUpperCase(colour.charAt(0))+colour.substring(1);
         route.setIcon(new ImageIcon("./images/checkmark"+colour+".png"));
@@ -247,7 +243,7 @@ public class RouteController {
         TTRController.availableRoutes.remove(route);
         
     }
-
+    
     public int scoreRoutes (Player player) {
         
         int score = 0;
@@ -267,36 +263,34 @@ public class RouteController {
      * @return Owner of hte longest continuous path.
      * If there are multiple owners, return them.
      */
+    
     public ArrayList<Player> getLongestContinuousPathOwners () {
         
         // Initialize the the longest path array
         int[] playersLongestPathLength = new int[TTRController.players.length+1];
-        HashMap<City, Integer> visited = new HashMap<>();
+        HashSet<Route> visited = new HashSet<>();
         
-        // Iterate through all the routes
-        for (City city: TTRController.cities) {
+        for (Route route : TTRController.routes) {
             
-            if (visited.containsKey(city)) continue;
+            if (visited.contains(route) || route.getOwner()==null) continue;
             
-            // Iterate through the players for each city
-            for (Player owner: TTRController.players) {
-    
-                // Find the length of the current path
-                Path path = new Path(owner);
-                dfsLengthOfPath(visited, path, city);
-    
-                // Check if the the current path length is longer than the current path
-                int longestLength = playersLongestPathLength[owner.getPlayerColour().getValue()];
-    
-                if (longestLength<=path.getLength()) {
-        
-                    // Reset array if there is a new longest length
-                    if (longestLength<path.getLength()) {
-                        Arrays.fill(playersLongestPathLength, 0);
-                    }
-                    playersLongestPathLength[owner.getPlayerColour().getValue()] = path.getLength();
-        
+            // Find the length of the current path
+            Path path = new Path();
+            dfsLengthOfPath(visited, path, route);
+            
+            // Check if the the current path length is longer than the longestLength
+            int owner = route.getOwner().getPlayerColour().getValue();
+            int longestLength = playersLongestPathLength[owner];
+            
+            if (longestLength<=path.getLength()) {
+                
+                // Reset array if there is a new longest length
+                if (longestLength<path.getLength()) {
+                    Arrays.fill(playersLongestPathLength, 0);
                 }
+                
+                // Assign a new length to the owner
+                playersLongestPathLength[owner] = path.getLength();
                 
             }
             
@@ -304,10 +298,13 @@ public class RouteController {
         
         // Return the player(s) with the longest route
         ArrayList<Player> longestContinuousPathOwners = new ArrayList<>();
-        for (int i = 0; i<playersLongestPathLength.length; ++i) {
+        for (int i = 1; i<playersLongestPathLength.length; ++i) {
+            
             if (playersLongestPathLength[i]!=0) {
-                longestContinuousPathOwners.add(TTRController.players[i]);
+                System.out.println(playersLongestPathLength[i]);
+                longestContinuousPathOwners.add(TTRController.players[i-1]);
             }
+            
         }
         
         return longestContinuousPathOwners;
@@ -315,54 +312,31 @@ public class RouteController {
     }
     
     /**
-     * TODO test the functionality
      * Dept first search to find the length of the longest path
-     * @param visited = All the visited routes so far
-     * @param path = the current path length
-     * @param currentCity = the current city
+     * @param visited      = All the visited routes so far
+     * @param path         = the current path length
+     * @param currentRoute = the current route
      */
-    private void dfsLengthOfPath (HashMap<City, Integer> visited, Path path, City currentCity) {
-    
-        // Mark the currentRoute as visited and add it to the pathLength
-        visited.put(currentCity, 1);
-
-        // Iterate through the city's routes
-        for (Route route: currentCity.getRoutes()) {
-
-            if (path.getOwner()!=route.getOwner()) continue;
-            
-            // Iterate through the route's cities
-            for (int i = 0; i<2; ++i) {
+    private void dfsLengthOfPath (HashSet<Route> visited, Path path, Route currentRoute) {
+        
+        visited.add(currentRoute);
+        path.addLength(currentRoute.getLength());
+        
+        // Iterate through the route's cities, then those city's routes
+        for (int i = 0; i<2; ++i) {
+            for (Route nextRoute : currentRoute.getCity(i).getRoutes()) {
                 
-                if (route.getCity(i)==currentCity) continue;
-                
+                // if the next route's owner is the same, does not lead backwards,
+                // and has not been visited before, then traverse it
+                if (currentRoute.getOwner()==nextRoute.getOwner()
+                        && currentRoute!=nextRoute
+                        && !visited.contains(nextRoute)) {
+                    dfsLengthOfPath(visited, path, nextRoute);
+                }
                 
             }
-
-            // Iterate through the cities' routes
-            for () {
-
-                if (currentCity.getOwner()!=nextCity.getOwner() || currentCity!=nextCity) {
-                    continue;
-                }
-
-                // If the route has not been visited and the owner is
-                // the same as the currentRoute's, traverse it
-                if (!visited.containsKey(nextCity)) {
-                    dfsLengthOfPath(visited, path, nextCity);
-
-                // Otherwise, if there is a cycle, include
-                // the connecting route with the pathLength
-                } else if (visited.containsKey(nextCity) && visited.get(nextCity)==1) {
-                    path.addLength(nextCity.getLength());
-                }
-
-            }
-
         }
-
-        visited.put(currentRoute, 2);
-    
+        
     }
     
 }

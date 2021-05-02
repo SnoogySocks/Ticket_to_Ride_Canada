@@ -65,7 +65,6 @@ public class Route extends JLabel implements Serializable, Comparable<Route> {
                 "cities="+Arrays.toString(cities)+
                 ", length="+length+
                 ", colour="+colour+
-                ", owner="+(owner==null ? "none" : owner.getName())+
                 '}';
     }
     

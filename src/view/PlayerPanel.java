@@ -19,15 +19,15 @@ public class PlayerPanel extends JPanel implements Observer {
     private final JLabel panelTitle, playerNameTitle, playerColourTitle, ticketTitle, trainCardTitle, numTrainsTitle;
     
     // Ticket Scroll pane
-    private JTextArea ticketPaneText;
-    private JScrollPane ticketPane;
+    private final JTextArea ticketPaneText;
+    private final JScrollPane ticketPane;
     
     // Buttons
-    private JButton claimRouteButton, nextTurnButton;
+    private final JButton claimRouteButton, nextTurnButton;
     
     // Lists
-    private ArrayList<Ticket> tickets;
-    private TrainCard[] numTrainCards;
+    private final ArrayList<Ticket> tickets;
+    private final TrainCard[] numTrainCards;
     
     public PlayerPanel (int x, int y, int width, int height) {
         
