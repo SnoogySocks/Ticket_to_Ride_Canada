@@ -65,7 +65,7 @@ public class TicketController {
             
             //Restart the process if a ticket hasn't been selected
             else if (numSelected<1) {
-                int i = JOptionPane.showConfirmDialog(TTRController.frame, "You must choose at least 2 ticket.", "Continue?", JOptionPane.OK_CANCEL_OPTION);
+                int i = JOptionPane.showConfirmDialog(TTRController.frame, "You must choose at least 1 ticket.", "Continue?", JOptionPane.OK_CANCEL_OPTION);
                 
                 if (i==2) {
                     for (Ticket t : choices) {
