@@ -84,6 +84,7 @@ public class RouteController {
         
         // If route is null then the player has cancelled the selection
         if (route==null) {
+            TTRController.frame.getBoardPanel().repaint();
             return;
         }
         
