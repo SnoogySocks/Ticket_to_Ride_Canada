@@ -74,10 +74,11 @@ public class TTRController extends Observable implements ActionListener {
     public void newGame () {
         
         playerTurn = 0;
+        endGameTurn = 1;
         createPlayers();
         tCController.dealTrainCards();
         tCController.flipFiveCards();
-        ticketController.dealStartingTickets();
+        //ticketController.dealStartingTickets();
         // TODO add below methods
         //         showNextPlayer();
         //         enableGUIElements(true);
@@ -109,6 +110,7 @@ public class TTRController extends Observable implements ActionListener {
         // Score the longest path
         ArrayList<Object> parameter = new ArrayList<>();
         parameter.add("Owner(s) of the longest route: ");
+        parameter.add("John Cena");
         
         for (Player player : TTRController.routeController.getLongestContinuousPathOwners()) {
             player.setScore(player.getScore()+10);
@@ -118,7 +120,8 @@ public class TTRController extends Observable implements ActionListener {
         // Display the owner(s) of the longest route
         JOptionPane.showMessageDialog(frame, parameter.toArray(), "Bonus", JOptionPane.INFORMATION_MESSAGE);
         
-        for (Player p : players) {
+        for (int i = 1 ; i < players.length; i++) {
+            Player p = players[i];
             if (p.getScore()==highest.get(0).getScore()) {
                 highest.add(p);
             } else if (p.getScore()>highest.get(0).getScore()) {
@@ -225,22 +228,24 @@ public class TTRController extends Observable implements ActionListener {
     public static void nextTurn () {
         
         playerTurn = playerTurn==3 ? 0 : playerTurn+1;
+        if (isEndGame) {
+            if (endGameTurn==4) {
+                endGame();
+                return;
+            } else {
+                endGameTurn++;
+            }
+
+        } else {
+            endGameConditions();
+        }
+
         notifyStaticObservers(EventType.NEXT_TURN);
         JOptionPane.showMessageDialog(frame,
                 getCurrentPlayer().getName()+"'s turn",
                 "Alert", JOptionPane.INFORMATION_MESSAGE);
-        
-        if (isEndGame) {
-            if (endGameTurn==4) {
-                endGame();
-            } else {
-                endGameTurn++;
-            }
-            
-        } else {
-            endGameConditions();
-        }
-        
+
+
     }
     
     /**
@@ -250,6 +255,8 @@ public class TTRController extends Observable implements ActionListener {
         for (Player p : players) {
             if (p.getNumTrains()<=2) {
                 isEndGame = true;
+                JOptionPane.showMessageDialog(frame ,"One More Round");
+                return;
             }
         }
         isEndGame = false;
