@@ -3,6 +3,9 @@ package application;
 import controller.TTRController;
 
 /**
+ * This is a Java application to play the game Ticket To Ride.
+ *
+ * "Extra Features"
  *
  * Nathan:
  *  Observers:
@@ -19,11 +22,13 @@ import controller.TTRController;
  *      which can then be used to set the TTRController state.
  *
  * Felix:
- *
- *
- *
- *
- *
+ *  Longest Path:
+ *      At the end of the game, players who have tied or achieved the longest path are recorded with the array playersLongestPathLength.
+ *      If a player’s value is 0, that means the player does not have the longest path, otherwise the player’s value will be the length of the current longest path.
+ *      To calculate the longest path, all the lengths of continuous paths are examined with a depth first search algorithm.
+ *      It uses the helper class Path  to keep track of the path’s length so that when it gets passed as an argument in the depth first search function it is passed by reference.
+ *      Passing by reference is important because one change in a function changes the variable in every other function; the path's total length is always recorded.
+ *      At the end of the function, an arraylist of the winning players is created and returned.
  *
  * Cerena:
  *  Highlighting Available Routes:
