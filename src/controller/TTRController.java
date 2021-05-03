@@ -46,8 +46,6 @@ public class TTRController extends Observable implements ActionListener {
         FileImportController.init();
         createPlayers();
         
-        System.out.println(Arrays.toString(players));
-        
         routes = (ArrayList<Route>) FileImportController.routes.clone();
         availableRoutes = new HashSet<>(routes);
         
@@ -68,13 +66,13 @@ public class TTRController extends Observable implements ActionListener {
         setupActionListeners();
         
         newGame();
-        
     }
     
     public void newGame () {
         
         playerTurn = 0;
         endGameTurn = 1;
+        isEndGame = false;
         createPlayers();
         tCController.dealTrainCards();
         tCController.flipFiveCards();
@@ -259,7 +257,7 @@ public class TTRController extends Observable implements ActionListener {
         for (Player p : players) {
             if (p.getNumTrains()<=2) {
                 isEndGame = true;
-                JOptionPane.showMessageDialog(frame ,"One More Round");
+                JOptionPane.showMessageDialog(frame ,"One More Round Remaining!");
                 return;
             }
         }
