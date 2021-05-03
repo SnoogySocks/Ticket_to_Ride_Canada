@@ -146,7 +146,7 @@ public class TrainCardController extends Observable {
             TTRController.shownCards.set(index, TTRController.trainCardDeck.pop());
             if (checkForThreeRainbowCards()) {
                 JOptionPane.showMessageDialog(TTRController.frame,
-                        "Tree rainbow cards were found! Redrawing...",
+                        "Three rainbow cards were found! Redrawing...",
                         "Alert", JOptionPane.INFORMATION_MESSAGE);
                 cardsTaken = 0;
             }
