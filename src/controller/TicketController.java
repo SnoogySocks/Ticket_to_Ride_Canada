@@ -194,10 +194,5 @@ public class TicketController {
             player.setScore(player.getScore()+TTRController.routeController.scoreRoutes(player));
         }
         
-        // Score the longest path
-        for (Player player : TTRController.routeController.getLongestContinuousPathOwners()) {
-            player.setScore(player.getScore()+10);
-        }
-        
     }
 }

@@ -105,6 +105,18 @@ public class TTRController extends Observable implements ActionListener {
         
         ArrayList<Player> highest = new ArrayList<>();
         highest.add(players[0]);
+    
+        // Score the longest path
+        ArrayList<Object> parameter = new ArrayList<>();
+        parameter.add("Owner(s) of the longest route: ");
+        
+        for (Player player : TTRController.routeController.getLongestContinuousPathOwners()) {
+            player.setScore(player.getScore()+10);
+            parameter.add(player.getName());
+        }
+        
+        // Display the owner(s) of the longest route
+        JOptionPane.showMessageDialog(frame, parameter.toArray(), "Bonus", JOptionPane.INFORMATION_MESSAGE);
         
         for (Player p : players) {
             if (p.getScore()==highest.get(0).getScore()) {
