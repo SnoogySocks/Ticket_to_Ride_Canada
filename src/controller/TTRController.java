@@ -78,10 +78,7 @@ public class TTRController extends Observable implements ActionListener {
         createPlayers();
         tCController.dealTrainCards();
         tCController.flipFiveCards();
-        //ticketController.dealStartingTickets();
-        // TODO add below methods
-        //         showNextPlayer();
-        //         enableGUIElements(true);
+        ticketController.dealStartingTickets();
         
         setupObservers();
         
@@ -110,7 +107,6 @@ public class TTRController extends Observable implements ActionListener {
         // Score the longest path
         ArrayList<Object> parameter = new ArrayList<>();
         parameter.add("Owner(s) of the longest route: ");
-        parameter.add("John Cena");
         
         // Highlight the longest path
         ArrayList<Route> longestPaths = new ArrayList<>();
@@ -237,7 +233,7 @@ public class TTRController extends Observable implements ActionListener {
         
         playerTurn = playerTurn==3 ? 0 : playerTurn+1;
         if (isEndGame) {
-            if (endGameTurn==4) {
+            if (endGameTurn==3) {
                 endGame();
                 return;
             } else {
