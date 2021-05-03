@@ -148,7 +148,7 @@ public class TTRController extends Observable implements ActionListener {
         frame.getExitMI().addActionListener(this);
         frame.getLoadMI().addActionListener(this);
         frame.getSaveMI().addActionListener(this);
-        frame.getHelpMenu().addActionListener(this);
+        frame.getHelpContentsMI().addActionListener(this);
         frame.getAboutMI().addActionListener(this);
         
     }
@@ -265,38 +265,40 @@ public class TTRController extends Observable implements ActionListener {
     /**
      *
      */
-    public void helpMenuMessage () {
+    public void helpMenuMIMessage () {
         JOptionPane.showMessageDialog(frame,
-                " The object of the game is to score points by:\n"+
-                        "\n\t"+
-                        "- claiming a route between two adjacent cities on the map\n\t"+
-                        "- completing a continuous path of routes between two cities listed on your Destination Tickets.\n\t"+
-                        "- Completing the Longest Continuous Path of routes.\n\t"+
+                "\n\n " +
+                        "How to Score Points:\n"+
+                        "   - Claiming a route between two adjacent cities on the map\n"+
+                        "   - Completing a continuous path of routes between two cities listed on your Destination Tickets\n"+
+                        "   - Completing the Longest Continuous Path of routes.\n\n"+
                         
-                        "Game Setup:\n\t"+
-                        "-Each player is give 4 random train cards\n\t"+
-                        "-45 coloured trains"+
-                        "-Each player must select at least 2 tickets at the start of the game and at least 1 (up to 3) if they wish to pick the ticket deck for their round\n"+
+                        "Game Setup:\n"+
+                        "   - Each player is give 4 random train cards\n"+
+                        "   - 45 coloured trains\n"+
+                        "   - Each player must select at least 2 tickets at the start of the game and at least 1 (up to 3) if they wish to pick the ticket deck for their round\n\n"+
                         
-                        "Gameplay:\n\t"+
-                        "Player can do the following actions only once during their turn:\n\t\t:"+
-                        "-draw Train Car Cards\n\t\t"+
-                        "-claim a route\n\t\t"+
-                        "-draw Destination Tickets\n"+
+                        "Gameplay:\n"+
+                        "   Player can do the following actions only once during their turn:\n"+
+                        "       - Draw Train Car Cards\n"+
+                        "       - Claim a route\n"+
+                        "       - Draw Destination Tickets\n" +
+                        "   *The game ends when one of the players reach 2 or less trains*\n\n"+
                         
-                        "Drawing Train Car Cards:\n\t"+
-                        "-Players are allowed to draw 2 train cards in total, two from the 5 face up cards or 2 from the card deck or one of each\n\t"+
-                        "-If a rainbow card is chosen from one of the 5 face up cards, the player is only able to pick that one rainbow card and not take another train card"+
+                        "Drawing Train Car Cards:\n"+
+                        "   - Players are allowed to draw 2 train cards in total, two from the 5 face up cards or 2 from the card deck or one of each\n"+
+                        "   - If a rainbow card is chosen from one of the 5 face up cards, the player is only able to pick that one rainbow card and not take another train card\n\n"+
                         
-                        "Claiming Routes:\n\t"+
-                        "-Available routes that a players can claim is highlighted in pink");
+                        "Claiming Routes:\n"+
+                        "   - Available routes that a players can claim is highlighted in pink\n\n");
     }
     
     public void aboutMessage () {
         JOptionPane.showMessageDialog(frame, ""+
-                "\t\tTicket to Ride - Canada Edition\n\n"+
-                "\t\t Created by Cerena, Felix, Nathan\n"+
-                "\t\t 2021");
+                "       \n    Ticket to Ride - Canada Edition       \n"+
+                "                    Created by\n " +
+                "            Cerena, Felix, Nathan\n"+
+                "                        2021");
         
     }
     
@@ -321,8 +323,8 @@ public class TTRController extends Observable implements ActionListener {
             newGame();
         } else if (e.getSource()==frame.getExitMI()) {
             System.exit(0);
-        } else if (e.getSource()==frame.getHelpMenu()) {
-            helpMenuMessage();
+        } else if (e.getSource()==frame.getHelpContentsMI()) {
+            helpMenuMIMessage();
         } else if (e.getSource()==frame.getAboutMI()) {
             aboutMessage();
         }

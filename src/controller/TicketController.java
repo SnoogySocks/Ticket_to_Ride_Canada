@@ -41,7 +41,7 @@ public class TicketController {
             
             //Initialize GUI elements for the JOptionPane
             JCheckBox[] checkBoxes = new JCheckBox[size];
-            Object[] parameters = { TTRController.getCurrentPlayer().getName()+" select at least 1 ticket! ", checkBoxes };
+            Object[] parameters = { TTRController.getCurrentPlayer().getName()+" select at least " + (isInitial ? 2 : 1)  + " ticket(s)! ", checkBoxes };
             
             for (int i = 0; i<size; i++) {
                 checkBoxes[i] = new JCheckBox(choices[i].toString());
