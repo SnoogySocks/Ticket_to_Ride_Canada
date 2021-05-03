@@ -112,13 +112,19 @@ public class TTRController extends Observable implements ActionListener {
         parameter.add("Owner(s) of the longest route: ");
         parameter.add("John Cena");
         
+        // Highlight the longest path
+        ArrayList<Route> longestPaths = new ArrayList<>();
+        
         for (Player player : TTRController.routeController.getLongestContinuousPathOwners()) {
             player.setScore(player.getScore()+10);
             parameter.add(player.getName());
+            longestPaths.addAll(player.getClaimedRoutes());
         }
         
-        // Display the owner(s) of the longest route
+        // Display the longest route(s) and the owner(s) of the longest route
+        routeController.highlightRoutes(longestPaths);
         JOptionPane.showMessageDialog(frame, parameter.toArray(), "Bonus", JOptionPane.INFORMATION_MESSAGE);
+        TTRController.frame.getBoardPanel().repaint();
         
         for (int i = 1 ; i < players.length; i++) {
             Player p = players[i];
@@ -273,6 +279,7 @@ public class TTRController extends Observable implements ActionListener {
      *
      */
     public void helpMenuMIMessage () {
+        
         JOptionPane.showMessageDialog(frame,
                 "\n\n " +
                         "How to Score Points:\n"+
@@ -298,6 +305,7 @@ public class TTRController extends Observable implements ActionListener {
                         
                         "Claiming Routes:\n"+
                         "   - Available routes that a players can claim is highlighted in pink\n\n");
+        
     }
     
     public void aboutMessage () {
