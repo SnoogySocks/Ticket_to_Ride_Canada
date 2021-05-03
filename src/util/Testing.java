@@ -28,9 +28,6 @@ public class Testing {
         r2.setOwner(player);
 
         player.addTicket(t);
-
-//        assert(controller.checkTicketComplete(t, player) == true);
-//        assert(controller.checkTicketComplete(FileImportController.tickets.get(0), player) == false);
     
         if (controller.checkTicketComplete(t, player)) {
             System.out.println("[TESTING] BFS for tickets test --> Passed");
