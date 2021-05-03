@@ -29,7 +29,7 @@ public class Player extends Observable implements Serializable {
         this.tickets = new ArrayList<>();
         this.claimedRoutes = new ArrayList<>();
         this.numCardsOfColour = new int[CardColour.values().length-1];
-        this.numTrains = 3;
+        this.numTrains = 45;
         this.totalCards = this.score = 0;
         
     }
