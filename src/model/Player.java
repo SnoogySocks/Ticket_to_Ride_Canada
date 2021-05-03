@@ -1,5 +1,6 @@
 package model;
 
+import controller.TTRController;
 import util.EventType;
 import util.Observable;
 

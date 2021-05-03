@@ -224,6 +224,7 @@ public class RouteController {
         
         // Claim the route
         player.getClaimedRoutes().add(route);
+        route.setOwner(player);
         player.setScore(player.getScore()+routeScoringTable.get(route.getLength()));
         
         // Set a checkmark for the route

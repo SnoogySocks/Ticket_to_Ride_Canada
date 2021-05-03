@@ -116,9 +116,11 @@ public class TTRController extends Observable implements ActionListener {
         ArrayList<Route> longestPaths = new ArrayList<>();
         
         for (Player player : TTRController.routeController.getLongestContinuousPathOwners()) {
+            
             player.setScore(player.getScore()+10);
             parameter.add(player.getName());
             longestPaths.addAll(player.getClaimedRoutes());
+            
         }
         
         // Display the longest route(s) and the owner(s) of the longest route
