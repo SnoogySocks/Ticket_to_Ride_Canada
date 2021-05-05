@@ -257,17 +257,24 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     * The game ends when a player has <=2 trains or the turnNumber/4 is 5
+     * The game ends when a player has <=2 trains
+     * or the turnNumber/4>=5 and a player has a route
      */
     public static void endGameConditions () {
+        
+        // Game does not end if a player has a route
+        boolean aPlayerHasRoute;
+        
         for (Player p : players) {
-            if (p.getNumTrains()<=2 || turnNumber/players.length==5) {
+            aPlayerHasRoute = p.getNumTrains()<45;
+            if (p.getNumTrains()<=2 || turnNumber/players.length>=5 && aPlayerHasRoute) {
                 isEndGame = true;
                 JOptionPane.showMessageDialog(frame ,"One More Round Remaining!");
                 return;
             }
         }
         isEndGame = false;
+        
     }
     
     /**
