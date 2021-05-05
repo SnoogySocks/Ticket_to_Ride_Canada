@@ -1,6 +1,9 @@
 package application;
 
 import controller.TTRController;
+import util.Coordinate;
+
+import java.util.ArrayList;
 
 /**
  * This is a Java application to play the game Ticket To Ride.
@@ -30,11 +33,6 @@ import controller.TTRController;
  *      Passing by reference is important because one change in a function changes the variable in every other function; the path's total length is always recorded.
  *      At the end of the function, an arraylist of the winning players is created and returned.
  *
- * Cerena:
- *  Highlighting Available Routes:
- *      The way this feature works is that valid routes, which is an array list containing valid routes that a player could take, is fed into a method called “highlightRoutes”.
- *      The method highlightRoutes feeds the coordinates of the cities from the array list “validRoutes” into another method located in the view package called “drawLine”.
- *      The drawLine method takes the coordinates of the two cities it is fed from the highlightRoutes method and uses the graphics class in order to draw a highlighted line between two cities.
  *
  * Group: Felix, Cerena, Nathan
  * Date: May 3, 2021

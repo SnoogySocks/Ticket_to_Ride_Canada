@@ -1,6 +1,9 @@
 package util;
 
 import model.Player;
+import model.Route;
+
+import java.util.ArrayList;
 
 /**
  * Class to pass an integer by reference
@@ -10,17 +13,33 @@ import model.Player;
 public class Path {
     
     private int length;
+    private ArrayList<Route> path;
     
     public Path () {
-        this.length = 0;
+        length = 0;
+        path = new ArrayList<>();
     }
     
     public int getLength () {
         return length;
     }
     
-    public void addLength (int additional) {
+    public void addLength (int additional, Route route) {
         length += additional;
+        path.add(route);
+    }
+    
+    public void clear () {
+        this.length = 0;
+        path.clear();
+    }
+    
+    public Player getOwner() {
+        return path.get(0).getOwner();
+    }
+    
+    public ArrayList<Route> getPath () {
+        return path;
     }
     
     @Override

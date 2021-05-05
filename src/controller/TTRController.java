@@ -38,6 +38,8 @@ public class TTRController extends Observable implements ActionListener {
     public static Stack<TrainCard> trainCardDiscards = new Stack<>();
     public static ArrayList<TrainCard> shownCards = new ArrayList<>();
     
+    // End game
+    public static int turnNumber = 1;
     public static int endGameTurn = 1;
     public static boolean isEndGame = false;
     
@@ -71,6 +73,7 @@ public class TTRController extends Observable implements ActionListener {
     public void newGame () {
         
         playerTurn = 0;
+        turnNumber = 1;
         endGameTurn = 1;
         isEndGame = false;
         createPlayers();
@@ -109,11 +112,12 @@ public class TTRController extends Observable implements ActionListener {
         // Highlight the longest path
         ArrayList<Route> longestPaths = new ArrayList<>();
         
-        for (Player player : TTRController.routeController.getLongestContinuousPathOwners()) {
+        for (Path path: TTRController.routeController.getLongestContinuousPathOwners()) {
             
+            Player player = path.getOwner();
             player.setScore(player.getScore()+10);
             parameter.add(player.getName());
-            longestPaths.addAll(player.getClaimedRoutes());
+            longestPaths.addAll(path.getPath());
             
         }
         
@@ -216,6 +220,7 @@ public class TTRController extends Observable implements ActionListener {
         shownCards = state.shownCards;
         players = state.players;
         playerTurn = state.playerTurn;
+        turnNumber = state.turnNumber;
         endGameTurn = state.endGameTurn;
         isEndGame = state.isEndGame;
         
@@ -229,6 +234,7 @@ public class TTRController extends Observable implements ActionListener {
      */
     public static void nextTurn () {
         
+        turnNumber++;
         playerTurn = playerTurn==3 ? 0 : playerTurn+1;
         if (isEndGame) {
             if (endGameTurn==3) {
@@ -251,11 +257,11 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     *
+     * The game ends when a player has <=2 trains or the turnNumber/4 is 5
      */
     public static void endGameConditions () {
         for (Player p : players) {
-            if (p.getNumTrains()<=2) {
+            if (p.getNumTrains()<=2 || turnNumber/4==5) {
                 isEndGame = true;
                 JOptionPane.showMessageDialog(frame ,"One More Round Remaining!");
                 return;

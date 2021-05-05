@@ -20,7 +20,6 @@ public class City extends JLabel implements Serializable {
 //        setIcon(new ImageIcon("./images/city.png"));
         this.name = name;
         this.point = point;
-        // TODO setBounds
     }
 
     public String getName () {

@@ -137,7 +137,7 @@ public class TrainCardController extends Observable {
     
     public void replaceTakenTrainCard (int index) {
         
-        //TODO if the stack is empty we switch to the discard pile
+        // if the stack is empty we switch to the discard pile
         if (TTRController.trainCardDeck.isEmpty()) {
             TTRController.trainCardDeck = (Stack<TrainCard>) TTRController.trainCardDiscards.clone();
             TTRController.trainCardDiscards.clear();

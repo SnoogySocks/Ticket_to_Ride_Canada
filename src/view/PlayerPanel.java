@@ -63,8 +63,6 @@ public class PlayerPanel extends JPanel implements Observer {
         add(ticketTitle);
         
         // Create the scroll pane
-        // TODO modify to be a JList of tickets
-        // TODO provide the JList with tickets to display
         ticketPaneText = new JTextArea();
         ticketPaneText.setPreferredSize(new Dimension(PREFERRED_WIDTH-18*2, LABEL_HEIGHT*20));
         ticketPaneText.setEditable(false);
