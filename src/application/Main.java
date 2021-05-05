@@ -23,13 +23,20 @@ import controller.TTRController;
  *
  * Felix:
  *  Longest Path:
- *      At the end of the game, players who have tied or achieved the longest path are recorded with the array playersLongestPathLength.
- *      If a player’s value is 0, that means the player does not have the longest path, otherwise the player’s value will be the length of the current longest path.
- *      To calculate the longest path, all the lengths of continuous paths are examined with a depth first search algorithm.
- *      It uses the helper class Path  to keep track of the path’s length so that when it gets passed as an argument in the depth first search function it is passed by reference.
- *      Passing by reference is important because one change in a function changes the variable in every other function; the path's total length is always recorded.
- *      At the end of the function, an arraylist of the winning players is created and returned.
+ *     At the end of the game, players who have tied or achieved the longest path are recorded with an array longestContinuousPathOwners of classes Path. If a path’s
+ *     length is 0, that means the player does not have the longest path, otherwise the length will be the length of the current longest path. To calculate the longest
+ *     path, all the lengths of continuous paths are examined with a depth first search algorithm. It uses the helper class Path to keep track of the path’s length so
+ *     that when it gets passed as an argument in the depth first search function it is passed by reference. Passing by reference is important because one change in a
+ *     function changes the variable in every other function; the path's total length is always recorded. Additionally, all routes that make up the current path are stored
+ *     inside the path Object as an ArrayList, so that the path could be highlighted at the end of the game. At the end of the function, all paths that are not the longest
+ *     path are removed from longestContinuousPathOwners and returned.
  *
+ * Cerena:
+ *  Highlighting Available Routes
+ *      The way this feature works is that valid routes, which is an array list containing valid routes that a player could take, is fed into a method called
+ *      “highlightRoutes”. The method highlightRoutes feeds the coordinates of the cities from the array list “validRoutes” into another method located in the view package
+ *      called “drawLine”. The drawLine method takes the coordinates of the two cities it is fed from the highlightRoutes method and uses the graphics class in order to draw
+ *      a highlighted line between two cities.
  *
  * Group: Felix, Cerena, Nathan
  * Date: May 3, 2021
