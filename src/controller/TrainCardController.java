@@ -65,15 +65,15 @@ public class TrainCardController extends Observable {
         if (card==null) {
             return;
         }
+
+        TTRController.getCurrentPlayer().addCard(card);
+        replaceTakenTrainCard(index);
         
         //If the rainbow card is selected from the shownCards then player only receives 1 rainbow card
         if (card.getColour()==CardColour.RAINBOW) {
             cardsTaken = 0;
             notifyStaticObservers(EventType.LOCK_CONTROLS);
         } else {
-
-            TTRController.getCurrentPlayer().addCard(card);
-            replaceTakenTrainCard(index);
             cardsTaken++;
 
             notifyStaticObservers(EventType.CARD_TAKEN);
