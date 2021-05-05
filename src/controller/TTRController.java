@@ -169,7 +169,7 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     *
+     * Assigns observers to observable objects
      */
     private static void setupObservers () {
         // For any GUI elements that need to be updated when something changes for a player
@@ -187,7 +187,7 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     *
+     * Prompts the user to enter a name and then saves the game under that name
      */
     public static void saveGame () {
         
@@ -201,7 +201,7 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     *
+     * Prompts the user to enter a name and finds/loads a game under that name
      */
     public static void loadGame () {
         JTextField name = new JTextField();
@@ -236,7 +236,7 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     *
+     *  Proceeds to the next turn
      */
     public static void nextTurn () {
         
