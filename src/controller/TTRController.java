@@ -43,6 +43,9 @@ public class TTRController extends Observable implements ActionListener {
     public static int endGameTurn = 1;
     public static boolean isEndGame = false;
     
+    /**
+     * @author Felix, Cerena, Nathan
+     */
     public TTRController () {
         
         FileImportController.init();
@@ -70,6 +73,9 @@ public class TTRController extends Observable implements ActionListener {
         newGame();
     }
     
+    /**
+     * @author Felix, Nathan, Cerena
+     */
     public void newGame () {
     
         // Unclaim all previous claimed routes
@@ -94,6 +100,9 @@ public class TTRController extends Observable implements ActionListener {
         
     }
     
+    /**
+     * @author Felix
+     */
     public static void createPlayers () {
         
         players = new Player[4];
@@ -104,6 +113,9 @@ public class TTRController extends Observable implements ActionListener {
         
     }
     
+    /**
+     * @author Nathan, Felix
+     */
     public static void endGame () {
         
         ticketController.scoreTicketsEndGame();
@@ -155,6 +167,9 @@ public class TTRController extends Observable implements ActionListener {
         
     }
     
+    /**
+     * @author Nathan
+     */
     private void setupActionListeners () {
         
         frame.getPlayerPanel().getNextTurnButton().addActionListener(this);
@@ -170,6 +185,7 @@ public class TTRController extends Observable implements ActionListener {
     
     /**
      * Assigns observers to observable objects
+     * @author Nathan
      */
     private static void setupObservers () {
         // For any GUI elements that need to be updated when something changes for a player
@@ -188,6 +204,7 @@ public class TTRController extends Observable implements ActionListener {
     
     /**
      * Prompts the user to enter a name and then saves the game under that name
+     * @author Nathan
      */
     public static void saveGame () {
         
@@ -202,6 +219,7 @@ public class TTRController extends Observable implements ActionListener {
     
     /**
      * Prompts the user to enter a name and finds/loads a game under that name
+     * @author Nathan
      */
     public static void loadGame () {
         JTextField name = new JTextField();
@@ -236,7 +254,8 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     *  Proceeds to the next turn
+     * Proceeds to the next turn
+     * @author Nathan
      */
     public static void nextTurn () {
         
@@ -265,6 +284,7 @@ public class TTRController extends Observable implements ActionListener {
     /**
      * The game ends when a player has <=2 trains
      * or the turnNumber/4>=5 and a player has a route
+     * @author Nathan, Felix
      */
     public static void endGameConditions () {
         
@@ -285,6 +305,7 @@ public class TTRController extends Observable implements ActionListener {
     
     /**
      * Retrieves the current player
+     * @author Nathan
      */
     public static Player getCurrentPlayer () {
         return players[playerTurn];
@@ -292,6 +313,7 @@ public class TTRController extends Observable implements ActionListener {
     
     /**
      * Shows a message detailing the rules of the game
+     * @author Cerena
      */
     public void helpMenuMIMessage () {
         
@@ -325,6 +347,7 @@ public class TTRController extends Observable implements ActionListener {
 
     /**
      * Shows a message about the program
+     * @author Cerena
      */
     public void aboutMessage () {
         JOptionPane.showMessageDialog(frame, ""+
@@ -335,6 +358,10 @@ public class TTRController extends Observable implements ActionListener {
         
     }
     
+    /**
+     * @author Nathan, Cerena
+     * @param e = event
+     */
     @Override
     public void actionPerformed (ActionEvent e) {
         

@@ -1,14 +1,8 @@
 package view;
 
 import javax.swing.*;
-
 import util.*;
-import model.*;
-
 import java.awt.*;
-import java.util.*;
-
-import controller.*;
 
 /**
  * @author Cerena

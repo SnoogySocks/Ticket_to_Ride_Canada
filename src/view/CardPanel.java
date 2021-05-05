@@ -1,10 +1,8 @@
 package view;
 
 /**
- *
+ * @author Cerena
  */
-
-import controller.TicketController;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -6,8 +6,6 @@ import model.Route;
 import model.Ticket;
 import util.EventType;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 

@@ -51,6 +51,8 @@ public class RouteController {
     }
     
     /**
+     *
+     * @author Cerena
      * @param routes = the highlighted routes
      */
     public void highlightRoutes (ArrayList<Route> routes) {
