@@ -32,7 +32,7 @@ import controller.TTRController;
  *     path are removed from longestContinuousPathOwners and returned.
  *
  * Cerena:
- *  Highlighting Available Routes
+ *  Highlighting Available Routes:
  *      The way this feature works is that valid routes, which is an array list containing valid routes that a player could take, is fed into a method called
  *      “highlightRoutes”. The method highlightRoutes feeds the coordinates of the cities from the array list “validRoutes” into another method located in the view package
  *      called “drawLine”. The drawLine method takes the coordinates of the two cities it is fed from the highlightRoutes method and uses the graphics class in order to draw
