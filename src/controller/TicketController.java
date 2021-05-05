@@ -24,6 +24,7 @@ public class TicketController {
             showTicketSelectionDialogue(true);
             TTRController.nextTurn();
         }
+        TTRController.turnNumber = 1;
     }
     
     /**

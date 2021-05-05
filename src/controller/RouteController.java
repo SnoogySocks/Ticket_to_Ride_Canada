@@ -267,8 +267,12 @@ public class RouteController {
      */
     public ArrayList<Path> getLongestContinuousPathOwners () {
         
-        // Initialize the the longest path array
-        ArrayList<Path> longestContinuousPathOwners = new ArrayList<>(TTRController.players.length+1);
+        // Initialize the longest path array
+        ArrayList<Path> longestContinuousPathOwners = new ArrayList<>() {{
+            for (int i = 0; i<PlayerColour.values().length; ++i) {
+                add(new Path());
+            }
+        }};
         HashSet<Route> visited = new HashSet<>();
         
         for (Route route : TTRController.routes) {
@@ -293,7 +297,7 @@ public class RouteController {
                 }
                 
                 // Assign a new length to the owner
-                longestContinuousPathOwners.set(owner, path);
+                longestContinuousPathOwners.get(owner).set(path);
                 
             }
             
@@ -301,14 +305,6 @@ public class RouteController {
         
         // Remove the players that do not own the longest continuous path
         longestContinuousPathOwners.removeIf(path->path.getLength()==0);
-//        for (int i = 1; i<longestContinuousPathOwners.size(); ++i) {
-//
-//            if (longestContinuousPathOwners.get(i).getLength()==0) {
-//                System.out.println(longestContinuousPathOwners.get(i));
-//                longestContinuousPathOwners.remove(TTRController.players[i-1]);
-//            }
-//
-//        }
         
         return longestContinuousPathOwners;
         

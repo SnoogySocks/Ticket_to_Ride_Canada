@@ -6,7 +6,7 @@ import model.Route;
 import java.util.ArrayList;
 
 /**
- * Class to pass an integer by reference
+ * Class to help find the longest path
  * @author Felix
  */
 
@@ -40,6 +40,11 @@ public class Path {
     
     public ArrayList<Route> getPath () {
         return path;
+    }
+    
+    public void set (Path path) {
+        this.length = path.length;
+        this.path = path.path;
     }
     
     @Override

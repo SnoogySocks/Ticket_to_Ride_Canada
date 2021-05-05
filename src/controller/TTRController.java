@@ -261,7 +261,7 @@ public class TTRController extends Observable implements ActionListener {
      */
     public static void endGameConditions () {
         for (Player p : players) {
-            if (p.getNumTrains()<=2 || turnNumber/4==5) {
+            if (p.getNumTrains()<=2 || turnNumber/players.length==5) {
                 isEndGame = true;
                 JOptionPane.showMessageDialog(frame ,"One More Round Remaining!");
                 return;
