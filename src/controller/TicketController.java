@@ -126,7 +126,7 @@ public class TicketController {
         
         // nodes - cities, edges - routes
         // start - city1, destination - city2
-        
+
         HashSet<City> explored = new HashSet<>();
         City destination = ticket.getCity2();
         
@@ -151,6 +151,8 @@ public class TicketController {
                     JOptionPane.showMessageDialog(TTRController.frame,
                             "You completed a ticket: "+ticket.getCity1()+" --> "+ticket.getCity2(),
                             "Alert", JOptionPane.INFORMATION_MESSAGE);
+
+                    owner.setScore(owner.getScore() + ticket.getVal());
                     return true;
                 }
                 
@@ -178,17 +180,15 @@ public class TicketController {
     }
     
     /**
-     * Applies ticket points to the players at the end of each game
+     * Removes unfinished ticket points from the players at the end of each game
      */
     public void scoreTicketsEndGame () {
-        
         for (Player player : TTRController.players) {
             for (Ticket t : player.getTickets()) {
-                if (t.isCompleted()) {
-                    player.setScore(player.getScore()+t.getVal());
+                if (!t.isCompleted()) {
+                    player.setScore(player.getScore()-t.getVal());
                 }
             }
-            player.setScore(player.getScore()+TTRController.routeController.scoreRoutes(player));
         }
         
     }

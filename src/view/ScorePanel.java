@@ -33,7 +33,7 @@ public class ScorePanel extends JPanel implements Observer {
     public void update(Observable obj, EventType event){
 
         //When a player's score is updated, update the GUI as well
-        if(event == EventType.UPDATE_SCORES) {
+        if(event == EventType.UPDATE_SCORES || event == EventType.NEXT_TURN) {
             for (int i = 0; i < TTRController.players.length; i++) {
                 playerScoreLabels[i].setText("Player " + (i + 1) + ": " + TTRController.players[i].getScore());
             }
