@@ -284,14 +284,14 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     /**
-     *
+     * Retrieves the current player
      */
     public static Player getCurrentPlayer () {
         return players[playerTurn];
     }
     
     /**
-     *
+     * Shows a message detailing the rules of the game
      */
     public void helpMenuMIMessage () {
         
@@ -322,7 +322,10 @@ public class TTRController extends Observable implements ActionListener {
                         "   - Available routes that a players can claim is highlighted in pink\n\n");
         
     }
-    
+
+    /**
+     * Shows a message about the program
+     */
     public void aboutMessage () {
         JOptionPane.showMessageDialog(frame, ""+
                 "       \n    Ticket to Ride - Canada Edition       \n"+
