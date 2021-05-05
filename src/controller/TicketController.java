@@ -127,12 +127,8 @@ public class TicketController {
         // nodes - cities, edges - routes
         // start - city1, destination - city2
         
-        HashMap<City, Boolean> explored = new HashMap<>();
+        HashSet<City> explored = new HashSet<>();
         City destination = ticket.getCity2();
-        
-        for (City c : FileImportController.cities) {
-            explored.put(c, false);
-        }
         
         Queue<City> queue = new LinkedList<>();
         queue.add(ticket.getCity1());
@@ -142,7 +138,7 @@ public class TicketController {
             
             //Get the next city in the queue and mark it explored
             City current = queue.poll();
-            explored.replace(current, true);
+            explored.add(current);
             
             for (Route r : current.generateOwnedRoutes(owner)) {
                 //switch depending on which city is the destination
@@ -158,10 +154,10 @@ public class TicketController {
                     return true;
                 }
                 
-                //Add the connecting city to the queue
-                if (!c1.equals(current) && !explored.get(c1)) {
+                // Add the connecting city to the queue
+                if (!c1.equals(current) && !explored.contains(c1)) {
                     queue.add(c1);
-                } else if (!explored.get(c2)) {
+                } else if (!explored.contains(c2)) {
                     queue.add(c2);
                 }
             }

@@ -71,6 +71,11 @@ public class TTRController extends Observable implements ActionListener {
     }
     
     public void newGame () {
+    
+        // Unclaim all previous claimed routes
+        for (Route route : routes) {
+            route.setIcon(null);
+        }
         
         playerTurn = 0;
         turnNumber = 1;
@@ -80,6 +85,7 @@ public class TTRController extends Observable implements ActionListener {
         tCController.dealTrainCards();
         tCController.flipFiveCards();
         ticketController.dealStartingTickets();
+        
         
         setupObservers();
         

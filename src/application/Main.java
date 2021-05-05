@@ -1,9 +1,6 @@
 package application;
 
 import controller.TTRController;
-import util.Coordinate;
-
-import java.util.ArrayList;
 
 /**
  * This is a Java application to play the game Ticket To Ride.
